@@ -147,7 +147,13 @@ For each machine, you will need to add a line in `/etc/hosts`, for example
 In case of using vagrant for local deployment, this won't be needed as it's
 already configured by vagrant.
 
-### Machine Provisioning
+## For each machine
+
+Refer to this section for the configuration steps you need to take into account
+and execute for each of the machines in the deployment (agora master, slave,
+auth1, auth2..).
+
+### Machine provisioning
 
 As mentioned earlier, you should provision each VM with Ubuntu 16.04 LTS,
 3GB of RAM and usually around 30GB HD. The machine requirements might 
@@ -167,7 +173,7 @@ example in AWS EC2 an instance whose hostname is `prod-a1` (trustee #1 for the
 production deployment) would be called `prod-a1`. Also, the name of the related
 volume (the hard disk) would have the same name.
 
-## Machine configuration
+### Machine configuration
 
 Once the machines are provisioned, we should configure them individually. The
 ansible deployment script is typically executed within the deployed machine. 
@@ -214,7 +220,7 @@ to [cloudflare ips](https://www.cloudflare.com/ips/). In AWS we use a
 (`prod-s1`) or to the load balancer, and then assign a Public Static IP 
 address for that machine and point to that IP Address in Cloudflare's DNS.
 
-## Backups
+### Backups
 
 In AWS EC2 we use `AWS Backup` to automate backups. They are done at the VM 
 level and they can be easily created by simply assigning a tag to the Volumnes
@@ -240,7 +246,7 @@ example it could be `prod-a1-restored-1`. You could stop the `prod-a1` instance,
 detach the `prod-a1` volume, attach the new `prod-a1-restored-1` volume as 
 `/dev/sda1`.
 
-## Non-root permissions (optional)
+### Non-root permissions (optional)
 
 One can use a non-root use for deployment. Unless a requirement, we don't 
 usually do it. Thus, this step is not very well tested lately. Deployment is
@@ -272,7 +278,7 @@ root@prod-s1 # wget https://raw.githubusercontent.com/agoravoting/agora-dev-box/
 root@prod-s1 # cat agora.sudoers >> /etc/sudoers
 ```
 
-## Install and configure deployment dependencies
+### Install and configure deployment dependencies
 
 Within the provisioned machine (for example `prod-s1`), there are a series of 
 steps required for a  proper and successful deployment. We will from now on 
@@ -427,7 +433,9 @@ root@prod-s2:/root/prod-s2/ $ cp doc/production/playbook.slave.yml playbook.yml
 root@prod-s2:/root/prod-s2/ $ time sudo ansible-playbook -i inventory playbook.yml
 ```
 
-# Deployment of authorities [prod-a1, prod-a2]
+## Deployment of authorities [prod-a1, prod-a2]
+
+
 
 We'll use an authority config file as a base:
 
