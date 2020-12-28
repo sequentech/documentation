@@ -22,9 +22,13 @@ module.exports = {
           label: 'Docs',
           position: 'left',
         },
-        {to: 'blog', label: 'Blog', position: 'left'},
         {
           href: 'https://nvotes.com/blog/',
+          label: 'Blog', 
+          position: 'left'
+        },
+        {
+          href: 'https://github.com/agoravoting/',
           label: 'GitHub',
           position: 'right',
         },
@@ -37,13 +41,15 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Style Guide',
+              label: 'Deployment',
               to: 'docs/',
             },
+            /*
             {
               label: 'Second Doc',
               to: 'docs/doc2/',
             },
+            */
           ],
         },
         {
@@ -68,11 +74,11 @@ module.exports = {
           items: [
             {
               label: 'Blog',
-              to: 'blog',
+              to: 'https://nvotes.com/blog/',
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/agoravoting/admin-page',
+              href: 'https://github.com/agoravoting/admin-manual',
             },
           ],
         },
@@ -87,7 +93,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/agoravoting/admin-page/edit/master/',
+            'https://github.com/agoravoting/admin-manual/edit/master/',
         },
         blog: {
           showReadingTime: true,
