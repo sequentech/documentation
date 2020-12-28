@@ -67,6 +67,30 @@ Some other recommendations to minimize attack surface:
   All machines should only be accessible through ssh via the `ops` machine, 
   with the root@aws-ops user and to the root user of the destination machine.
 
+### Configuring access to each VM inside the ops machine
+
+Each machine should have its own static private ip address inside the private
+network and its own name. This should be configured in the `ops` machine to
+access them by name.
+
+By default, ssh access to this deployment machines is done through the `ubuntu`
+user, and only from that you can `sudo -s` to root or other users. In order for
+not to need to specify this user everytime you login and for every new machine,
+we suggest you add the following two lines to the `/root/.ssh/config` file:
+
+```
+Host *
+User ubuntu
+```
+
+### Configuring ops hosts
+
+For each machine, you will need to add a line in `/etc/hosts` in the `ops` 
+machine, for example  `192.168.1.2 prod-s1`.
+
+In case of using vagrant for local deployment, this won't be needed as it's
+already configured by vagrant.
+
 ### Collaborate sharing with tmuxinator
 
 To help collaboration during operations among employees and to ease operations 
@@ -113,23 +137,7 @@ deployment/deployment-skel.yml</a> into the file
  - Ctrl+a, c: Adds a new tab terminal to the current session.
  - Ctrl+Left/Right arrow: moves from one tab terminal to the other.
 
-### Configuring access to each VM inside the ops machine
-
-Each machine should have its own static private ip address inside the private
-network and its own name. This should be configured in the `ops` machine to
-access them by name.
-
-By default, ssh access to this deployment machines is done through the `ubuntu`
-user, and only from that you can `sudo -s` to root or other users. In order for
-not to need to specify this user everytime you login and for every new machine,
-we suggest you add the following two lines to the `/root/.ssh/config` file:
-
-```
-Host *
-User ubuntu
-```
-
-## Whole deployment configuration
+### Creating the mux project
 
 Each deployment is compromised of multiple machines. As mentioned earlier, we 
 recommend to create a tmuxinator project for each deployment.
@@ -139,13 +147,6 @@ create a `<deployment-name>` project. Do a quick find & replace all in vim
 inside the file with the command: `:%s/BASE/<deployment-name>/g` then save and
 exit with `:wq`.
 
-### Configuring ops hosts
-
-For each machine, you will need to add a line in `/etc/hosts`, for example 
-`192.168.1.2 prod-s1`.
-
-In case of using vagrant for local deployment, this won't be needed as it's
-already configured by vagrant.
 
 ## For each machine
 
@@ -327,7 +328,8 @@ git clone https://github.com/agoravoting/agora-dev-box.git $NAME
 cd $NAME
 git checkout master
 
-# needed for ansible:
+# needed for ansible. If you are deploying an election authority use
+# doc/production/playbook.auth.yml instead
 echo "localhost ansible_connection=local" > inventory 
 cp doc/production/playbook.agora.yml playbook.yml
 
@@ -353,7 +355,7 @@ Even for the election authorities' machines, it's easiest to just copy the
 sample production config files for both agora and auth machines in the 
 `doc/production` directory.
 
-# Web servers master deployment [prod-s1, prod-s2]
+## Web servers master & slave deployment
 
 Both machines prod-s1 and prod-s2 should be setup with the same passwords,
 because they will be a replica of each other: the slave will be in hot standby
@@ -394,7 +396,7 @@ the credentials you specified in the config.yml file.
 We recommend to use the /etc/hosts file to change the ip address of the
 webserver from prod-s1 to prod-s2 ip easily for testing purposes.
 
-# Configure prod-s2 as a slave
+### Configure the slave
 
 To configure prod-s2 as a slave, we need to import the ssh keys from the
 agoraelections and postgres users in ***prod-s1*** to add them in ***prod-s2**.
@@ -433,9 +435,11 @@ root@prod-s2:/root/prod-s2/ $ cp doc/production/playbook.slave.yml playbook.yml
 root@prod-s2:/root/prod-s2/ $ time sudo ansible-playbook -i inventory playbook.yml
 ```
 
-## Deployment of authorities [prod-a1, prod-a2]
+## Deployment of authorities
 
-
+Please follow the steps of the [For Each Machine section](#for-each-machine) to 
+do the initial provisioning and configuration of the election authorities,
+prod-a1, prod-a2. Afterwards, continue reading this section.
 
 We'll use an authority config file as a base:
 
@@ -455,7 +459,7 @@ Then deploy as usual:
 date; time ansible-playbook -i inventory playbook.yml; date
 ```
 
-### Connecting prod-a1 with prod-a2
+### Connecting authorities
 
 Authorities communicate with other authorities using ssl and client
 certificates so the authority server doesn't accept queries from unknown
@@ -497,7 +501,7 @@ You should see the software working as eolog output will appear in the
 first terminal window. Once it the eotest command finishes, you can also close
 prod-a2 connection to eolog.
 
-### Connecting agora servers with authorities
+### Connecting web servers with authorities
 
 The following commands should be executed in both **prod-s1** and **prod-s2**
 machines:
@@ -593,6 +597,6 @@ prod-s1 in the director election authority. This can be done by:
 
     agora@prod-a1:~/agora-dev-box/ $ time sudo ansible-playbook -i inventory playbook.yml
 
-### Troubleshooting
+## Troubleshooting
 
 For Troubleshooting please read the [deployment_troubleshooting.md](Deployment Troubleshooting).
