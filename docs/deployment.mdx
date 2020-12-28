@@ -443,8 +443,8 @@ prod-a1, prod-a2. Afterwards, continue reading this section.
 
 We'll use an authority config file as a base:
 
-```
-root@prod-a1:/root/prod-a1/ # cp doc/production/config.auth.yml config.yml
+```bash
+root@prod-a1:/root/prod-a1/ $ cp doc/production/config.auth.yml config.yml
 ```
 
 Edit the config.yml file following the instructions inside. Specifically, don't forget to edit:
@@ -456,7 +456,7 @@ Edit the config.yml file following the instructions inside. Specifically, don't 
 Then deploy as usual:
 
 ```bash
-date; time ansible-playbook -i inventory playbook.yml; date
+root@prod-a1:/root/prod-a1/ $ date; time ansible-playbook -i inventory playbook.yml; date
 ```
 
 ### Connecting authorities
@@ -472,30 +472,39 @@ certificate sharing with the eopeers tool.
 
 Execute the following in **prod-a1**:
 
-    agora@prod-a1:~ $ sudo eopeers --show-mine
+```bash
+root@prod-a1:/root/prod-a1/ $ eopeers --show-mine
+```
 
 Copy the output to a file in **prod-a2**, then install it:
 
-    agora@prod-a2:~ $ sudo sudo eopeers --install prod-a1.pkg
-    agora@prod-a2:~ $ sudo service nginx restart
+```bash
+root@prod-a2:/root/prod-a2/ $ eopeers --install prod-a1.pkg
+root@prod-a2:/root/prod-a2/ $ service nginx restart
+```
 
 Then do the same the other way around:
 
-    agora@prod-a2:~ $ sudo eopeers --show-mine
-
-    agora@prod-a1:~ $ sudo sudo eopeers --install prod-a2.pkg
-    agora@prod-a1:~ $ sudo service nginx restart
+```bash
+root@prod-a1:/root/prod-a1/ $ eopeers --show-mine
+root@prod-a1:/root/prod-a1/ $ eopeers --install prod-a2.pkg
+root@prod-a1:/root/prod-a1/ $ service nginx restart
+```
 
 ### Test the connection between the authorities
 
 A tool is installed to test the real connection between the authorities.
-Open two terminal windows.  Open eolog in one of the terminal windows:
+Open two terminal windows.  Open `eolog` in one of the terminal windows:
 
-    agora@prod-a2 $ sudo eolog
+```bash
+root@prod-a1:/root/prod-a1/ $ sudo eolog
+```
 
 Run eotest in the other terminal window from the other auth server:
 
-    agora@prod-a1 $ sudo eotest full --vmnd --vcount 100
+```bash
+root@prod-a1:/root/prod-a1/ $ eotest full --vmnd --vcount 100
+```
 
 You should see the software working as eolog output will appear in the
 first terminal window. Once it the eotest command finishes, you can also close
@@ -509,18 +518,22 @@ machines:
 Create **prod-a1.pkg** and **prod-a2.pkg** files with the configuration of both
 authorities. Then install them:
 
-    agora@agora:~ $ sudo eopeers --install prod-a1.pkg --keystore /home/agoraelections/keystore.jks
-    agora@agora:~ $ sudo eopeers --install prod-a2.pkg
-    agora@agora:~ $ sudo service nginx restart
+```bash
+root@prod-s1:/root/prod-s1/ $ eopeers --install prod-a1.pkg --keystore /home/agoraelections/keystore.jks
+root@prod-s1:/root/prod-s1/ $ eopeers --install prod-a2.pkg
+root@prod-s1:/root/prod-s1/ $ service nginx restart
+```
 
 Before completion, the installation of the certificate of the **prod-s1** and
 **prod-s2** servers needs to be installed in the election authorities, because
 even though i'ts the same TLS cert, they have different hostnames. So copy
 them (get it with "eopeers --show-mine") to the authorities and install them:
 
-    agora@agora:~ $ sudo eopeers --install prod-s1.pkg
-    agora@agora:~ $ sudo eopeers --install prod-s2.pkg
-    agora@agora:~ $ sudo service nginx restart
+```bash
+root@prod-a1:/root/prod-a1/ $ eopeers --install prod-s1.pkg
+root@prod-a1:/root/prod-a1/ $ eopeers --install prod-s2.pkg
+root@prod-a1:/root/prod-a1/ $ service nginx restart
+```
 
 ### Create a test election
 
@@ -528,22 +541,26 @@ Go to https://prod-s1/admin/login and create a test election. Then execute
 the following to create some votes. Change '2' in the following commands with
 your election number:
 
-    agora@prod-s1:~ $ su - agoraelections
-    agoraelections@prod-s1:~ $ source ~/env/bin/activate
-    agoraelections@prod-s1:~ $ cd ~/agora-elections/admin
-    agoraelections@prod-s1:~ $ export ELECTION_ID=2
-    agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py dump_pks $ELECTION_ID
-    agoraelections@prod-s1:~/agora-elections/admin/ $ echo '[1,0]' > votes.json
-    agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py encrypt $ELECTION_ID
+```bash
+root@prod-s1:/root/prod-s1/ $ su - agoraelections
+agoraelections@prod-s1:~ $ source ~/env/bin/activate
+agoraelections@prod-s1:~ $ cd ~/agora-elections/admin
+agoraelections@prod-s1:~ $ export ELECTION_ID=2
+agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py dump_pks $ELECTION_ID
+agoraelections@prod-s1:~/agora-elections/admin/ $ echo '[1,0]' > votes.json
+agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py encrypt $ELECTION_ID
+```
 
 start the election, cast the votes, stop it and tally it:
 
-    agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py start $ELECTION_ID
-    agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py cast_votes $ELECTION_ID
-    agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py count_votes $ELECTION_ID
-    2 (2)
-    agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py stop $ELECTION_ID
-    agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py tally $ELECTION_ID
+```bash
+agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py start $ELECTION_ID
+agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py cast_votes $ELECTION_ID
+agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py count_votes $ELECTION_ID 
+# it will output: "2 (2)" which means 2 votes cast, 2 unique voters
+agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py stop $ELECTION_ID
+agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py tally $ELECTION_ID
+```
 
 ### Check high availability and load balancing
 
@@ -561,13 +578,15 @@ server.
 If you list the files inside the datastore and the server certificate in
 both **prod-s1** and **prod-s2**, it should list the same files:
 
-    agora@agora:~ $ sudo -u agoraelections find /home/agoraelections/datastore/ -type f | xargs md5sum
-    05b76ec89dd7a32b76427d389a5778c1  /home/agoraelections/datastore/public/2/pks
+```bash
+root@prod-s1:/root/prod-s1/ $ sudo -u agoraelections find /home/agoraelections/datastore/ -type f | xargs md5sum
+05b76ec89dd7a32b76427d389a5778c1  /home/agoraelections/datastore/public/2/pks
 
-    agora@agora:~ $ find /srv/certs/selfsigned/ -type f | xargs md5sum
-    d811c3e92162ade25f21f1d782f32c6e  /srv/certs/selfsigned/calist
-    54a67dfe2a9fde364a833135d9bfdd3b  /srv/certs/selfsigned/key-nopass.pem
-    a9bf327511b67100c096aebed5b46c94  /srv/certs/selfsigned/cert.pem
+root@prod-s1:/root/prod-s1/ $ find /srv/certs/selfsigned/ -type f | xargs md5sum
+d811c3e92162ade25f21f1d782f32c6e  /srv/certs/selfsigned/calist
+54a67dfe2a9fde364a833135d9bfdd3b  /srv/certs/selfsigned/key-nopass.pem
+a9bf327511b67100c096aebed5b46c94  /srv/certs/selfsigned/cert.pem
+```
 
 ### Test changing a slave to be a master and do a tally
 
@@ -577,26 +596,34 @@ launch the tally successfully from within the authorities.
 To promote **prod-s2** to be a master, change set to **true** the config.yml
 config variable **config.load_balancing.is_master**, then execute again ansible:
 
-    agora@prod-s2:~/agora-dev-box/ $ time sudo ansible-playbook -i inventory playbook.yml
+```bash
+date; time ansible-playbook -i inventory playbook.yml; date
+```
 
 To be able to receive successfully the tally, prod-s2 needs to "impersonate"
 prod-s1 in the director election authority. This can be done by:
 
 1. removing the prod-s1 eopeer package:
 
-    agora@prod-a1:~ $ sudo eopeers --remove prod-s1
+```bash
+agora@prod-a1:~ $ sudo eopeers --remove prod-s1
+```
 
 2. adding an alias to /etc/hosts in **prod-a1** config.yml variable **config.hosts**,
    setting it to something like:
 
-    hosts:
-    - hostname: prod-s1
-      ip: 192.168.50.14
+```
+hosts:
+- hostname: prod-s1
+  ip: 192.168.50.14
+```
 
 3. re-executing ansible in **prod-a1**:
 
-    agora@prod-a1:~/agora-dev-box/ $ time sudo ansible-playbook -i inventory playbook.yml
+```bash
+date; time ansible-playbook -i inventory playbook.yml; date
+```
 
 ## Troubleshooting
 
-For Troubleshooting please read the [deployment_troubleshooting.md](Deployment Troubleshooting).
+For troubleshooting please read the [Deployment Troubleshooting](deployment_troubleshooting.md).
