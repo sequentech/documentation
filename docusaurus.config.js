@@ -29,7 +29,12 @@ module.exports = {
         },
         {
           href: 'https://github.com/agoravoting/',
-          label: 'GitHub',
+          label: '@agoravoting on GitHub',
+          position: 'right',
+        },
+        {
+          href: 'https://nvotes.com/',
+          label: 'Powered by nVotes',
           position: 'right',
         },
       ],
