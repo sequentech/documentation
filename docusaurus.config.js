@@ -2,7 +2,7 @@ module.exports = {
   title: 'admin-manual',
   tagline: 'Agora Voting Project Admin Manual by nVotes',
   url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  baseUrl: '/admin-manual/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
