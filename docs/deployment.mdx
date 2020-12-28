@@ -294,14 +294,13 @@ a generic config file in ops machine. Then from ops, copy it to the provisioned
 machine, for example in prod-s1:
 
 ```bash
-scp config-generic.yaml prod-s1:/home/ubuntu/config.yaml
+scp config-base.yml prod-s1:/home/ubuntu/config.yml
 ```
 
 The previous step is not really required, but it is required for the following
 steps to have the `config.yml` inside the `/home/ubuntu`. You can for example 
-use the config file from <a href={useBaseUrl("deployment/config.agora.yml")} target="_blank">
-deployment/config.agora.yml</a> as a base, copying it
-instead.
+use the config file from <a href={useBaseUrl("deployment/config.master.yml")} target="_blank">
+deployment/config.master.yml</a> as a base, copying it instead.
 
 Then in the provisioned machine as root, we install dependencies and move the
 config file where it needs to be (for example `/root/prod-s1/root.yml`):
