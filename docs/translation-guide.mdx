@@ -26,47 +26,48 @@ is in JSON and is [roughly defined here (JSON v1 i18next format)](https://www.i1
 
 ## How to translate
 
-### 1. Translating the i18n strings
+### Step 1. Writing the translations
 
 The English version of the translation JSON files is usually the most up to 
-date, and it is the most international language. For this reasons, in order to 
-create your translation based on the English JSON file for each language. It is
-located in the `locales/en.json` in each repository:
+date, and it is the most international language. For these reasons, to create
+your translation we recommend to base it on the English JSON file for each
+repository. This English base translation is located in the `locales/en.json` 
+in each repository:
 
 - [agora-gui-common/locales/en.json](https://github.com/agoravoting/agora-gui-common/blob/master/locales/en.json)
 - [agora-gui-admin/locales/en.json](https://github.com/agoravoting/agora-gui-admin/blob/master/locales/en.json)
 - [agora-gui-elections/locales/en.json](https://github.com/agoravoting/agora-gui-elections/blob/master/locales/en.json)
 - [agora-gui-booth/locales/en.json](https://github.com/agoravoting/agora-gui-booth/blob/master/locales/en.json)
 
-In order to translate, just copy each of those files into the same `locales/`
-directory into a new file with a name following the pattern 
+To create a translation, just copy each of those files into the same `locales/`
+directory as a new file with a name following the pattern 
 `<language-code>.json`. The language code for each language is defined in 
 ISO 639-1 and a [table of codes can be found in Wikipedia](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes). For example, the language code for Spanish is `es`
 and for German is `de`.
 
 Currently the Agora Voting Project contains translations for the following 
-language codes:
-- ca
-- en
-- es
-- fi
-- gl
-- sv
+languages:
+- Catalan (ca)
+- English (en)
+- Finnish (fi)
+- Galician (gl)
+- Spanish (es)
+- Swedish (sv)
 
-### 2. Building the translations
+### Step 2. Building the translations
 
-Once we have written the translation files and put them in the `locales/` 
-directory with the proper file names, we are not finished yet. We have to modify
-the building system to incorporate these files.
+Once we have written the translation files and put them in the corresponding 
+`locales/` directories with the proper file names, we are not finished yet. We 
+have to modify the building system to incorporate these files.
 
-The `agora-gui-*` repositories use [GruntJS](https://gruntjs.com/) task runner 
-for building and bundling the the javascript code. In each of the `agora-gui-*`
-repositories you will find a top level file called `Gruntfile.js` that we will
-need to modify.
+The `agora-gui-*` repositories use the [GruntJS](https://gruntjs.com/) task 
+runner  for building and bundling the javascript code. In each of the 
+`agora-gui-*` repositories you will find a top level file called `Gruntfile.js` 
+that we will need to modify.
 
-The modifications are pretty simple. Just search for the string `locales/` 
-inside the file and you will find usually one or two places where i18n files 
-are processed. For example, in [agora-gui-common/Gruntfile.js](https://github.com/agoravoting/agora-gui-common/blob/master/Gruntfile.js#L207) around line 207 you will find 
+The required modifications are pretty simple. Just search for the string 
+`locales/` inside the file `Gruntfile.js` and you will find usually one or two 
+places where i18n files are processed. For example, in [agora-gui-common/Gruntfile.js](https://github.com/agoravoting/agora-gui-common/blob/master/Gruntfile.js#L207) around line 207 you will find 
 something like:
 
 ```js
@@ -91,7 +92,8 @@ add the following line in between:
             "dist/locales/is.json": ["locales/is.json", "plugins/**/locales/is.json"],
 ```
 
-Ending up with the `merge-json` task being as follows:
+Ending up with the `merge-json` task inside the file `Gruntfile.js` being as
+follows:
 
 ```js
     "merge-json": {
@@ -109,10 +111,11 @@ Ending up with the `merge-json` task being as follows:
     },
 ```
 
-This `merge-json` tasks basically joins using json the translation files for
-each language from the `locales/` directory and from the `plugins` directory.
-You'll notice that the string `locales/` appears in another section, in the
-`uglify` section around line 226:
+This `merge-json` task joins the translation files for each language from the 
+`locales/` directory and from the `plugins` directory. 
+
+You'll notice that the  string `locales/` appears in another section inside the 
+file `Gruntfile.js`, in the `uglify` section around [line 226](https://github.com/agoravoting/agora-gui-common/blob/master/Gruntfile.js#L226):
 
 ```js
     uglify: {
@@ -135,22 +138,24 @@ You'll notice that the string `locales/` appears in another section, in the
         }
 ```
 
-This is related to the usage of the [moment](https://momentjs.com/) library,
+This is related to the usage of the [momentjs](https://momentjs.com/) library,
 used for internationalization of times and dates. You can add a new line there
 also for loading the moment internationalization file for your language if there
 is one.
 
 We have done this for the `agora-gui-common` project. We would have to repeat
-the process for the other three `agora-gui-*` projects.
+the process for the other three `agora-gui-*` projects for which we are adding
+translation support for a new language.
 
 ### 3. Translation deployment and configuration
 
-We have now translated the interface into our language and incorporated the
+We have now translated the interface to a new language and incorporated the
 translations in the building process. The next step is to configure our 
 deployment to include and use the new language translation.
 
 :::info
-To deploy the Agora Voting project, please follow the [Deployment Guide](deployment.mdx).
+To deploy the Agora Voting project, please follow the 
+[Deployment Guide](deployment.mdx).
 :::
 
 The configuration is fairly simple. In the `config.yml` file inside the 
@@ -174,9 +179,9 @@ The configuration is fairly simple. In the `config.yml` file inside the
       - ca
 ```
 
-For example if you want to specify that the language is going to be Polish 
-(`po` language code), you would change the `agora_gui.language` key to `po` and
-add `po` to the `languagesWhitelist`:
+For example if you want to specify that the default language is going to be 
+Polish  (`po` language code), you would change the `agora_gui.language` key to 
+`po` and add `po` to the `languagesWhitelist`:
 
 ```yaml
     # Default language of the application
@@ -216,9 +221,9 @@ from the whitelist so that the user won't be able to choose any other language:
 ```
 
 Or maybe you might want to support a secondary language (English for example)
-but force the default language to be Polish. By default, the gui tries to 
-detect the preferred language of the web browser, but this behaviour can be
-changed using the `agora_gui.forceLanguage` setting:
+but force the default language to be Polish. By default, the user interface will
+try to detect the preferred language of the web browser, but this behaviour can 
+be overridden using the `agora_gui.forceLanguage` setting:
 
 ```yaml
     # Default language of the application
@@ -237,10 +242,10 @@ changed using the `agora_gui.forceLanguage` setting:
 ```
 
 You might have integrated the Agora Voting project deployment with some other 
-platform. If voters access to the Agora Voting interface from some third party
+platform. If voters access to the Agora Voting interface from some third-party
 interface, this first interface might have some specific language configuration
-for each user.  When accessing to an Agora Voting project link from some other 
-web site, you can modify the link to force a specific default language adding
-a query string such as `?lang=pl`. The name of this URL query string paramenter
-is specified with the `agora_gui.detectLanguageQueryString` configuration 
-parameter.
+for each user. When accessing to an Agora Voting deployment link from some other 
+web site, you can modify the access link to force a specific default language 
+adding a query string such as `?lang=pl`. The name of this URL query string 
+paramenter is specified with the `agora_gui.detectLanguageQueryString` 
+configuration  parameter.
