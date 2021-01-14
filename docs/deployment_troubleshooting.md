@@ -216,3 +216,18 @@ On Ubuntu, you can install the latest version of Ansible by executing:
     $ sudo apt-add-repository ppa:ansible/ansible -y
     $ sudo apt-get update
     $ sudo apt-get install ansible -y
+
+## 5. Issues deploying High Availability / Load Balancer
+
+If you encounter the following issue when deploying:
+
+```bash
+fatal: [localhost]: FAILED! => {"changed": true, "cmd": "/usr/lib/postgresql/9.4/bin/repmgr -f /etc/repmgr/repmgr.conf master register", "delta": "0:00:00.009032", "end": "2020-12-30 10:16:05.318695", "failed_when_result": true, "msg": "non-zero return code", "rc": 6, "start": "2020-12-30 10:16:05.309663", "stderr": "[2020-12-30 10:16:05] [ERROR] connection to database failed: fe_sendauth: no password supplied", "stderr_lines": ["[2020-12-30 10:16:05] [ERROR] connection to database failed: fe_sendauth: no password supplied"], "stdout": "", "stdout_lines": []}
+```
+
+It's usually related to a misconfiguration of the `/etc/hosts` file. Please 
+verify that when you execute within the deployed machine `ping <machine-name>` 
+it should be answering with the private ip address you configured in 
+`config.private_ipaddress`. Edit `/etc/hosts` to fix that if it is not.
+
+

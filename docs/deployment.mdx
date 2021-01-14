@@ -12,7 +12,7 @@ with two Authorities for a production environment in virtual machines.
 
 ## Requirements
 
-You need 4 Linux x64 host machines with at least 3GB of RAM each and a clean
+You need 4 Linux x64 host machines with at least 4GB of RAM each and a clean
 Ubuntu  16.04 LTS installed and around 30GB of HD.
 
 The structure of the four machines is:
@@ -157,13 +157,12 @@ auth1, auth2..).
 ### Machine provisioning
 
 As mentioned earlier, you should provision each VM with Ubuntu 16.04 LTS,
-3GB of RAM and usually around 30GB HD. The machine requirements might 
+4GB of RAM and usually around 30GB HD. The machine requirements might 
 vary depending on the size and number of the elections that these machines will
 be used for.
 
-For a faster deployment we recommend to increase the number of cores and 
-increase the RAM to 4GB. This can be reduced later to even just 1 core and 2GB
-of RAM.
+For a faster deployment we recommend to increase the number of cores. This can
+be reduced later to even just 1 core and 2GB of RAM.
 
 In AWS EC2 we usually use the free `Ubuntu 16.04 LTS - Xenial (HVM)` AWS 
 Marketplace  AMI. If you are using vagrant, it will take care of the 

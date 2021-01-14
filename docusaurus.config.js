@@ -49,12 +49,14 @@ module.exports = {
               label: 'Deployment',
               to: 'docs/',
             },
-            /*
             {
-              label: 'Second Doc',
-              to: 'docs/doc2/',
+              label: 'Translation',
+              to: 'docs/translation-guide',
             },
-            */
+            {
+              label: 'Testing',
+              to: 'docs/testing/',
+            },
           ],
         },
         {

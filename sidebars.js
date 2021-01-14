@@ -1,6 +1,7 @@
 module.exports = {
   someSidebar: {
-    Deployment: ['deployment', 'deployment_troubleshooting']
-    /*Features: ['mdx'],*/
+    Deployment: ['deployment', 'deployment_troubleshooting'],
+    Translation: ['translation-guide'],
+    Testing: ['testing/testing']
   },
 };
