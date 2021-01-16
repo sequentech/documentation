@@ -55,7 +55,11 @@ module.exports = {
             },
             {
               label: 'Testing',
-              to: 'docs/testing/',
+              to: 'docs/testing/bulk',
+            },
+            {
+              label: 'Contribute',
+              to: 'docs/contribute',
             },
           ],
         },
