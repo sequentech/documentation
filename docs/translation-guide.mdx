@@ -70,7 +70,7 @@ The required modifications are pretty simple. Just search for the string
 places where i18n files are processed. For example, in [agora-gui-common/Gruntfile.js](https://github.com/agoravoting/agora-gui-common/blob/master/Gruntfile.js#L207) around line 207 you will find 
 something like:
 
-```js
+```js title="agora-gui-common/Gruntfile.js fragment"
     "merge-json": {
       main: {
         files: {
@@ -88,14 +88,14 @@ something like:
 If you are adding a translation for Icelandic (`is` language code), you should 
 add the following line in between:
 
-```js
+```js title="agora-gui-common/Gruntfile.js fragment"
             "dist/locales/is.json": ["locales/is.json", "plugins/**/locales/is.json"],
 ```
 
 Ending up with the `merge-json` task inside the file `Gruntfile.js` being as
 follows:
 
-```js
+```js title="agora-gui-common/Gruntfile.js fragment" {7}
     "merge-json": {
       main: {
         files: {
@@ -117,7 +117,7 @@ This `merge-json` task joins the translation files for each language from the
 You'll notice that the  string `locales/` appears in another section inside the 
 file `Gruntfile.js`, in the `uglify` section around [line 226](https://github.com/agoravoting/agora-gui-common/blob/master/Gruntfile.js#L226):
 
-```js
+```js title="agora-gui-common/Gruntfile.js fragment" {15-17}
     uglify: {
       main: {
         options:{
@@ -161,7 +161,7 @@ To deploy the Agora Voting project, please follow the
 The configuration is fairly simple. In the `config.yml` file inside the 
 `agora_gui` section you can find the following configurations keys:
 
-```yaml
+```yaml title="config.yml fragment"
     # Default language of the application
     language: en
 
@@ -183,7 +183,7 @@ For example if you want to specify that the default language is going to be
 Polish  (`po` language code), you would change the `agora_gui.language` key to 
 `po` and add `po` to the `languagesWhitelist`:
 
-```yaml
+```yaml title="config.yml fragment" {2,16}
     # Default language of the application
     language: po
 
@@ -205,7 +205,7 @@ Polish  (`po` language code), you would change the `agora_gui.language` key to
 If you are doing a deployment only in Polish, you could remove other languages
 from the whitelist so that the user won't be able to choose any other language: 
 
-```yaml
+```yaml title="config.yml fragment" {2,12}
     # Default language of the application
     language: po
 
@@ -225,7 +225,7 @@ but force the default language to be Polish. By default, the user interface will
 try to detect the preferred language of the web browser, but this behaviour can 
 be overridden using the `agora_gui.forceLanguage` setting:
 
-```yaml
+```yaml title="config.yml fragment" {5,13}
     # Default language of the application
     language: po
 
