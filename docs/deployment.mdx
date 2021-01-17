@@ -514,7 +514,7 @@ between the two authorities in which:
 2. **Encrypt:** Test ballots have been created and encrypted.
 3. **Tally:** Those encrypted votes have been mixed and decrypted.
 
-:::info
+:::tip
 The `eotest` command is useful to test election authorities. You can change the 
 number of votes to use in the test using the `--vcount`  option. In our example
 above we used 100 votes, but you could tally 100,000 or any other number. This
@@ -522,9 +522,9 @@ can help you find out how much time the tally would take and if the authority
 machine configuration and hardware would work with a specific number of votes.
 
 By default eotest uses all connected authorities, but you can also specify with 
-which other authorities you want to do the test using the `--peers`. And you 
-can execute each of the steps individually using `create`, `encrypt` or `tally`
-options instead of `full`. Find more information with `eotest --help`.
+which other authorities you want to do the test using the `--peers` option. 
+You can execute each of the steps individually using `create`, `encrypt` or
+`tally` options instead of `full`. Find more information with `eotest --help`.
 :::
 
 ### Connecting web servers with authorities

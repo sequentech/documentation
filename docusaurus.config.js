@@ -54,7 +54,7 @@ module.exports = {
               to: 'docs/translation-guide',
             },
             {
-              label: 'Testing',
+              label: 'Election Testing',
               to: 'docs/testing/bulk',
             },
             {
