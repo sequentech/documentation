@@ -58,6 +58,10 @@ module.exports = {
               to: 'docs/testing/bulk',
             },
             {
+              label: 'Advanced Elections',
+              to: 'docs/advanced-election-management-guide',
+            },
+            {
               label: 'Contribute',
               to: 'docs/contribute',
             },
