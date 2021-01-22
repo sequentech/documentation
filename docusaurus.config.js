@@ -62,7 +62,7 @@ module.exports = {
             },
             {
               label: 'Advanced Elections',
-              to: 'docs/advanced-elections/management-guide',
+              to: 'docs/advanced-elections/introduction',
             },
             {
               label: 'Contribute',

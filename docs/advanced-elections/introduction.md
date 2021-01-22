@@ -1,14 +1,12 @@
 ---
-id: management-guide
-title: Advanced Election Management Guide
-sidebar_label: Advanced Election Management Guide
-slug: /advanced-elections/management-guide
+id: introduction
+title: Introduction
+sidebar_label: Introduction
+slug: /advanced-elections/introduction
 ---
 
 This document describes how to create and manage elections with more advanced
 characteristics.
-
-## Introduction
 
 Simple electoral processes can be configured and created using the intuitive 
 graphical interface of the administration backoffice of the Agora Voting
@@ -31,11 +29,5 @@ Advanced elections might involve:
 - Automate the mailing of daily PDF reports with the number of votes in multiple elections.
 - Automate the start and end of elections.
 - Allowing to configure granual permissions over specific election for multiple admin users.
-
-## Election creation
-
-In the Admin interface, given enough permissions you can create new
-elections using the `New Election` buttons highlighted below:
-
-![Highlighted Create New Election Buttons in Admin interface](./assets/admin_elections_list__create_new_highlighted.png)
+- Advanced authentication mechanisms, with two or alternative factor authentication.
 
