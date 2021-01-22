@@ -9,6 +9,9 @@ module.exports = {
   organizationName: 'agoravoting', // Usually your GitHub org/user name.
   projectName: 'admin-manual', // Usually your repo name.
   themeConfig: {
+    colorMode: {
+      disableSwitch: true
+    },
     navbar: {
       title: 'Admin Manual',
       logo: {
@@ -20,21 +23,21 @@ module.exports = {
           to: 'docs/deployment/guide',
           activeBasePath: 'docs',
           label: 'Docs',
-          position: 'left',
+          position: 'right',
         },
         {
           href: 'https://nvotes.com/blog/',
           label: 'Blog', 
-          position: 'left'
+          position: 'right'
         },
         {
           href: 'https://github.com/agoravoting/',
-          label: '@agoravoting on GitHub',
+          label: 'GitHub',
           position: 'right',
         },
         {
           href: 'https://nvotes.com/',
-          label: 'Powered by nVotes',
+          label: 'Powered By nVotes',
           position: 'right',
         },
       ],
