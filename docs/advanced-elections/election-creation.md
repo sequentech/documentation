@@ -67,19 +67,72 @@ once like this:
 Once you click on the `Finish edit` in the `Edit Election Json` dialog, if you
 have added multiple elections this will be reflected in the interface.
 
-### Election
+## Election
 
-An election can have the following settings
+Within the Election JSON settings that can be set using the `Edit Election JSON` dialog, each election can have the following settings:
 
-| Name | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| `id` | `Positive Integer` | No | None | Election's unique id. It will automatically be assigned one if none is set. If the election already exists and the user has permissions to edit it, it will be updated if the election is registered but not yet created ([see below](#modifying-elections)). |
-| `title` | `Short String` | Yes | - | Election's title. It will appear in the admin election list, and as the election title in the public election site and in the voting booth start screen. |
-| `description` | `Long String` | Yes | - | Election's description. It will appear below the title in the public election site and in the voting booth start screen. |
-| `start_date` | `String` | Yes | - | DEPRECATED. This field is required but should really be an empty string as it is currently unused. |
-| `end_date` | `String` | Yes | - | DEPRECATED. This field is required but should really be an empty string as it is currently unused. |
-| `director` | `String` | Yes | - | The name of the election authority that will act as the director for this election. Its eopackage needs to be installed in the backend server ([see details](../deployment/guide#connecting-web-servers-with-authorities)). |
-| `authorities` | `List<String>` | Yes | - | List of names of all the election authorities that should be included in this election, excluding the director authority name. Its eopackages needs to be installed in the backend server ([see details](../deployment/guide#connecting-web-servers-with-authorities)). |
+### id
+
+- **Type:** `Positive Integer`
+- **Required:** No
+- **Default:** -
+- **Example:** `345`
+
+Election's unique id. It will automatically be assigned one if none is set. If the election already exists and the user has permissions to edit it, the election configuration will be updated if the election is registered but not yet created ([see below](#modifying-elections)).
+
+### title
+
+- **Type:** `Short String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"New election"`
+
+Election's title. It will appear in the admin election list, and as the election title in the public election site and in the voting booth start screen.
+
+### description
+
+- **Type:** `Long String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"This is the description of the election. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs."`
+
+Election's description. It will appear below the title in the public election site and in the voting booth start screen. As shown in the example it allows for some basic HTML.
+
+### start_date
+
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `""`
+
+DEPRECATED. This field is required but should really be an empty string as it is currently unused.
+
+### end_date
+
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `""`
+
+DEPRECATED. This field is required but should really be an empty string as it is currently unused.
+
+### director
+
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"auth1"`
+
+The name of the election authority that will act as the director for this election. Its eopackage needs to be installed in the backend server ([see details](../deployment/guide#connecting-web-servers-with-authorities)).
+
+### authorities
+
+- **Type:** `List<String>`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `["auth2", "auth3"]`
+
+List of names of all the election authorities that should be included in this election, excluding the director authority name. Its eopackages needs to be installed in the backend server ([see details](../deployment/guide#connecting-web-servers-with-authorities)).
 
 ## Creating elections
 
