@@ -1,11 +1,9 @@
 ---
-id: contribute
+id: guide
 title: Contribution Guide
 sidebar_label: Contribution Guide
-slug: /contribute
+slug: /contribute/guide
 ---
-
-import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## Introduction
 
@@ -23,7 +21,7 @@ right to re-license, modify your code and use your work elsewhere if you want.
 
 To complete the CLA and become a contributor you need to:
 
-1.  Read the <a href={useBaseUrl("cla/AV_CLA_1.0.pdf")} target="_blank">CLA</a>.
+1.  Read the [CLA](./assets/AV_CLA_1.0.pdf).
 2.  Print the CLA.
 3.  Fill the details requested in the CLA.
 4.  Sign the printed CLA, marking all the pages.

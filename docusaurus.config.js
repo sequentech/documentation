@@ -17,7 +17,7 @@ module.exports = {
       },
       items: [
         {
-          to: 'docs/',
+          to: 'docs/deployment/guide',
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
@@ -47,11 +47,11 @@ module.exports = {
           items: [
             {
               label: 'Deployment',
-              to: 'docs/',
+              to: 'docs/deployment/guide',
             },
             {
               label: 'Translation',
-              to: 'docs/translation-guide',
+              to: 'docs/translation/guide',
             },
             {
               label: 'Election Testing',
@@ -59,11 +59,11 @@ module.exports = {
             },
             {
               label: 'Advanced Elections',
-              to: 'docs/advanced-election-management-guide',
+              to: 'docs/advanced-elections/management-guide',
             },
             {
               label: 'Contribute',
-              to: 'docs/contribute',
+              to: 'docs/contribute/guide',
             },
           ],
         },

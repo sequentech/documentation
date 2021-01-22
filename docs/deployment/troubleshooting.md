@@ -1,5 +1,5 @@
 ---
-id: deployment-troubleshooting
+id: troubleshooting
 title: Deployment Troubleshooting
 sidebar_label: Deployment Troubleshooting
 slug: /deployment/troubleshooting

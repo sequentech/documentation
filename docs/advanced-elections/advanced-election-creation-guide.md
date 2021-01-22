@@ -1,8 +1,8 @@
 ---
-id: advanced-election-management-guide
+id: management-guide
 title: Advanced Election Management Guide
 sidebar_label: Advanced Election Management Guide
-slug: /advanced-election-management-guide
+slug: /advanced-elections/management-guide
 ---
 
 This document describes how to create and manage elections with more advanced
@@ -25,10 +25,17 @@ Advanced elections might involve:
 - Allowing to specify voter census in parent elections and set which voter can participate in which children election.
 - Allowing voters to authenticate once and then vote in multiple elections.
 - Produce consolidated election results from multiple elections.
-- Allow the configuration, creation and usage of ballot boxes and their corresponding tally sheets in hybrid elections so that election results for both online and paper ballots can be producted.
-- Allow setting up advanced results configuration during election creation.
-- Allow inserting/updating elections using a specific election ids.
+- Allowing the configuration, creation and usage of ballot boxes and their corresponding tally sheets in hybrid elections so that election results for both online and paper ballots can be producted.
+- Allowing to set up advanced results configuration during election creation.
+- Allowing to insert/update elections using a specific election ids.
 - Automate the mailing of daily PDF reports with the number of votes in multiple elections.
 - Automate the start and end of elections.
+- Allowing to configure granual permissions over specific election for multiple admin users.
 
+## Election creation
+
+In the Admin interface, given enough permissions you can create new
+elections using the `New Election` buttons highlighted below:
+
+![Highlighted Create New Election Buttons in Admin interface](./assets/admin_elections_list__create_new_highlighted.png)
 

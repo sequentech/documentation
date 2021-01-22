@@ -1,8 +1,8 @@
 ---
-id: translation-guide
+id: guide
 title: Translation Guide
 sidebar_label: Translation Guide
-slug: /translation-guide
+slug: /translation/guide
 ---
 
 This document describes how to translate the Agora Voting project to a new 

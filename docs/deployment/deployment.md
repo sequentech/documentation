@@ -1,11 +1,9 @@
 ---
-id: deployment
+id: guide
 title: Deployment Guide
 sidebar_label: Deployment Guide
-slug: /
+slug: /deployment/guide
 ---
-
-import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This document describes the complete deployment of an Agora Voting project
 with two Authorities for a production environment in virtual machines.
@@ -100,9 +98,8 @@ single shared `tmux` session per deployment in the `ops` machine.
 We use `tmuxinator` to help managing these `tmux` sessions. Please install it
 in the `ops` machine in the root user.
 
-<p>You can access our base skeleton configuration for a deployment in the
-<a href={useBaseUrl("deployment/deployment-skel.yml")} target="_blank">
-deployment/deployment-skel.yml</a> file. You can:</p>
+You can access our base skeleton configuration for a deployment in the
+[deployment-skel.yml](./assets/deployment-skel.yml) file. You can:
 
 1. Install `tmux` and `tmuxinator` in the `ops` machine:
 
@@ -118,8 +115,7 @@ alias mux='tmuxinator'
 ```
 
 3. Create the base tmuxinator config file that you'll copy for each deployment
-by copying the file <a href={useBaseUrl("deployment/deployment-skel.yml")} target="_blank">
-deployment/deployment-skel.yml</a> into the file
+by copying the file [deployment-skel.yml](./assets/deployment-skel.yml) into the file
 `/root/.tmuxinator/deployment-skel.yml` of the `ops` machine.
 
 4. Learn the basic tmuxinator & tmux commands:
@@ -305,8 +301,8 @@ scp config-base.yml prod-s1:/home/ubuntu/config.yml
 
 The previous step is not really required, but it is required for the following
 steps to have the `config.yml` inside the `/home/ubuntu`. You can for example 
-use the config file from <a href={useBaseUrl("deployment/config.master.yml")} target="_blank">
-deployment/config.master.yml</a> as a base, copying it instead.
+use the config file from [config.master.yml](./assets/config.master.yml) as a 
+base, copying it instead.
 
 Then in the provisioned machine as root, we install dependencies and move the
 config file where it needs to be (for example `/root/prod-s1/root.yml`):

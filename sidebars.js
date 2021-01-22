@@ -1,9 +1,9 @@
 module.exports = {
   mainSidebar: {
-    Deployment: ['deployment', 'deployment-troubleshooting'],
-    Translation: ['translation-guide'],
+    Deployment: ['deployment/guide', 'deployment/troubleshooting'],
+    Translation: ['translation/guide'],
     "Election Testing": ['testing/bulk'],
-    "Advanced Elections": ['advanced-election-management-guide'],
-    Contribute: ['contribute']
+    "Advanced Elections": ['advanced-elections/management-guide'],
+    Contribute: ['contribute/guide']
   },
 };
