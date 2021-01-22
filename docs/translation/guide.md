@@ -155,7 +155,7 @@ deployment to include and use the new language translation.
 
 :::info
 To deploy the Agora Voting project, please follow the 
-[Deployment Guide](deployment.mdx).
+[Deployment Guide](../deployment/guide).
 :::
 
 The configuration is fairly simple. In the `config.yml` file inside the 
@@ -255,4 +255,4 @@ configuration  parameter.
 We welcome your contributions. This is an open source project and we'll be happy 
 to accept your pull request adding support for a new language or updating an 
 existing translation. Please ensure you read and follow the step in the 
-[Contribution Guide](contribute.mdx) to do so.
+[Contribution Guide](../contribute/guide) to do so.

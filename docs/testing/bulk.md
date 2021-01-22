@@ -5,8 +5,6 @@ sidebar_label: Bulk Election Testing
 slug: /testing/bulk
 ---
 
-import useBaseUrl from '@docusaurus/useBaseUrl';
-
 This document describes how to run a somewhat realistic comprehensive election 
 test, which includes the following steps:
 1. Creating the election
@@ -19,4 +17,4 @@ benchmarking and stress testing.
 
 There are other ways to test specific parts of the process. For example if you
 only want to test the process in relation with the election authorities, you can
-use the eocommand as explained in the [corresponding Deployment Guide section](deployment.mdx#test-the-connection-between-the-authorities).
+use the eocommand as explained in the [corresponding Deployment Guide section](../deployment/guide#test-the-connection-between-the-authorities).

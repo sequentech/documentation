@@ -639,4 +639,4 @@ date; time ansible-playbook -i inventory playbook.yml; date
 
 ## Troubleshooting
 
-For troubleshooting please read the [Deployment Troubleshooting](deployment-troubleshooting.md).
+For troubleshooting please read the [Deployment Troubleshooting](./troubleshooting).
