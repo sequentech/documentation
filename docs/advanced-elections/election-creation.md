@@ -47,8 +47,8 @@ in the Edit JSON Dialog for Election Creation.  You review an example of a
 [sample election JSON configuration here](./assets/sample_config.yml).
 
 As can be seen in the last screenshot, the JSON Format starts with a list. This
-is a list of Elections. This means you can directly create multiple elections at
-once like this:
+is a list of [Elections](#election-object). This means you can directly create 
+multiple elections at once like this:
 
 ```json title="multiple_elections.json"
 [
@@ -66,73 +66,6 @@ once like this:
 
 Once you click on the `Finish edit` in the `Edit Election Json` dialog, if you
 have added multiple elections this will be reflected in the interface.
-
-## Election
-
-Within the Election JSON settings that can be set using the `Edit Election JSON` dialog, each election can have the following settings:
-
-### id
-
-- **Type:** `Positive Integer`
-- **Required:** No
-- **Default:** -
-- **Example:** `345`
-
-Election's unique id. It will automatically be assigned one if none is set. If the election already exists and the user has permissions to edit it, the election configuration will be updated if the election is registered but not yet created ([see below](#modifying-elections)).
-
-### title
-
-- **Type:** `Short String`
-- **Required:** Yes
-- **Default:** -
-- **Example:** `"New election"`
-
-Election's title. It will appear in the admin election list, and as the election title in the public election site and in the voting booth start screen.
-
-### description
-
-- **Type:** `Long String`
-- **Required:** Yes
-- **Default:** -
-- **Example:** `"This is the description of the election. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs."`
-
-Election's description. It will appear below the title in the public election site and in the voting booth start screen. As shown in the example it allows for some basic HTML.
-
-### start_date
-
-- **Type:** `String`
-- **Required:** Yes
-- **Default:** -
-- **Example:** `""`
-
-DEPRECATED. This field is required but should really be an empty string as it is currently unused.
-
-### end_date
-
-- **Type:** `String`
-- **Required:** Yes
-- **Default:** -
-- **Example:** `""`
-
-DEPRECATED. This field is required but should really be an empty string as it is currently unused.
-
-### director
-
-- **Type:** `String`
-- **Required:** Yes
-- **Default:** -
-- **Example:** `"auth1"`
-
-The name of the election authority that will act as the director for this election. Its eopackage needs to be installed in the backend server ([see details](../deployment/guide#connecting-web-servers-with-authorities)).
-
-### authorities
-
-- **Type:** `List<String>`
-- **Required:** Yes
-- **Default:** -
-- **Example:** `["auth2", "auth3"]`
-
-List of names of all the election authorities that should be included in this election, excluding the director authority name. Its eopackages needs to be installed in the backend server ([see details](../deployment/guide#connecting-web-servers-with-authorities)).
 
 ## Creating elections
 
@@ -225,3 +158,350 @@ the elections is checked.
 In that case, the elections will first be updated (first the AuthEvent, then the
 census, and then the election), and then the public and private keys will be
 created.
+## Election object
+
+Within the Election JSON settings that can be set using the `Edit Election JSON` dialog, each election can have the following settings:
+
+### Election: `id`
+
+- **Property name**: `id`
+- **Type:** `Positive Integer`
+- **Required:** No
+- **Default:** -
+- **Example:** `345`
+
+Election's unique id. It will automatically be assigned one if none is set. If the election already exists and the user has permissions to edit it, the election configuration will be updated if the election is registered but not yet created ([details here](#modifying-elections)).
+
+### Election: `title`
+
+- **Property name**: `title`
+- **Type:** `Short String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"New election"`
+
+Election's title. It will appear in the admin election list, and as the election title in the public election site and in the voting booth start screen.
+
+### Election: `description`
+
+- **Property name**: `description`
+- **Type:** `Long String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"This is the description of the election. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs."`
+
+Election's description. It will appear below the title in the public election site and in the voting booth start screen. As shown in the example it allows for some basic HTML.
+
+### Election: `start_date`
+
+- **Property name**: `start_date`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `""`
+
+DEPRECATED. This field is required but should really be an empty string as it is currently unused.
+
+### Election: `end_date`
+
+- **Property name**: `end_date`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `""`
+
+DEPRECATED. This field is required but should really be an empty string as it is currently unused.
+
+### Election: `director`
+
+- **Property name**: `director`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"auth1"`
+
+The name of the election authority that will act as the director for this election. Its eopackage needs to be installed in the backend server ([see details](../deployment/guide#connecting-web-servers-with-authorities)).
+
+### Election: `authorities`
+
+- **Property name**: `authorities`
+- **Type:** `List<String>`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `["auth2", "auth3"]`
+
+List of names of all the election authorities that should be included in this election, excluding the director authority name. Its eopackages needs to be installed in the backend server ([see details](../deployment/guide#connecting-web-servers-with-authorities)).
+
+### Election: `presentation`
+
+- **Property name**: `presentation`
+- **Type:** [Election Presentation](#election-presentation-object)
+- **Required:** Yes
+- **Default:** -
+- **Example:** 
+```json
+{
+      "theme": "default",
+      "share_text": [
+        {
+          "network": "Twitter",
+          "button_text": "",
+          "social_message": "I have just voted in election __URL__, you can too! #nvotes"
+        },
+        {
+          "network": "Facebook",
+          "button_text": "",
+          "social_message": "__URL__"
+        }
+      ],
+      "urls": [],
+      "theme_css": ""
+    }
+```
+
+Describes presentation options related to the whole election. See 
+[Election Presentation](#election-presentation-object) for more details.
+
+## Election Presentation Object
+
+This json object type describes presentation options related to the whole 
+election. It is used [here](#election-presentation) and can have the following 
+properties:
+
+### Election Presentation: `theme`
+
+- **Property name**: `theme`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"default"`
+
+Theme that will be used in the public election website and in the voting booth
+of this election. Existing themes exist in the [themes directory](https://github.com/agoravoting/agora-gui-common/tree/master/themes) of the agora-gui-common repository. You can write
+your own if need be, by following the same directory and file structure as any
+of those. The `default` theme uses simple colors and not very specific, with 
+the idea of being able to be used in most cases. It is also the most widely used
+and thus battle-tested.
+
+### Election Presentation: `share_text`
+
+- **Property name**: `share_text`
+- **Type:** List<[Share Text](#share-text-object)>
+- **Required:** Yes
+- **Default:** -
+- **Example:**
+```json
+[
+  {
+    "network": "Twitter",
+    "button_text": "",
+    "social_message": "I have just voted in election __URL__, you can too! #nvotes"
+  },
+  {
+    "network": "Facebook",
+    "button_text": "",
+    "social_message": "__URL__"
+  }
+]
+```
+
+Describes a series of social network or other kind of links to be shown at the 
+top of the election public website and at the success screen of the voting 
+booth. See [Share Text](#share-text) for more details. It can be an empty list.
+
+### Election Presentation: `urls`
+
+- **Property name**: `urls`
+- **Type:** `List<Election URL>`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `[]`
+
+DEPRECATED. Just leave it as an empty list.
+
+### Election Presentation: `theme_css`
+
+- **Property name**: `theme_css`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `""`
+
+DEPRECATED. Just leave it as an empty string.
+
+### Election Presentation: `extra_options`
+
+- **Property name**: `extra_options`
+- **Type:** [Election Presentation Extra Options](#election-presentation-extra-options-object)
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "start_screen__skip": true
+}
+```
+
+A set of additional of election configuration options, currently used to modify
+the voting booth presentation behaviour. This property is not required, but can
+be useful. See more 
+[details about Election Presentation Extra Options here](#election-presentation-extra-options-object).
+
+## Share Text Object
+
+Object describing a series of social network links or any other type of link
+to be shown at the top of the election public website and at the success screen 
+of the voting  booth. It  is used [here](#election-presentation-share_text) and
+it can have the following properties:
+
+### Share Text: `network`
+
+- **Property name**: `network`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"Twitter"`
+
+Specifies the social network this link is for. Currently only `"Twitter"` and 
+`"Facebook"` special cases are detected. If you use any of those, then a given
+social network icon will be shown and the url will be set to share the 
+specified [social message](#share-text-social_message).
+
+### Share Text: `button_text`
+
+- **Property name**: `button_text`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `""`
+
+Specifies the text to show with this share link. It's usually set to an empty
+string as the network icon is usually set.
+
+### Share Text: `social_message`
+
+- **Property name**: `social_message`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"I have just voted in election __URL__, you can too! #nvotes"`
+
+When users click on the share link, it will try automatically default to share
+in Twitter/Facebook this message. It is a template string, where `__URL__` will
+be automatically replaced to a link to this election's public website.
+
+Currently unused.
+
+## Election Presentation Extra Options Object
+
+An object describing a set of additional of election configuration options, 
+currently used to modify the voting booth presentation behaviour. It is used 
+[here](#election-presentation-extra_options) and it can have the following 
+properties:
+
+### Election Presentation Extra Options: `start_screen__skip`
+
+- **Property name**: `start_screen__skip`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `true`
+
+If set, this optional property will modify the voting booth behaviour and the
+start screen of the voting booth will not be shown.
+
+### Election Presentation Extra Options: `public_title`
+
+- **Property name**: `public_title`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"Approval of the accounts 2022"`
+
+If set, this optional property will modify the voting booth behaviour so that
+instead of showing the title of election in the voting booth, it will show this
+other title instead.
+### Election Presentation Extra Options: `success_screen__hide_ballot_tracker`
+
+- **Property name**: `success_screen__hide_ballot_tracker`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `true`
+
+If set, this optional property will modify the voting booth behaviour and the
+success screen will not show the ballot tracker hash. This option does not hide
+the QR code nor the link to download the ballot ticket PDF.
+### Election Presentation Extra Options: `success_screen__hide_qr_code`
+
+- **Property name**: `success_screen__hide_qr_code`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `true`
+
+If set, this optional property will modify the voting booth behaviour and the
+success screen will not show the QR code that encodes a link to the ballot 
+tracker URL. This option does not hide the ballot tracker hash nor the link
+to download the ballot ticket PDF.
+### Election Presentation Extra Options: `success_screen__hide_download_ballot_ticket`
+
+- **Property name**: `success_screen__hide_download_ballot_ticket`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `true`
+
+If set, this optional property will modify the voting booth behaviour and the
+success screen will not show the link to download the ballot ticket PDF. This 
+option does not hide the ballot tracker hash nor the QR code to the ballot 
+tracker.
+### Election Presentation Extra Options: `success_screen__redirect_to_login`
+
+- **Property name**: `success_screen__redirect_to_login`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `true`
+
+If set, this optional property will modify the voting booth behaviour so that 
+the success screen will show a link to redirect to the voter login page. Use
+together with [`success_screen__redirect_to_login__text`](#election-presentation-extra-options-success_screen__redirect_to_login__text)
+because the link will have that text, so you need to set it.
+
+### Election Presentation Extra Options: `success_screen__redirect_to_login__text`
+
+- **Property name**: `success_screen__redirect_to_login__text`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `Go to login`
+
+If set, this optional property will modify the voting booth behaviour so that 
+the redirect to login link in the  success screen will have the text specified
+in this string. Use
+together with [success_screen__redirect_to_login](#election-presentation-extra-options-success_screen__redirect_to_login)
+because the link will only appear if that option is set to `true`.
+### Election Presentation Extra Options: `disable_voting_booth_audit_ballot`
+
+- **Property name**: `disable_voting_booth_audit_ballot`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `true`
+
+If set, this optional property will modify the voting booth behaviour so that 
+the review ballot screen, shown before casting the vote, will not show the hash
+of the ballot nor the link to audit the ballot.
+
+### Election Presentation Extra Options: `success_screen__redirect_to_login__auto_seconds`
+
+- **Property name**: `success_screen__redirect_to_login__auto_seconds`
+- **Type:** `Positive Integer`
+- **Required:** No
+- **Default:** -
+- **Example:** `10`
+
+If set, this optional property will modify the voting booth behaviour so that 
+once the ballot is cast and the success screen is shown, after the specified
+number of seconds the voter will be automatically redirected to the login page.

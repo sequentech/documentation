@@ -14,14 +14,12 @@
         {
           "network": "Twitter",
           "button_text": "",
-          "social_message": "I have just voted in election __URL__, you can too! #nvotes",
-          "active": true
+          "social_message": "I have just voted in election __URL__, you can too! #nvotes"
         },
         {
           "network": "Facebook",
           "button_text": "",
-          "social_message": "__URL__",
-          "active": false
+          "social_message": "__URL__"
         }
       ],
       "urls": [],
