@@ -677,6 +677,30 @@ results when the election status is set to `publish results`. The results in the
  - `<election-id>.results.pdf`
  - `ballots.csv`
 
+`agora-results` works so that the pipes execute sequentially and communicate 
+with one another mainly through passing information via the mutable `data_list` 
+argument and also writting information in the temporal tarball extraction 
+directories. The final output is the results configuration (which is in 
+different formats and files). But one important feature is that it might contain
+a list of questions different of that one of the election configuration question
+list. This is because there are some pipes that can duplicate questions and
+consolidate electoral results. 
+
+For example, it might make sense that if you have an election with ballot boxes
+enabled, you might have only one question in the digital election but that two
+different ballot boxes, one ballot box for Mail-in ballots and another for 
+Onsite paper ballots. You could have election results for this election to 
+contain four different tallied questions (even if the election had only one 
+question):
+- A tally of the digital votes
+- A tally of the mail-in votes (from the Mail-in ballots box)
+- A tally of the paper ballots (from the Paper ballots box)
+- Consolidated results of all the previous ones together
+
+To do that, you would also have to change the title of the duplicated questions
+so that you can easily see which question corresponds with which tally. There 
+are pipes to do that.
+
 What follows is a list of the results configuration pipes in no particular
 order:
 
@@ -701,11 +725,6 @@ inside `data_list` if the tally algorithm generated any log output.
 This pipe calls uses the [agora-tally](https://github.com/agoravoting/agora-tally) 
 library and calls to `agora_tally.tally.do_tally` to do the results calculation
 of any question to be tallied.
-
- ignore_invalid_votes=True, print_as_csv=False,
-               question_indexes=None, reuse_results=False,
-               allow_empty_tally=False,
-               extra_args=defaultdict(), tallies_indexes=None, help=""
 
 The following configuration options can be set in the pipe configuration object:
 #### `do_tallies`: `ignore_invalid_votes`
@@ -815,3 +834,36 @@ Most if not all of the pipes receive the `help` argument. This is a way for the
 writter of the results configuration pipes to explain anything relating to this
 particular pipe + pipe configuration pair, as usually configuration is in JSON
 format which does not allow for comments.
+
+<!--
+      #- agora_results.pipes.duplicate_questions.duplicate_questions
+      #- agora_results.pipes.modifications.apply_modifications
+      #- agora_results.pipes.multipart.make_multipart
+      #- agora_results.pipes.multipart.election_max_size_corrections
+      #- agora_results.pipes.multipart.question_totals_with_corrections
+      #- agora_results.pipes.multipart.reduce_answers_with_corrections
+      #- agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner
+      #- agora_results.pipes.multipart.data_list_reverse
+      #- agora_results.pipes.multipart.multipart_tally_plaintexts_joiner
+      #- agora_results.pipes.multipart.append_ballots
+      #- agora_results.pipes.parity.proportion_rounded
+      - agora_results.pipes.parity.parity_zip_non_iterative
+      #- agora_results.pipes.parity.reorder_winners
+      #- agora_results.pipes.parity.podemos_parity_loreg_zip_non_iterative
+      #- agora_results.pipes.parity.podemos_parity2_loreg_zip_non_iterative
+      #- agora_results.pipes.podemos.podemos_proportion_rounded_and_duplicates
+      #- agora_results.pipes.desborda4.podemos_desborda4
+      #- agora_results.pipes.desborda3.podemos_desborda3
+      #- agora_results.pipes.desborda2.podemos_desborda2
+      #- agora_results.pipes.desborda.podemos_desborda
+      #- agora_results.pipes.pretty_print.pretty_print_stv_winners
+      - agora_results.pipes.pretty_print.pretty_print_not_iterative
+      - agora_results.pipes.results.do_tallies
+      #- agora_results.pipes.results.to_files
+      #- agora_results.pipes.results.apply_removals
+      - agora_results.pipes.sort.sort_non_iterative
+      #- agora_results.pipes.stv_tiebreak.stv_first_round_tiebreak
+      #- agora_results.pipes.pdf.configure_pdf
+      - agora_results.pipes.withdraw_candidates.withdraw_candidates
+      # - agora_results.pipes.ballot_boxes.count_tally_sheets
+-->
