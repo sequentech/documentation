@@ -706,13 +706,13 @@ order:
 
 ### Pipe: `do_tallies`
 
-- **Pipe path**: `agora_results.pipes.results.do_tallies`
+- **Pipe path**: [`agora_results.pipes.results.do_tallies`](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/results.py#L24)
 - **Example usage**:
 ```json
-    "agora_results.pipes.sort.sort_non_iterative",
-    {
-      "question_indexes": [0]
-    }
+"agora_results.pipes.results.do_tallies",
+{
+  "question_indexes": [0]
+}
 ```
 
 This pipe is used to run the `tally` algorithm of the election questions. It
@@ -727,6 +727,7 @@ library and calls to `agora_tally.tally.do_tally` to do the results calculation
 of any question to be tallied.
 
 The following configuration options can be set in the pipe configuration object:
+
 #### `do_tallies`: `ignore_invalid_votes`
 
 - **Property name**: `ignore_invalid_votes`
