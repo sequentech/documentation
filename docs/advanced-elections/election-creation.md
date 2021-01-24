@@ -262,6 +262,96 @@ List of names of all the election authorities that should be included in this el
 Describes presentation options related to the whole election. See 
 [Election Presentation](#election-presentation-object) for more details.
 
+### Election: `has_ballot_boxes`
+
+- **Property name**: `has_ballot_boxes`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to true enables the usage of ballot boxes, which means that you can later
+on register tally sheets that can be used to be used in the results 
+calculations.
+
+### Election: `ballot_boxes`
+
+- **Property name**: `ballot_boxes`
+- **Type:** `List<Short String>`
+- **Required:** No
+- **Default:** `[]`
+- **Example:** `["Postal Ballots", "Onsite Paper Ballots"]`
+
+This configuration option is only used if 
+[has_ballot_boxes](#election-has_ballot_boxes) is set to true. It contains a
+list of ballot boxes to be created.
+
+### Election: `layout`
+
+- **Property name**: `layout`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"simple"`
+
+Specifies the election-wide layout. For now this settings remains unused and it
+must always be set to `"simple"`.
+
+### Election: `num_successful_logins_allowed`
+
+- **Property name**: `num_successful_logins_allowed`
+- **Type:** `Positive Integer`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `0`
+
+Specifies the number of votes that can be cast, because *successful logins* is
+a generic and fancy way to call 'votes cast' in a generic way within AuthApi.
+If set to zero, no specific limitation in `authapi` will happen regarding the 
+authentication process. If set to a number higher than zero, for example 1 or 3,
+that will be the limit in the number of votes that can be cast.
+
+Once the limitation is hit, the voter won't be able to authenticate again to
+cast a vote.
+
+:::note
+There might be other limitations on the number of votes that a voter can cast.
+For example `agora-elections` has a deployment level configuration setting
+that limits the number of votes that can be cast (this setting's path is 
+`config.agora_elections.max_revotes` in the `config.yml` ansible configuration).
+This `agora-elections` configuration setting will be applied independently of
+`num_successful_logins_allowed`.
+:::
+
+### Election: `resultsConfig`
+
+- **Property name**: `resultsConfig`
+- **Type:** List<[Results Config Pipes](#results-config-pipes)>
+- **Required:** No
+- **Default:** -
+- **Example:**
+```json
+[
+  [
+    "agora_results.pipes.results.do_tallies",
+    {
+      "ignore_invalid_votes": true
+    }
+  ],
+  [
+    "agora_results.pipes.sort.sort_non_iterative",
+    {
+      "question_indexes": [0]
+    }
+  ]
+]
+```
+
+Specifies how election results will be calculated. It is set of pipes to be 
+applied, together with each pipe configuration, that will be used during the 
+calculation of election results. See [Results Config Pipes](#results-config-pipes)
+for more details.
+
 ## Election Presentation Object
 
 This json object type describes presentation options related to the whole 
@@ -399,7 +489,7 @@ currently used to modify the voting booth presentation behaviour. It is used
 [here](#election-presentation-extra_options) and it can have the following 
 properties:
 
-### Election Presentation Extra Options: `start_screen__skip`
+### Election Presentation Options: `start_screen__skip`
 
 - **Property name**: `start_screen__skip`
 - **Type:** `Boolean`
@@ -410,7 +500,7 @@ properties:
 If set, this optional property will modify the voting booth behaviour and the
 start screen of the voting booth will not be shown.
 
-### Election Presentation Extra Options: `public_title`
+### Election Presentation Options: `public_title`
 
 - **Property name**: `public_title`
 - **Type:** `String`
@@ -421,7 +511,7 @@ start screen of the voting booth will not be shown.
 If set, this optional property will modify the voting booth behaviour so that
 instead of showing the title of election in the voting booth, it will show this
 other title instead.
-### Election Presentation Extra Options: `success_screen__hide_ballot_tracker`
+### Election Presentation Options: `success_screen__hide_ballot_tracker`
 
 - **Property name**: `success_screen__hide_ballot_tracker`
 - **Type:** `Boolean`
@@ -432,7 +522,7 @@ other title instead.
 If set, this optional property will modify the voting booth behaviour and the
 success screen will not show the ballot tracker hash. This option does not hide
 the QR code nor the link to download the ballot ticket PDF.
-### Election Presentation Extra Options: `success_screen__hide_qr_code`
+### Election Presentation Options: `success_screen__hide_qr_code`
 
 - **Property name**: `success_screen__hide_qr_code`
 - **Type:** `Boolean`
@@ -444,7 +534,7 @@ If set, this optional property will modify the voting booth behaviour and the
 success screen will not show the QR code that encodes a link to the ballot 
 tracker URL. This option does not hide the ballot tracker hash nor the link
 to download the ballot ticket PDF.
-### Election Presentation Extra Options: `success_screen__hide_download_ballot_ticket`
+### Election Presentation Options: `success_screen__hide_download_ballot_ticket`
 
 - **Property name**: `success_screen__hide_download_ballot_ticket`
 - **Type:** `Boolean`
@@ -456,7 +546,7 @@ If set, this optional property will modify the voting booth behaviour and the
 success screen will not show the link to download the ballot ticket PDF. This 
 option does not hide the ballot tracker hash nor the QR code to the ballot 
 tracker.
-### Election Presentation Extra Options: `success_screen__redirect_to_login`
+### Election Presentation Options: `success_screen__redirect_to_login`
 
 - **Property name**: `success_screen__redirect_to_login`
 - **Type:** `Boolean`
@@ -466,10 +556,10 @@ tracker.
 
 If set, this optional property will modify the voting booth behaviour so that 
 the success screen will show a link to redirect to the voter login page. Use
-together with [`success_screen__redirect_to_login__text`](#election-presentation-extra-options-success_screen__redirect_to_login__text)
+together with [`success_screen__redirect_to_login__text`](#election-presentation-options-success_screen__redirect_to_login__text)
 because the link will have that text, so you need to set it.
 
-### Election Presentation Extra Options: `success_screen__redirect_to_login__text`
+### Election Presentation Options: `success_screen__redirect_to_login__text`
 
 - **Property name**: `success_screen__redirect_to_login__text`
 - **Type:** `Boolean`
@@ -480,9 +570,9 @@ because the link will have that text, so you need to set it.
 If set, this optional property will modify the voting booth behaviour so that 
 the redirect to login link in the  success screen will have the text specified
 in this string. Use
-together with [success_screen__redirect_to_login](#election-presentation-extra-options-success_screen__redirect_to_login)
+together with [success_screen__redirect_to_login](#election-presentation-options-success_screen__redirect_to_login)
 because the link will only appear if that option is set to `true`.
-### Election Presentation Extra Options: `disable_voting_booth_audit_ballot`
+### Election Presentation Options: `disable_voting_booth_audit_ballot`
 
 - **Property name**: `disable_voting_booth_audit_ballot`
 - **Type:** `Boolean`
@@ -494,7 +584,7 @@ If set, this optional property will modify the voting booth behaviour so that
 the review ballot screen, shown before casting the vote, will not show the hash
 of the ballot nor the link to audit the ballot.
 
-### Election Presentation Extra Options: `success_screen__redirect_to_login__auto_seconds`
+### Election Presentation Options: `success_screen__redirect_to_login__auto_seconds`
 
 - **Property name**: `success_screen__redirect_to_login__auto_seconds`
 - **Type:** `Positive Integer`
@@ -505,3 +595,85 @@ of the ballot nor the link to audit the ballot.
 If set, this optional property will modify the voting booth behaviour so that 
 once the ballot is cast and the success screen is shown, after the specified
 number of seconds the voter will be automatically redirected to the login page.
+
+## Results Config Pipes
+
+A results config pipe is used to specify how election results will be calculated. 
+Results configuration is set of pipes to be applied, together with each pipe 
+configuration, that will be used during the  calculation of election results. It
+is configured at the election level with the 
+[resultsConfig setting](#election-resultsconfig).
+
+Each pipe is a list with two items (a pair):
+1. The pipe import path
+2. An object with that specific pipe configuration
+
+For example, a config pair could be:
+
+```json
+[
+  "agora_results.pipes.sort.sort_non_iterative",
+  {
+    "question_indexes": [0]
+  }
+]
+```
+
+The pipes are interpreted and applied by 
+[agora-results](https://github.com/agoravoting/agora-results), which in turn is
+called by `agora-elections`. There are multiple available pipes and we will 
+document in this section most of them, what they do, what you can use them for 
+and what are their configuration  options.
+
+:::note
+There's a deployment level configuration setting that specifies a whitelist of
+pipes that can be used. This setting's path is 
+`config.agora_results.pipes_whitelist` in the `config.yml` ansible 
+configuration). If you need to use a specific pipe, please ensure you
+have whitelisted it in the deployment configuration.
+:::
+
+`agora-results` is called with multiple input data:
+- The path to the list of votes to be decrypted.
+- The path to the election results configuration with all the pipes to be run.
+- The path to the election tally tarball. This tarball is generated by election
+authorities and contains among other things a file with the list of questions,
+the different options available for each question, the tally mechanism, etc.
+- The `output directory` where the election tally results in different formats 
+should be written in different files.
+- The election id.
+- The path to a file containing the whitelisted pipes.
+
+`agora-results` works by loading the election questions configuration, and 
+passing it from pipe to pipe as the first argument of each pipe, called 
+`data_list`. It also untars the election tally tarball in a temporal directory, 
+which some pipes might use to output some temporal files too.
+
+In virtual elections, `agora-results` not only receives as an input the tarball
+of the virtual election, but also the tarball of all the virtual subelections. 
+In that case, `agora-results` will also load that election's question 
+configuration in the `data_list` pipes argument and extract each tally tarball
+in a different temporal directory. This is what allows us to do
+results consolidation from multiple elections into a single one. In virtual
+elections, the first element in `data_list` is the configuration of the virtual
+election and then follows in order the list of virtual subelections as per the
+configuration of the election in `agora-elections`. Within each element in
+`data_list` there's an additional key `extract_dir` that pipes can use to 
+access the details of the tally tarball of a specific subelection.
+
+The output of `agora-results` is usually directly to stdout in a specific 
+format. This is read by `agora-elections` and stored in the database as the 
+electoral results. But it also outputs the same electoral results in different
+formats in the election `output directory`: `csv`, `json`, `pretty` (plain
+text) and `pdf`.
+
+What follows is a list of the results configuration pipes in no particular
+order:
+
+### Pipe: `do_tallies`
+
+- **Pipe path**: `agora_results.pipes.results.do_tallies`
+
+This pipe is used to execute the `tally` algorithm of the election questions.
+
+TODO
