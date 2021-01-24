@@ -665,7 +665,17 @@ The output of `agora-results` is usually directly to stdout in a specific
 format. This is read by `agora-elections` and stored in the database as the 
 electoral results. But it also outputs the same electoral results in different
 formats in the election `output directory`: `csv`, `json`, `pretty` (plain
-text) and `pdf`.
+text) and `pdf`. It will also save the ballots in JSON format in the 
+`output directory`. The `output directory` is served with `agora-elections` as
+a private directory where results can be accessed when the election results are
+not public, and then as a public directory where anyone can access the election
+results when the election status is set to `publish results`. The results in the
+`output directory` will contain with the following files:
+ - `<election-id>.results.csv`
+ - `<election-id>.results.json`
+ - `<election-id>.results.pretty`
+ - `<election-id>.results.pdf`
+ - `ballots.csv`
 
 What follows is a list of the results configuration pipes in no particular
 order:
@@ -673,7 +683,135 @@ order:
 ### Pipe: `do_tallies`
 
 - **Pipe path**: `agora_results.pipes.results.do_tallies`
+- **Example usage**:
+```json
+    "agora_results.pipes.sort.sort_non_iterative",
+    {
+      "question_indexes": [0]
+    }
+```
 
-This pipe is used to execute the `tally` algorithm of the election questions.
+This pipe is used to run the `tally` algorithm of the election questions. It
+will calculate the results using that `tally` algorithm and set them in the 
+`results` key in the appropiate element inside `data_list`, among other things. 
+`results` is used later by `agora-results` to output the electoral results in 
+the appropiate format. It also sets the `log` key in the appropiate element 
+inside `data_list` if the tally algorithm generated any log output.
 
-TODO
+This pipe calls uses the [agora-tally](https://github.com/agoravoting/agora-tally) 
+library and calls to `agora_tally.tally.do_tally` to do the results calculation
+of any question to be tallied.
+
+ ignore_invalid_votes=True, print_as_csv=False,
+               question_indexes=None, reuse_results=False,
+               allow_empty_tally=False,
+               extra_args=defaultdict(), tallies_indexes=None, help=""
+
+The following configuration options can be set in the pipe configuration object:
+#### `do_tallies`: `ignore_invalid_votes`
+
+- **Property name**: `ignore_invalid_votes`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `true`
+- **Example:** `false`
+
+If this option is set to `true` as it is by default, having invalid votes will 
+not make the tally fail. If it is set to `false`, then the call to 
+`agora_tally.tally.do_tally` will raise an exception and the `agora-results`
+execution will fail. 
+
+If you are not expecting any invalid votes, setting `ignore_invalid_votes` to 
+`false` might be a way to ensure that you don't overlook any invalid vote.
+
+#### `do_tallies`: `print_as_csv`
+
+- **Property name**: `print_as_csv`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If this option is set to `false` as it is by default, it will output to stdout
+the ballots as they are read in CSV format. This option is currently unused most
+of the time as the `agora-results` already outputs the ballots in CSV format (
+the `ballots.csv` file). By the way, that file is genereted by this pipe and 
+using the same code as this setting uses.
+
+#### `do_tallies`: `tallies_indexes`
+
+- **Property name**: `tallies_indexes`
+- **Type:** `List<Positive Integer> | None`
+- **Required:** No
+- **Default:** `None`
+- **Example:** `[0,1,2,4,6]`
+
+List of indexes in `data_list` to tally or None if all of them should be 
+tallied which is the default. Note that this is a filtering list. It will not
+error if any index of this list is out of bounds. If this a virtual election
+and `agora-results` received 2 tallies as input, if `tallies_indexes` is
+`[0,1,2,3]` it will actually only tally the first two.
+
+#### `do_tallies`: `question_indexes`
+
+- **Property name**: `question_indexes`
+- **Type:** `List<Positive Integer> | None`
+- **Required:** No
+- **Default:** `None`
+- **Example:** `[0,1,2]`
+
+List of question to tally for each of the tallies being tallied or None if all 
+of them should be tallied which is the default. Two notes:
+- This is a filtering list. It will not error if any index of this list is out 
+of bounds. If there is only a single question but `question_indexes` is set to
+`[0,1,2,3,4]`, this pipe will just tally the first question without any error.
+- This list of question indexes is applied to all elections. To apply different
+`question_indexes` for different elections you would have to have in yout pipes
+configuration multiple calls to the `do_tallies` with different settings. See
+[reuse_results](#do_tallies-reuse_results) for some details on that.
+
+#### `do_tallies`: `reuse_results`
+
+- **Property name**: `reuse_results`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+As mentioned before, this pipe heavy lifting is actually done by calling to
+`agora_tally.tally.do_tally`. This function call receives the question 
+configuration as an object using the `question_json` parameter. Usually this 
+configuration is obtained by reading the question json file within the tally 
+tarball temporal extraction directory. However, if `reuse_results` is set to 
+`true`, then the `question_json` parameter will be loaded with an object from 
+the given  element inside `data_list`: 
+`data_list[<index>]['results']['questions']`.
+
+This can be useful in different circumstances. For example if for some reason 
+like the one mentioned in [question_indexes](#do_tallies-question_indexes), you
+need to execute multiple runs of this pipe within the same `agora-results` 
+execution.
+
+#### `do_tallies`: `allow_empty_tally`
+
+- **Property name**: `allow_empty_tally`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true` (the default is `false`), the tally will not fail even if there
+is an empty list of ballots being tallied.
+
+#### `do_tallies`: `help`
+
+- **Property name**: `help`
+- **Type:** `String`
+- **Required:** No
+- **Default:** `""`
+- **Example:** `"Some explanation"`
+
+Most if not all of the pipes receive the `help` argument. This is a way for the
+writter of the results configuration pipes to explain anything relating to this
+particular pipe + pipe configuration pair, as usually configuration is in JSON
+format which does not allow for comments.
