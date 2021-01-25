@@ -262,30 +262,6 @@ List of names of all the election authorities that should be included in this el
 Describes presentation options related to the whole election. See 
 [Election Presentation](#election-presentation-object) for more details.
 
-### Election: `has_ballot_boxes`
-
-- **Property name**: `has_ballot_boxes`
-- **Type:** `Boolean`
-- **Required:** No
-- **Default:** `false`
-- **Example:** `true`
-
-If set to true enables the usage of ballot boxes, which means that you can later
-on register tally sheets that can be used to be used in the results 
-calculations.
-
-### Election: `ballot_boxes`
-
-- **Property name**: `ballot_boxes`
-- **Type:** `List<Short String>`
-- **Required:** No
-- **Default:** `[]`
-- **Example:** `["Postal Ballots", "Onsite Paper Ballots"]`
-
-This configuration option is only used if 
-[has_ballot_boxes](#election-has_ballot_boxes) is set to true. It contains a
-list of ballot boxes to be created.
-
 ### Election: `layout`
 
 - **Property name**: `layout`
@@ -394,6 +370,17 @@ As a result, if you want the tally sheets to be reflected somehow in the
 election results, you will need to use the appropiate 
 [Results Config Pipes](#results-config-pipes), for example [agora_results.pipes.ballot_boxes.count_tally_sheets](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/ballot_boxes.py#L278). See also [Election results can have different questions](#election-results-can-have-different-questions) section.
 
+### Election: `ballot_boxes`
+
+- **Property name**: `ballot_boxes`
+- **Type:** `List<Short String>`
+- **Required:** No
+- **Default:** `[]`
+- **Example:** `["Postal Ballots", "Onsite Paper Ballots"]`
+
+This configuration option is only used if 
+[has_ballot_boxes](#election-has_ballot_boxes) is set to true. It contains a
+list of ballot boxes to be created.
 
 ### Election: `census`
 
