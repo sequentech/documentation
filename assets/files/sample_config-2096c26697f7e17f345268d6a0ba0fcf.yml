@@ -58,8 +58,8 @@
         }
       ]
     ],
+    "has_ballot_boxes": false,
     "census": {
-      "has_ballot_boxes": false,
       "voters": [],
       "auth_method": "email",
       "census": "close",
