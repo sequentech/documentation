@@ -419,7 +419,7 @@ See [Census](#census-object) for more details.
 
 ## Election Presentation Object
 
-This json object type describes presentation options related to the whole 
+This JSON object type describes presentation options related to the whole 
 election. It is used [here](#election-presentation) and can have the following 
 properties:
 
@@ -1130,3 +1130,180 @@ right now to understand how they work is to just look at the code:
 - [agora_results.pipes.pdf.configure_pdf](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/pdf.py)
 - [agora_results.pipes.withdraw_candidates.withdraw_candidates](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/withdraw_candidates.py)
 - [agora_results.pipes.ballot_boxes.count_tally_sheets](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/ballot_boxes.py#L278)
+## Census object
+
+This JSON object type describes census configuration related to the election. 
+It is used by the [census property](#election-census) and can have the 
+following properties:
+
+### Census: `voters`
+
+- **Property name**: `voters`
+- **Type:** List<[Voter](#voter-object)>
+- **Required:** Yes
+- **Default:** -
+- **Example:** 
+```json
+[
+  {
+    "metadata": {
+      "email": "john@example.com",
+      "name": "John"
+    }
+  },
+  {
+    "metadata": {
+      "email": "marta@example.com",
+      "name": "Marta"
+    }
+  }
+]
+```
+
+It's a list of voters to be loaded. Each voter is an object with their 
+properties set within the `metadata` field. Which voter properties are valid 
+depends on the [authentication method](#census-auth_method) used and the 
+[extra fields](#census-extra_fields) defined.
+
+If the census size if big, it's not advisable to set it using this field 
+because it's currently not very fast. In that case it's best to use the 
+`authapi`'s `bulk_insert_voters` management command through the command line 
+which can easily load 4,000 voters/second instead of maybe 6-10 voters/second 
+here.
+
+You can also modify the census later when the election is created. If you use
+the admin user interface, it will use the same backend as it used during 
+election creation here and thus the same speed recommendations apply.
+
+Note that when loading voters using this API, voters are uniquely identified by
+a different field depending on the [authentication method](#census-auth_method),
+for example the `email` field if using the `email-otp` authentication method.
+If you reupload a census, the voters that already exist (matching their unique 
+id) won't be modified. 
+
+However if you use `authapi`'s `bulk_insert_voters` management command, this
+kind of detection won't be applied. If you need to update the census, it's best
+to first remove all the census with the `bulk_delete_voters` command before 
+executing `bulk_insert_voters`.
+
+If the election is a parent election, you usually set the census within the
+parent election and there assign to which children elections can that specific
+voter vote. To do so, set the `children_event_id_list` property within the 
+`metadata` field of each voter.
+
+### Census: `auth_method`
+
+- **Property name**: `auth_method`
+- **Type:** `Short String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `sms-otp`
+
+This property specifies which is the main authentication method related to the
+election. The list of currently available authentication methods is:
+
+- **email**: The user will be authenticate through a code sent via email.
+The email is sent by the adminstrators to voters using the `Send authentication` 
+option in the Election Dashboard or the `Send auth codes` to specific voters
+option in the election `Census Data` sidebar option. If used, an 
+[extra_field](#census-extra_fields) of type `email` and named `email` is 
+required.
+
+- **email-otp**: The user will authenticate through an OTP (One Time Password)
+sent via email. This OTP is not sent to voters by administrators, but instead 
+is requested by voters during the authentication process each time they execute
+it. If used, an [extra_field](#census-extra_fields) of type `email` and named 
+`email` is  required.
+
+- **sms**: The user will be authenticate through a code sent via SMS.
+The SMS is sent by the adminstrators to voters using the `Send authentication` 
+option in the Election Dashboard or the `Send auth codes` to specific voters
+option in the election `Census Data` sidebar option. If used, an 
+[extra_field](#census-extra_fields) of type `tlf` and named `tlf` is 
+required.
+
+- **sms-otp**: The user will authenticate through an OTP (One Time Password) 
+sent via SMS. This OTP is not sent to voters by administrators, but instead is 
+requested by voters during the authentication process each time they execute it.
+If used, an [extra_field](#census-extra_fields) of type `tlf` and named 
+`tlf` is required.
+
+- **openid-connect**: The authentication will happen through a third-party 
+openid provider. This provider shall be configured in the `config.yml` 
+[ansible deployment configuration](../deployment/guide.md). If used, an 
+[extra_field](#census-extra_fields) of type `sub` and named `text` is 
+required.
+
+- **user-and-password**: The voters will authenticate simply by the username 
+and password. You can assign the `password` field of each voter appropiately. 
+This is usually not recommended, as by default voters are assigned a random
+username so it's difficult for them to know their username. The only usecase for
+this is currently for the administrative `AuthEvent` (usually with id `0`) used
+to authenticate in the administrative interface, and whose list of users is 
+directly set within the `config.yml` 
+[ansible deployment configuration](../deployment/guide.md) using the 
+`config.authapi.upsert_file` and the superadmin user 
+(`config.authapi.admin_user`). If used, an [extra_field](#census-extra_fields) 
+of type `password` and named `password` is required.
+
+- **email-and-password**: The voters will authenticate simply by the email 
+and password. You can assign the `password` field of each voter appropiately.
+If used, an [extra_field](#census-extra_fields) of type `password` and named 
+`password` is required.
+
+- **dnie**: The voters will authenticate using a TLS client authentication
+certificate. This authentication method requires some updates to be usable in 
+the current version of the software and thus is currently not usable, but it 
+does not require much development work to make it work.
+
+<!-- TODO: Write a guide explaining how to add a new authentication method. -->
+
+### Census: `census`
+
+- **Property name**: `census`
+- **Type:** `Short String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"close"`
+
+Indicates if the census is either `"open"` or `"close"`. If census is `"open"`, 
+it means it is in open registration mode and voters can register themselves, 
+fill the [extra_fields](#census-extra_fields) required on registration to be 
+able to vote later either at that moment if the election is open or later on.
+
+### Census: `extra_fields`
+
+- **Property name**: `extra_fields`
+- **Type:** List<[Extra Field](#extra-field-object)>
+- **Required:** Yes
+- **Default:** -
+- **Example:** 
+```json
+[
+  {
+    "must": true,
+    "name": "email",
+    "type": "email",
+    "required": true,
+    "min": 2,
+    "max": 200,
+    "required_on_authentication": true
+  }
+]
+```
+
+Defines authentication fields that the voters might fill or with some relation 
+to voters. There are some `extra_fields` required depending on the election's 
+[auth_method](#election-auth_method). For example, if the authentication method
+is `sms-otp`, the extra field named `tlf` and of type `tlf` is required. 
+
+See [Extra Field](#extra-field-object) for more details about extra fields.
+
+<!--
+regex
+unique
+private
+match_census_on_registration
+fill_if_empty_on_registration
+autofill
+-->
