@@ -352,6 +352,84 @@ applied, together with each pipe configuration, that will be used during the
 calculation of election results. See [Results Config Pipes](#results-config-pipes)
 for more details.
 
+### Election: `has_ballot_boxes`
+
+- **Property name**: `has_ballot_boxes`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+Specifies if this election will have paper ballot boxes. If set to `true`, the
+election will show a new `Balot Boxes` tab in the sidebar once created. In that
+tab a list of ballot boxes will be shown, and each ballot box will be able to
+have a tally sheet attached. This can be used for hybrid elections with both
+digital votes and paper ballots. 
+
+A single election can have multiple ballot boxes assigned to it. Each ballot
+box can be assigned via the [`ballot_boxes`](#election-ballot_boxes) election
+object property.
+
+The way election results are calculated when there are ballot boxes is through
+multiple steps:
+1. When a tally sheet is uploaded (to `authapi`), `authapi` sends a callback to
+   `agora-elections` (the API call is to 
+   `/api/election/:id/update-ballot-boxes-config`) with the updated list of 
+   tally sheets related to that election.
+2. That API call to `/api/election/:id/update-ballot-boxes-config` of
+   `agora-elections` executes multiple steps:
+    1. It sets the `ballotBoxesResultsConfig` in the appropiate election and 
+       saves it in the database.
+    2. It uses the [resultsConfig setting](#election-resultsconfig) as a 
+       template replacing any ocurrence of the text 
+       `__ballotBoxesResultsConfig__` with the content of
+       `ballotBoxesResultsConfig` which is the updated list of tally sheets. If
+       ballotBoxesResultsConfig is not set, then `__ballotBoxesResultsConfig__` 
+       will be always replaced by `[]` (empty list).
+    3. It re-calculates the election results running `agora-results` with the
+       calculated [resultsConfig setting](#election-resultsconfig) in the previous
+       step.
+
+As a result, if you want the tally sheets to be reflected somehow in the 
+election results, you will need to use the appropiate 
+[Results Config Pipes](#results-config-pipes), for example [agora_results.pipes.ballot_boxes.count_tally_sheets](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/ballot_boxes.py#L278). See also [Election results can have different questions](#election-results-can-have-different-questions) section.
+
+
+### Election: `census`
+
+- **Property name**: `census`
+- **Type:** List<[Census](#census-object)>
+- **Required:** Yes
+- **Default:** -
+- **Example:**
+```json
+{
+  "voters": [],
+  "auth_method": "email",
+  "census": "close",
+  "extra_fields": [],
+  "admin_fields": [],
+  "config": {
+    "allow_user_resend": true,
+    "msg": "Vote in __URL__ with code __CODE__",
+    "subject": "Vote now with nVotes",
+    "authentication-action": {
+      "mode": "vote",
+      "mode-config": {
+        "url": ""
+      }
+    },
+    "registration-action": {
+      "mode": "vote",
+      "mode-config": null
+    }
+  }
+}
+```
+
+Object that details the different options related to the census configuration.
+See [Census](#census-object) for more details.
+
 ## Election Presentation Object
 
 This json object type describes presentation options related to the whole 
@@ -633,6 +711,8 @@ configuration). If you need to use a specific pipe, please ensure you
 have whitelisted it in the deployment configuration.
 :::
 
+### Election results input
+
 `agora-results` is called with multiple input data:
 - The path to the list of votes to be decrypted.
 - The path to the election results configuration with all the pipes to be run.
@@ -661,6 +741,8 @@ configuration of the election in `agora-elections`. Within each element in
 `data_list` there's an additional key `extract_dir` that pipes can use to 
 access the details of the tally tarball of a specific subelection.
 
+### Election results output
+
 The output of `agora-results` is usually directly to stdout in a specific 
 format. This is read by `agora-elections` and stored in the database as the 
 electoral results. But it also outputs the same electoral results in different
@@ -685,6 +767,8 @@ different formats and files). But one important feature is that it might contain
 a list of questions different of that one of the election configuration question
 list. This is because there are some pipes that can duplicate questions and
 consolidate electoral results. 
+
+### Election results can have different questions
 
 For example, it might make sense that if you have an election with ballot boxes
 enabled, you might have only one question in the digital election but that two
@@ -1058,4 +1142,4 @@ right now to understand how they work is to just look at the code:
 - [agora_results.pipes.stv_tiebreak.stv_first_round_tiebreak](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/stv_tiebreak.py)
 - [agora_results.pipes.pdf.configure_pdf](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/pdf.py)
 - [agora_results.pipes.withdraw_candidates.withdraw_candidates](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/withdraw_candidates.py)
-- [agora_results.pipes.ballot_boxes.count_tally_sheets](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/ballot_boxes.py)
+- [agora_results.pipes.ballot_boxes.count_tally_sheets](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/ballot_boxes.py#L278)
