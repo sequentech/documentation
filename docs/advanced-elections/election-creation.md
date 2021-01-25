@@ -417,6 +417,19 @@ list of ballot boxes to be created.
 Object that details the different options related to the census configuration.
 See [Census](#census-object) for more details.
 
+### Election: `hide_default_login_lookup_field`
+
+- **Property name**: `hide_default_login_lookup_field`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+Specifies if the census main lookup field is hidden. Only use this option if
+you have setup some other(s) [census extra_field](#census-extra_fields) with the
+[required_on_authentication attribute](#extra-field-required_on_authentication) 
+set to `true`, as it would be used to look up the voter in the database.
+
 ## Election Presentation Object
 
 This JSON object type describes presentation options related to the whole 
@@ -1282,7 +1295,6 @@ able to vote later either at that moment if the election is open or later on.
 ```json
 [
   {
-    "must": true,
     "name": "email",
     "type": "email",
     "required": true,
@@ -1300,11 +1312,200 @@ is `sms-otp`, the extra field named `tlf` and of type `tlf` is required.
 
 See [Extra Field](#extra-field-object) for more details about extra fields.
 
+## Extra Field Object
+
+Defines an authentication field that the voters might fill or with some relation 
+to voters. Some extra fields are required depending on the election's 
+[auth_method](#election-auth_method). For example, if the authentication method
+is `sms-otp`, the extra field named `tlf` and of type `tlf` is required. 
+
+It is used by the Census' [extra_fields property](#census-extra_fields) and can 
+have the following properties:
+
+### Extra Field: `name`
+
+- **Property name**: `name`
+- **Type:** `Short String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"email"`
+
+The name property identifies the extra field. For most 
+[extra field types](#extra-field-type) the name set here is shown to voters
+as the field name in the user interface during the authentication process. It's
+also used in API calls as the key to receive the authentication data or to store
+the census data of a specific user.
+
+### Extra Field: `type`
+
+- **Property name**: `type`
+- **Type:** `Short String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"text"`
+
+Defines the extra field type, which changes in appeareance and behaviour. There
+are the following available extra field types that you can use:
+- `"text"`
+- `"int"`
+- `"bool"`
+- `"email"`
+- `"tlf"`
+- `"captcha"`
+- `"textarea"`
+- `"dni"`
+- `"dict"`
+- `"date"`
+
+### Extra Field: `required_on_authentication`
+
+- **Property name**: `required_on_authentication`
+- **Type:** `Boolean`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `false`
+
+Defines if this field is required during authentication. If `true` it means 
+that during the authentication process this field needs to be provided by the 
+voter.  
+
+### Extra Field: `required`
+
+- **Property name**: `required`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `false`
+
+Defines if this field is always required. If `true` it means that during any 
+process in which the voter needs to fill the extra fields, either during
+registration or authentication, this field needs to be provided by the voter. 
+
+### Extra Field: `required_when_registered`
+
+- **Property name**: `required_when_registered`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `false`
+
+If set to `true` this extra field will not appear to voters during 
+[open registration](#census-census).
+
+### Extra Field: `private`
+
+- **Property name**: `private`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+Defines if this field is private. If set to `true`, then the field will not 
+appear to voters at any time but it will be appear in the census. This is useful
+if there's any field that you want to appear in the census to be able to search
+for it or review that kind of user data in the administrative interface, but 
+should not be used for anything else.
+
+### Extra Field: `unique`
+
+- **Property name**: `unique`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true` (the default is `false`), vote registration will fail if the
+voter enters a value to this field that is repeated by any other element in the
+census. Note that this field uniquness is not verified during census import by
+administrators. It only makes sense to set `unique` to `true` when setting the
+election to have `open` [voter registration](#census-census), because otherwise
+it will have no effect as there won't be any open voter registration process.
+
+### Extra Field: `match_census_on_registration`
+
+- **Property name**: `match_census_on_registration`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+For `open` [voter registration](#census-census), any previous element in the 
+census would be matched using this field. This useful to be used together with 
+[fill_if_empty_on_registration](#extra-field-fill_if_empty_on_registration), 
+so that if you have a pre-registration census with only some fields already 
+filled in, you could fill the missing fields with 
+`fill_if_empty_on_registration` if  you first identify the element in census 
+with `match_census_on_registration` set to `true`.
+
+### Extra Field: `fill_if_empty_on_registration`
+
+- **Property name**: `fill_if_empty_on_registration`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+It is used for pre-registration. If the pre-registered user on the census has 
+this field empty, then when the user will be able to set its value upon 
+registration.
+
+This useful to be used together with 
+[match_census_on_registration](#extra-field-match_census_on_registration), so 
+that if you have a pre-registration census with only some fields already filled
+in, you could fill the missing fields with `fill_if_empty_on_registration` if 
+you first identify the element in census with `match_census_on_registration` 
+set to `true`.
+
+### Extra Field: `userid_field`
+
+- **Property name**: `userid_field`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+`userid_field` is used to generate the username, usedto generate the hmac 
+authentication token. If any field on the authevent is marked with 
+`userid_field` as `true`, the username won't be generated randomly as it is done 
+usually, but instead it will be generated by:
+
+1. Concatenating all the data from the `userid_field`'s (in order of
+appeareance of the fields in ae.extra_fields).
+2. Adding the shared_secret (`field1:field2:field3...:shared_secret`)
+separated with the colon character: `:`.
+3. The username will be the sha256 hash of the above
+Note that if a field is marked as userid_field, it should always have a valid 
+convertable-to-string value.
+
+### Extra Field: `help`
+
+- **Property name**: `help`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"Example: John Doe"`
+
+Help text that will appear below the input in the voter authentication or 
+registration form.
+
+### Extra Field: `regex`
+
+- **Property name**: `regex`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"/\d{9}[a-z]/"`
+
+Regular expression that will be checked against user input when sending the
+authentication or registration form. This property only makes sense for extra
+fields whose input is a string like `textarea`, `email` or `text`.
+
 <!--
-regex
-unique
-private
-match_census_on_registration
-fill_if_empty_on_registration
+TODO: extra fields properties:
+min
+max
+user_editable
+register-pipeline
+authenticate-pipeline
 autofill
 -->
