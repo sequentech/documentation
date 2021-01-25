@@ -1272,6 +1272,13 @@ does not require much development work to make it work.
 
 <!-- TODO: Write a guide explaining how to add a new authentication method. -->
 
+:::note Alternative authentication methods
+If the authentication method is `email` but there's defined also an `tlf` 
+[extra field](#census-extra_fields), then for those elements in census where
+both fields are defined, the voter will receive the Authentication Code through
+both SMS and email authentication, and the voter will be able to authenticate
+through the link and code sent by either of those.
+:::
 ### Census: `census`
 
 - **Property name**: `census`
@@ -1310,7 +1317,7 @@ to voters. There are some `extra_fields` required depending on the election's
 [auth_method](#election-auth_method). For example, if the authentication method
 is `sms-otp`, the extra field named `tlf` and of type `tlf` is required. 
 
-See [Extra Field](#extra-field-object) for more details about extra fields.
+See [Extra Field](#extra-field-object) for more details about extra fields. 
 
 ## Extra Field Object
 
@@ -1390,7 +1397,8 @@ registration or authentication, this field needs to be provided by the voter.
 - **Example:** `false`
 
 If set to `true` this extra field will not appear to voters during 
-[open registration](#census-census).
+[open registration](#census-census). A better name for it might have been 
+`hidden_during_registration`.
 
 ### Extra Field: `private`
 
@@ -1500,12 +1508,50 @@ Regular expression that will be checked against user input when sending the
 authentication or registration form. This property only makes sense for extra
 fields whose input is a string like `textarea`, `email` or `text`.
 
+### Extra Field: `min`
+
+- **Property name**: `min`
+- **Type:** `Integer`
+- **Required:** No
+- **Default:** -
+- **Example:** `1`
+
+This property can mean two different things:
+- For extra fields whose value is a string, it's the minimum allowed length of 
+such a string.
+- For extra fields of `int` [type](#extra-field-type), it is the minimum 
+allowed value.
+
+### Extra Field: `max`
+
+- **Property name**: `max`
+- **Type:** `Integer`
+- **Required:** No
+- **Default:** -
+- **Example:** `55`
+
+This property can mean two different things:
+- For extra fields whose value is a string, it's the maximum allowed length of 
+such a string.
+- For extra fields of `int` [type](#extra-field-type), it is the maximum 
+allowed value.
+
+### Extra Field: `autofill`
+
+- **Property name**: `autofill`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+When user is is activated by calling to `authapi`'s 
+`/api/auth-event/%d/census/activate/`, this field will be copied from the admin
+user to the activated user. This is useful for example if an admin user has an
+extra field specifying the precint assigned to it and we would like to set that
+info in a [private field](#extra-field-private) of the activated user too.
+
 <!--
 TODO: extra fields properties:
-min
-max
-user_editable
 register-pipeline
 authenticate-pipeline
-autofill
 -->
