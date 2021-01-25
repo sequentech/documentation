@@ -1160,12 +1160,12 @@ following properties:
 ]
 ```
 
-It's a list of voters to be loaded. Each voter is an object with their 
+It's a list of voters to be imported. Each voter is an object with their 
 properties set within the `metadata` field. Which voter properties are valid 
 depends on the [authentication method](#census-auth_method) used and the 
 [extra fields](#census-extra_fields) defined.
 
-If the census size if big, it's not advisable to set it using this field 
+If the census size if big, it's not advisable to import it using this field 
 because it's currently not very fast. In that case it's best to use the 
 `authapi`'s `bulk_insert_voters` management command through the command line 
 which can easily load 4,000 voters/second instead of maybe 6-10 voters/second 
@@ -1178,7 +1178,7 @@ election creation here and thus the same speed recommendations apply.
 Note that when loading voters using this API, voters are uniquely identified by
 a different field depending on the [authentication method](#census-auth_method),
 for example the `email` field if using the `email-otp` authentication method.
-If you reupload a census, the voters that already exist (matching their unique 
+If you re-upload a census, the voters that already exist (matching their unique 
 id) won't be modified. 
 
 However if you use `authapi`'s `bulk_insert_voters` management command, this
@@ -1189,7 +1189,8 @@ executing `bulk_insert_voters`.
 If the election is a parent election, you usually set the census within the
 parent election and there assign to which children elections can that specific
 voter vote. To do so, set the `children_event_id_list` property within the 
-`metadata` field of each voter.
+`metadata` field of each voter. This list is simply a list of children election
+ids in which the voter can vote.
 
 ### Census: `auth_method`
 
