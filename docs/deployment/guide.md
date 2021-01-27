@@ -192,16 +192,15 @@ that has the following rule:
 
 Firewall rules should be created to allow the following kind of connections:
 
--  prod-s1 <<tcp:5432>> prod-s2                     # postgresql
--  prod-s1 <<tcp:22>> prod-s2                       # postgresql's rsync
--  [prod-s1, prod-s2] <<tcp:443>> Internet          # web service
--  [prod-s1, prod-s2] <<tcp:9090>> Internet         # sentry api
--  [prod-s1, prod-s2] <<tcp:8443>> Internet         # sentry web
--  prod-a1 <<tcp:5000>> prod-a2                     # eotest
--  prod-a1 <<tcp:4081>> prod-a2                     # vfork
--  prod-a1 <<udp:8081>> prod-a2                     # vfork
--  [prod-s1, prod-s2] <<tcp:14443>> [prod-a1, auh2]
--  [prod-s1, prod-s2] <<tcp:14453>> [prod-a1, auh2] # download ciphertexts
+-  **postgresql:** prod-s1 **<<tcp:5432>>** prod-s2
+-  **postgresql's rsync:** prod-s1 **<<tcp:22>>** prod-s2
+-  **web site:** [prod-s1, prod-s2] **<<tcp:443>>** Internet
+-  **sentry api:** [prod-s1, prod-s2] **<<tcp:9090>>** Internet
+-  **sentry web site:** [prod-s1, prod-s2] **<<tcp:8443>>** Internet
+-  **eotest:** prod-a1 **<<tcp:5000>>** prod-a2
+-  **mixnet:** prod-a1 **<<tcp:4081>>** prod-a2
+-  **mixnet:** prod-a1 **<<udp:8081>>** prod-a2
+-  **private ballots download:** [prod-s1, prod-s2] **<<tcp:14453>>** [prod-a1, prod-a2]
 
 You can create the appropiate rules to allow this access to the different 
 services. For example if one or more of the trustee machines are external, 
