@@ -231,6 +231,90 @@ The name of the election authority that will act as the director for this electi
 - **Example:** `["auth2", "auth3"]`
 
 List of names of all the election authorities that should be included in this election, excluding the director authority name. Its eopackages needs to be installed in the backend server ([see details](../deployment/guide#connecting-web-servers-with-authorities)).
+### Election: `questions`
+
+- **Property name**: `questions`
+- **Type:** List<[Question](#question-object)>
+- **Required:** No
+- **Default:** -
+- **Example:**
+```json
+[
+  {
+    "answer_total_votes_percentage": "over-total-valid-votes",
+    "answers": [
+      {
+        "category": "",
+        "details": "This is an option with an simple example description.",
+        "id": 0,
+        "sort_order": 0,
+        "text": "Example option 1",
+        "urls": [
+          {
+            "title": "URL",
+            "url": ""
+          },
+          {
+            "title": "Image URL",
+            "url": ""
+          }
+        ]
+      },
+      {
+        "category": "",
+        "details": "An option can contain a description. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>. You can also set an image url below, but be sure it's HTTPS or else it won't load.\n\n<br><br>You need to use two br element for new paragraphs.",
+        "id": 1,
+        "sort_order": 1,
+        "text": "Example option 2",
+        "urls": [
+          {
+            "title": "URL",
+            "url": "https://nvotes.com"
+          },
+          {
+            "title": "Image URL",
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/The_Fabs.JPG/220px-The_Fabs.JPG"
+          }
+        ]
+      },
+      {
+        "category": "",
+        "details": "",
+        "id": 2,
+        "sort_order": 2,
+        "text": "Example option 3",
+        "urls": [
+          {
+            "title": "URL",
+            "url": ""
+          },
+          {
+            "title": "Image URL",
+            "url": ""
+          }
+        ]
+      }
+    ],
+    "description": "This is the description of this question. You can have multiple questions. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs.",
+    "layout": "accordion",
+    "max": 1,
+    "min": 1,
+    "num_winners": 1,
+    "tally_type": "plurality-at-large",
+    "title": "Test question title",
+    "extra_options": {
+      "shuffle_categories": true,
+      "shuffle_all_options": true,
+      "shuffle_category_list": [],
+      "show_points": false
+    },
+    "active": true
+  }
+]
+```
+
+List of questions in the election. See [Question](#question-object) for more 
+details.
 
 ### Election: `presentation`
 
@@ -323,7 +407,7 @@ This `agora-elections` configuration setting will be applied independently of
 ]
 ```
 
-Specifies how election results will be calculated. It is set of pipes to be 
+Specifies how election results will be calculated. It is a set of pipes to be 
 applied, together with each pipe configuration, that will be used during the 
 calculation of election results. See [Results Config Pipes](#results-config-pipes)
 for more details.
@@ -416,7 +500,6 @@ list of ballot boxes to be created.
 
 Object that details the different options related to the census configuration.
 See [Census](#census-object) for more details.
-
 ### Election: `hide_default_login_lookup_field`
 
 - **Property name**: `hide_default_login_lookup_field`
@@ -1319,6 +1402,79 @@ is `sms-otp`, the extra field named `tlf` and of type `tlf` is required.
 
 See [Extra Field](#extra-field-object) for more details about extra fields. 
 
+### Census: `admin_fields`
+
+- **Property name**: `admin_fields`
+- **Type:** List<[Admin Field](#admin-field-object)>
+- **Required:** Yes
+- **Default:** -
+- **Example:**
+```json
+[
+  {
+    "name": "org_legal_name",
+    "label": "Organization: Legal Name",
+    "description": "Required. Please provide the name under which your organization is legally registered. It will be shown as part of the public information in a section inside the election public page.",
+    "placeholder": "Example: Association of Surgeons of Great Britain",
+    "min": 1,
+    "max": 255,
+    "value": "Example Organization Name",
+    "required": true,
+    "private": true,
+    "type": "text"
+  },
+  {
+    "name": "org_url",
+    "label": "Organization: Website URL",
+    "description": "Optional. Please provide the URL of your organization. It will be shown as part of the public information in a section inside the election public page.",
+    "placeholder": "Example: https://example.com",
+    "min": 5,
+    "value": "https://example.com",
+    "required": false,
+    "private": true,
+    "type": "text"
+  }
+]
+```
+
+Object that details the different options related to the election and required
+to be filled by election administrators for every election. What admin fields 
+need to be filled is configured in the `config.yml` 
+[ansible deployment configuration](../deployment/guide.md) with the key 
+`config.agora_gui.admin_fields`. 
+
+See [Admin Field](#admin-field-object) for more details.
+
+### Census: `config`
+
+- **Property name**: `config`
+- **Type:** List<[Census Config](#census-config-object)>
+- **Required:** Yes
+- **Default:** -
+- **Example:**
+```json
+{
+  "allow_user_resend": true,
+  "msg": "Vote in __URL__ with code __CODE__",
+  "subject": "Vote now with nVotes",
+  "authentication-action": {
+    "mode": "vote",
+    "mode-config": {
+      "url": ""
+    }
+  },
+  "registration-action": {
+    "mode": "vote",
+    "mode-config": null
+  }
+}
+```
+
+Object that specifies various configuration authentication and authorization
+options.
+
+See [Census Config](#census-config-object) for more details.
+
 ## Extra Field Object
 
 Defines an authentication field that the voters might fill or with some relation 
@@ -1555,3 +1711,27 @@ TODO: extra fields properties:
 register-pipeline
 authenticate-pipeline
 -->
+
+## Admin Field Object
+
+Object that details the different options related to the election and required
+to be filled by election administrators for every election. What admin fields 
+need to be filled is configured in the `config.yml` 
+[ansible deployment configuration](../deployment/guide.md) with the key 
+`config.agora_gui.admin_fields`. 
+
+It is used by the Census' [admin_fields property](#census-admin_fields) and
+set by the election administrator during creator in the sidebar item 
+`Admin Fields`.
+
+The properties of an [Admin Field](#admin-field-object) are the same as those
+of an [Extra Field](#extra-field-object) but with some additional properties:
+- `description`: Description of what the field should be used for
+- `label`: Label of the admin field, which will be shown to the election creator
+ instead of the name.
+- `value`: Value set for this specific election.
+- `placeholder`: placeholder to be shown for the admin field when empty.
+
+## Census Config Object
+
+TODO
