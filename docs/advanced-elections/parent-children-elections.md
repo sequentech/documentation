@@ -212,7 +212,7 @@ information regarding the virtual elections and
     "resultsConfig": [
       [
         // We source votes from source subelection questions to the 
-        // appropiate parent questions.
+        // appropiate virtual election questions.
         "agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner",
         {
           "mappings": [
@@ -348,7 +348,7 @@ The configuration file sketch would be:
       ],
       [
         // We source votes from source subelection questions to the
-        // appropiate parent questions.
+        // appropiate virtual election questions.
         "agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner",
         {
           "mappings": [
