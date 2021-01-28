@@ -12,7 +12,8 @@ module.exports = {
     ],
     "Advanced Elections": [
       'advanced-elections/introduction',
-      'advanced-elections/election-creation'
+      'advanced-elections/election-creation',
+      'advanced-elections/parent-and-children-elections'
     ],
     Contribute: [
       'contribute/guide'

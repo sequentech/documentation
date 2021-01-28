@@ -651,6 +651,7 @@ list of ballot boxes to be created.
 
 Object that details the different options related to the census configuration.
 See [Census](#census-object) for more details.
+
 ### Election: `hide_default_login_lookup_field`
 
 - **Property name**: `hide_default_login_lookup_field`
