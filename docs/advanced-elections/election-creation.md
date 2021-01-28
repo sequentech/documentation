@@ -160,7 +160,8 @@ census, and then the election), and then the public and private keys will be
 created.
 ## Election object
 
-Within the Election JSON settings that can be set using the `Edit Election JSON` dialog, each election can have the following settings:
+Within the Election JSON settings that can be set using the `Edit Election JSON` 
+dialog, each election can have the following settings:
 
 ### Election: `id`
 
@@ -170,7 +171,10 @@ Within the Election JSON settings that can be set using the `Edit Election JSON`
 - **Default:** -
 - **Example:** `345`
 
-Election's unique id. It will automatically be assigned one if none is set. If the election already exists and the user has permissions to edit it, the election configuration will be updated if the election is registered but not yet created ([details here](#modifying-elections)).
+Election's unique id. It will automatically be assigned one if none is set. If 
+the election already exists and the user has permissions to edit it, the
+election configuration will be updated if the election is registered but
+not yet created ([details here](#modifying-elections)).
 
 ### Election: `title`
 
@@ -180,7 +184,8 @@ Election's unique id. It will automatically be assigned one if none is set. If t
 - **Default:** -
 - **Example:** `"New election"`
 
-Election's title. It will appear in the admin election list, and as the election title in the public election site and in the voting booth start screen.
+Election's title. It will appear in the admin election list, and as the
+election title in the public election site and in the voting booth start screen.
 
 ### Election: `description`
 
@@ -190,27 +195,168 @@ Election's title. It will appear in the admin election list, and as the election
 - **Default:** -
 - **Example:** `"This is the description of the election. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs."`
 
-Election's description. It will appear below the title in the public election site and in the voting booth start screen. As shown in the example it allows for some basic HTML.
+Election's description. It will appear below the title in the public election 
+site and in the voting booth start screen. As shown in the example it allows 
+for some basic HTML.
 
-### Election: `start_date`
+### Election: `virtual`
 
-- **Property name**: `start_date`
-- **Type:** `String`
-- **Required:** Yes
-- **Default:** -
-- **Example:** `""`
+- **Property name**: `virtual`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
 
-DEPRECATED. This field is required but should really be an empty string as it is currently unused.
+:::info Enabling Virtual Elections
+Virtual elections are not enabled by default because for security reasons 
+virtual elections should not be enabled in multi-tenant deployments, as 
+`agora-elections` do not verify that the election creator has permissions for
+accessing the sub-elections.
 
-### Election: `end_date`
+To allow virtual election you have to enable it in the 
+[deployment configuration](../deployment/guide), which can be done by setting
+the `config.agora_elections.virtualElectionsAllowed` setting in the `config.yml` 
+deployment configuration file to `true`. 
+:::
 
-- **Property name**: `end_date`
-- **Type:** `String`
-- **Required:** Yes
-- **Default:** -
-- **Example:** `""`
+:::tip Virtual vs Parent elections
+You will note that there are two different possible types of relations between 
+elections:
+1. A [virtual election](#election-virtual) and its respective 
+[virtual subelections](#election-virtualSubelections).
+2. A [parent election](#election-parent_id) and its respective 
+[children elections](#election-children_election_info).
 
-DEPRECATED. This field is required but should really be an empty string as it is currently unused.
+The first kind of relation (virtual elections and virtual subelections) is 
+established in `agora-elections`, and its use is allows for electoral results
+consolidation.
+
+The second kind of relation is established in `authapi` and its use is more
+related to the authentication, authorization and presentation behaviour in the
+earlier stages of an election, for example during login.
+
+Both are closely related/coupled, because usually you want to do both or none. 
+The separation exists simply because `authapi` and `agora-elections` are
+different modules that have separated databases.
+:::
+
+If set to `true`, this is a virtual election, meaning it can have subelections
+in `agora-elections`. This allows the election results to be calculated when
+calling [agora-results](#results-config-pipes) with the votes of all the 
+subelections, and thus allows you to do electoral results consolidation. Set the 
+[virtualSubelections setting](#election-virtualSubelections) to specify which
+are those subelections.
+
+### Election: `virtualSubelections`
+
+- **Property name**: `virtualSubelections`
+- **Type:** `List<Positive Integer>`
+- **Required:** No
+- **Default:** `[]`
+- **Example:** 
+```json
+[
+  41004,
+  41005,
+  41006
+]
+```
+
+List of [election ids](#election-id) that will be used for virtual subelections.
+See the information in [virtual setting](#election-virtual) for more details.
+
+### Election: `parent_id`
+
+- **Property name**: `parent_id`
+- **Type:** `Positive Integer | null`
+- **Required:** No
+- **Default:** `null`
+- **Example:** `66341`
+
+Identification number of the parent election, or more specifically `AuthEvent`,
+because this is an attribute set in `authapi`. `parent_id` is set in children
+elections. It can only be set to refer to a parent `AuthEvent`'s that exist, so
+you will have to create the parent election first.
+
+When a set of election have a parent-children relationship, they have the 
+following behaviour:
+1. In the Admin election list, the children elections are hidden by default and
+only shown as a dropdown of the parent election.
+2. In the Admin election dashboard, the parent election can manage the children
+elections. For example starting or stopping the parent election starts/stops 
+the children elections automatically. The parent election dashboard also allows
+to trigger the tally of specific subelections with a chooser widget, and also
+allows to switch to see the election results of specific children elections.
+3. In the Admin election Census Data, you can assign to each voter a subset of 
+the children elections, to allow a specific subset of children elections. The
+Census Data section also allows you to view in which children elections has any
+voter voted.
+4. In the parent election results public website, there's a chooser widget to
+choose which children election results to visualize.
+5. In the voting booth, after authentication the voter will vote without having
+to authenticate again in  the assigned children election in their 
+[natural order](#child-election-natural_order) sequentially. If a voter does 
+not vote to all the children elections assigned to this voter, then he will be
+able to authenticate again and vote in the next unvoted children election.
+
+See the [children_election_info setting](#election-children_election_info) for
+more details about how to set the list of children elections in a parent. Also
+read about the [virtual election setting](#election-virtual) to learn about
+the differences of virtual and parent elections.
+
+
+### Election: `children_election_info`
+
+- **Property name**: `children_election_info`
+- **Type:** [Children Election Info](#children-election-info-object) | `null`
+- **Required:** No
+- **Default:** `null`
+- **Related:**
+  - [Election: `parent_id`](#election-parent_id)
+  - [Election: `virtual`](#election-virtual)
+  - [Children Election Info](#children-election-info-object)
+- **Example:**
+```json
+{
+  "natural_order": [
+    41004,
+    41005,
+    41006
+  ],
+  "presentation": {
+    "categories": [
+      {
+        "events": [
+          {
+            "event_id": 41004,
+            "title": "Executive Board"
+          }
+        ],
+        "id": 1,
+        "title": "Board"
+      },
+      {
+        "events": [
+          {
+            "event_id": 41005,
+            "title": "Sector 1"
+          },
+          {
+            "event_id": 41006,
+            "title": "Sector 2"
+          }
+        ],
+        "id": 2,
+        "title": "Sectorial"
+      }
+    ]
+  }
+}
+```
+
+Describes the information related to the children elections. `null`, which is
+the default value, if this is not a parent election. See 
+[Children Election Info](#children-election-info-object) for details.
 
 ### Election: `director`
 
@@ -220,7 +366,9 @@ DEPRECATED. This field is required but should really be an empty string as it is
 - **Default:** -
 - **Example:** `"auth1"`
 
-The name of the election authority that will act as the director for this election. Its eopackage needs to be installed in the backend server ([see details](../deployment/guide#connecting-web-servers-with-authorities)).
+The name of the election authority that will act as the director for this 
+election. Its eopackage needs to be installed in the backend server 
+([see details](../deployment/guide#connecting-web-servers-with-authorities)).
 
 ### Election: `authorities`
 
@@ -230,7 +378,10 @@ The name of the election authority that will act as the director for this electi
 - **Default:** -
 - **Example:** `["auth2", "auth3"]`
 
-List of names of all the election authorities that should be included in this election, excluding the director authority name. Its eopackages needs to be installed in the backend server ([see details](../deployment/guide#connecting-web-servers-with-authorities)).
+List of names of all the election authorities that should be included in this 
+election, excluding the director authority name. Its eopackages needs to be 
+installed in the backend server 
+([see details](../deployment/guide#connecting-web-servers-with-authorities)).
 ### Election: `questions`
 
 - **Property name**: `questions`
@@ -512,6 +663,41 @@ Specifies if the census main lookup field is hidden. Only use this option if
 you have setup some other(s) [census extra_field](#census-extra_fields) with the
 [required_on_authentication attribute](#extra-field-required_on_authentication) 
 set to `true`, as it would be used to look up the voter in the database.
+
+### Election: `allow_public_census_query`
+
+- **Property name**: `allow_public_census_query`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+Specifies if voters at any time can access the website to consult if their
+voter is part of the census. Disabled by default. If enabled, a link to this
+page will appear in the public election website. The public census query is
+implemented in a very similar way to the login form, but without sending any
+One Time Passwords and instead of authenticating the user to vote it shows the
+user if he will be able to vote, even before or after the voting process starts.
+
+### Election: `start_date`
+
+- **Property name**: `start_date`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `""`
+
+UNUSED. This field is required but should really be an empty string as it is currently unused.
+
+### Election: `end_date`
+
+- **Property name**: `end_date`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `""`
+
+UNUSED. This field is required but should really be an empty string as it is currently unused.
 
 ## Election Presentation Object
 
@@ -813,7 +999,9 @@ passing it from pipe to pipe as the first argument of each pipe, called
 which some pipes might use to output some temporal files too.
 
 In virtual elections, `agora-results` not only receives as an input the tarball
-of the virtual election, but also the tarball of all the virtual subelections. 
+of the [virtual election](#election-virtual), but also the tarball of all the 
+[virtual subelections](#election-virtualSubelections). 
+
 In that case, `agora-results` will also load that election's question 
 configuration in the `data_list` pipes argument and extract each tally tarball
 in a different temporal directory. This is what allows us to do
@@ -1733,5 +1921,13 @@ of an [Extra Field](#extra-field-object) but with some additional properties:
 - `placeholder`: placeholder to be shown for the admin field when empty.
 
 ## Census Config Object
+
+TODO
+
+## Question Object
+
+TODO
+
+## Children Election Info Object
 
 TODO
