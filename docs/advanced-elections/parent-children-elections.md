@@ -192,14 +192,16 @@ relations. See
 [children_election_info](election-creation.md#election-children_election_info)
 for details.
 
-In reality, the questions set in the parent election is not used for much. For
-results consolidation in the parent election you could just use the appropiate
-[Results Config Pipes](#results-config-pipes) to clone the election from the 
-subelections. Note however that it's required for all election to be created
-with at least one question.
+In reality, the questions set in the parent election are not used for much. For
+results' consolidation in the parent election you could just use the appropiate
+[Results Config Pipes](election-creation.md#results-config-pipes) to clone the 
+election from the subelections. We will do something similar later on. Note 
+however that it's  required for all election to be created with at least one 
+question.
 
-What follows is a more is the same JSON configuration but only sketched the
-information regarding the virtual elections and results calculations:
+What follows is a more is the same JSON configuration but we only sketched the
+information regarding the virtual elections and 
+[results config pipes](election-creation.md#results-config-pipes):
 
 ```json title="university_elections_2.json"
 [
