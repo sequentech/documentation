@@ -280,9 +280,9 @@ always array index 1. Then the sub-elections are indexed in the order of
 appeareance in the `virtualSubelections` property. Thus, within `agora-results`
 the indexes of elections transform this way:
 
-- Electoral Process #1 => Array Index 0
-- Students Election #2 => Array Index 1
-- Professors Election #3 => Array Index 2
+- Electoral Process #1 => Election Index 0
+- Students Election #2 => Election Index 1
+- Professors Election #3 => Election Index 2
 
 We are using the `multipart_tally_plaintexts_append_joiner` pipe to source 
 ballots from the subelections to the virtual election for results consolidation.
