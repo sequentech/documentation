@@ -65,7 +65,7 @@ If a voter does  not vote to all the children elections assigned to this voter,
 then he will be able to authenticate again and vote in the next unvoted 
 children election.
 
-## Basic University elections example
+## University elections example
 
 Apart from the brief description above, we recommend you delve in to the details
 of election creation reading the 
@@ -76,9 +76,9 @@ In this tutorial we are going to create an university electoral process
 compromised of 3 different elections. The electoral process contains 3 Yes/No 
 questions:
 
-1. **For Everyone**: Do you want John to be the University Dean?
-2. **For Students**: Do you want Mary to be the Students' Representative?
-2. **For Professors**: Do you want Robert to be the Faculty representative?
+1. **For Everyone**: Q1: Do you want John to be the University Dean?
+2. **For Students**: Q2: Do you want Mary to be the Students' Representative?
+2. **For Professors**: Q3: Do you want Robert to be the Faculty representative?
 
 ![Questions and voter groups](./assets/questions_and_voter_groups.svg)
 
@@ -90,7 +90,7 @@ something like this:
 In the graphic above the question indexes within each election is indicated 
 between brackets like `[0]`.
 
-We will create the elections as described in 
+To do so, we will create the elections as described in 
 [Election Creation Guide](election-creation.md). The
 [Election JSON settings](election-creation.md#election-json-settings) will be
 similar to the following sketch:
@@ -192,15 +192,16 @@ relations. See
 [children_election_info](election-creation.md#election-children_election_info)
 for details.
 
-In reality, the questions set in the parent election are not used for much. For
-results' consolidation in the parent election you could just use the appropiate
+In reality, the questions set in the parent election are not used for much 
+because voters will only vote in the children elections. For
+results' consolidation in the parent election we could just use the appropiate
 [Results Config Pipes](election-creation.md#results-config-pipes) to clone the 
 election from the subelections. We will do something similar later on. Note 
 however that it's  required for all election to be created with at least one 
 question.
 
-What follows is a more is the same JSON configuration but we only sketched the
-information regarding the virtual elections and 
+What follows is the same JSON configuration but we only sketched the information 
+regarding the virtual elections and 
 [results config pipes](election-creation.md#results-config-pipes):
 
 ```json title="university_elections_2.json"
@@ -278,7 +279,7 @@ information regarding the virtual elections and
 The juice of this part is in the `resultsConfig` for the virtual election (id=1). As
 `agora-results` doesn't know the id of the subelections, it references to the
 subelections by array index. The virtual election (Electoral Process, id 1) has
-always array index 1. Then the sub-elections are indexed in the order of 
+always array index 0. Then the sub-elections are indexed in the order of 
 appeareance in the `virtualSubelections` property. Thus, within `agora-results`
 the indexes of elections transform this way:
 
@@ -288,6 +289,16 @@ the indexes of elections transform this way:
 
 We are using the `multipart_tally_plaintexts_append_joiner` pipe to source 
 ballots from the subelections to the virtual election for results consolidation.
+
+We would want three different versions of the results for Q1:
+1. Q1 Consolidated results of both students and professors.
+2. Q1 Results from students.
+3. Q1 Results from professors.
+
+The consolidated results for Q1 will appear in `Electoral Process #1`. That 
+election (election #1) will also show the results for Q2 and Q3 because we
+ensured to source ballots for those questions from the sub-elections in which
+the students and professors voted.
 
 We could further improve the `Electoral Process #1` election results to contain 
 there all the electoral information and not just consolidated elections. We could
