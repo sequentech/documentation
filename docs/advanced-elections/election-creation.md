@@ -276,7 +276,8 @@ See the information in [virtual setting](#election-virtual) for more details.
 Identification number of the parent election, or more specifically `AuthEvent`,
 because this is an attribute set in `authapi`. `parent_id` is set in children
 elections. It can only be set to refer to a parent `AuthEvent`'s that exist, so
-you will have to create the parent election first.
+you will have to create the parent election first. If you are creating multiple
+elections in a single `Edit JSON elections`, then also place the parent first.
 
 When a set of election have a parent-children relationship, they have the 
 following behaviour:

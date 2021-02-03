@@ -95,21 +95,21 @@ To do so, we will create the elections as described in
 [Election JSON settings](election-creation.md#election-json-settings) will be
 similar to the following sketch:
 
-```json title="university_elections_1.json"
+```json
 [
   {
-    "id": 1,
+    "id": 100, // election id
     "title": "Electoral Process",
     "children_election_info": {
-      "natural_order": [2, 3],
+      "natural_order": [101, 102],
       "presentation": {
         "categories": [
           {
             "events": [
-              {"event_id": 2, "title": "Students"},
-              {"event_id": 3, "title": "PRofessors"}
+              {"event_id": 101, "title": "Students"},
+              {"event_id": 102, "title": "Professors"}
             ],
-            "id": 2,
+            "id": 0,
             "title": "Sectors"
           }
         ]
@@ -138,12 +138,12 @@ similar to the following sketch:
         ]
       },
     ],
-    // ..other properties..
+    // ..other election properties for election with id=100 missing here..
   },
   {
-    "id": 2,
+    "id": 101, // election id
     "title": "Students election",
-    "parent_id": 1,
+    "parent_id": 100,
     "questions": [
       {
         "title": "Q1: Do you want John to be the University Dean?",
@@ -160,12 +160,12 @@ similar to the following sketch:
         ]
       }
     ],
-    // ..other properties..
+    // ..other election properties for election with id=101 missing here..
   },
   {
-    "id": 3,
+    "id": 102, // election id
     "title": "Professors election",
-    "parent_id": 1,
+    "parent_id": 100,
     "questions": [
       {
         "title": "Q1: Do you want John to be the University Dean?",
@@ -182,34 +182,45 @@ similar to the following sketch:
         ]
       }
     ],
-    // ..other properties..
+    // ..other election properties for election with id=102 missing here..
   }
 ]
 ```
+:::note
+There are many missing properties in the configuration above. The sketched  
+document is just part of the complete JSON document and if you try to create the
+[Election Creation Guide](election-creation.md#creating-elections) it will fail.
+In the document above we are just showing the parts of the JSON document that 
+we want to explain at this moment. You can access the 
+[final document, complete and with some modifications here](./assets/university_example.yaml).
+The modifications will be improvements / evolutions that we will be explaining 
+in this document. It is that final document that we will use later to create
+the elections.
+:::
 
-That's the configuration regarding the questions and the parent-children 
-relations. See 
+The sketched JSON document above is the configuration regarding the questions 
+and the  parent-children relations. See 
 [children_election_info](election-creation.md#election-children_election_info)
 for details.
 
-In reality, the questions set in the parent election are not used for much 
-because voters will only vote in the children elections. For
-results' consolidation in the parent election we could just use the appropiate
+The questions set in the parent election (with `id=100`) are not used for much 
+because voters will only vote in the children elections. For results 
+consolidation in the parent election we could just use the appropiate
 [Results Config Pipes](election-creation.md#results-config-pipes) to clone the 
-election from the subelections. We will do something similar later on. Note 
-however that it's  required for all election to be created with at least one 
-question.
+election from the subelections. We will do something similar later on. However, 
+note that it's required for all elections to be created with at least one 
+question - parent election included.
 
-What follows is the same JSON configuration but we only sketched the information 
-regarding the virtual elections and 
+What follows is the same JSON configuration as before, but this time we only 
+sketched the information regarding the virtual elections and 
 [results config pipes](election-creation.md#results-config-pipes):
 
-```json title="university_elections_2.json"
+```json
 [
   {
-    "id": 1,
+    "id": 100, // election id
     "virtual": true,
-    "virtualSubelections": [2,3],
+    "virtualSubelections": [101, 102],
     "resultsConfig": [
       [
         // We source votes from source subelection questions to the 
@@ -218,74 +229,74 @@ regarding the virtual elections and
         {
           "mappings": [
             {
-              // From: Students Election #2 | Q1
+              // From: Students Election #101 | Q1
               "source_election_id": 1,
               "source_question_num": 0,
-              // To: Electoral Process #1 | Q1
+              // To: Electoral Process #100 | Q1
               "dst_election_id": 0,
               "dst_question_num": 0
             },
             {
-              // From: Professors Election #3 | Q1
+              // From: Professors Election #102 | Q1
               "source_election_id": 2,
               "source_question_num": 0,
-              // To: Electoral Process #1 | Q1
+              // To: Electoral Process #100 | Q1
               "dst_election_id": 0,
               "dst_question_num": 0
             },
             {
-              // From: Students Election #2 | Q2
+              // From: Students Election #101 | Q2
               "source_election_id": 1,
               "source_question_num": 1,
-              // To: Electoral Process #1 | Q2
+              // To: Electoral Process #100 | Q2
               "dst_election_id": 0,
               "dst_question_num": 1
             },
             {
-              // From: Professors Election #3 | Q3
+              // From: Professors Election #102 | Q3
               "source_election_id": 2,
               "source_question_num": 1,
-              // To: Electoral Process #1 | Q3
+              // To: Electoral Process #100 | Q3
               "dst_election_id": 0,
               "dst_question_num": 2
-            },
+            }
           ]
         }
-      ]
+      ],
       ["agora_results.pipes.results.do_tallies", {}],
       ["agora_results.pipes.sort.sort_non_iterative", {}]
     ]
-    // .. other properties..
+    // ..other election properties for election with id=100 missing here..
   },
   {
-    "id": 2,
+    "id": 101,
     "resultsConfig": [
       ["agora_results.pipes.results.do_tallies", {}],
       ["agora_results.pipes.sort.sort_non_iterative", {}]
     ]
-    // .. other properties..
+    // ..other election properties for election with id=101 missing here..
   },
   {
-    "id": 3,
+    "id": 102,
     "resultsConfig": [
       ["agora_results.pipes.results.do_tallies", {}],
       ["agora_results.pipes.sort.sort_non_iterative", {}]
     ]
-    // .. other properties..
+    // ..other election properties for election with id=102 missing here..
   },
 ]
 ```
 
-The juice of this part is in the `resultsConfig` for the virtual election (id=1). As
-`agora-results` doesn't know the id of the subelections, it references to the
-subelections by array index. The virtual election (Electoral Process, id 1) has
-always array index 0. Then the sub-elections are indexed in the order of 
-appeareance in the `virtualSubelections` property. Thus, within `agora-results`
-the indexes of elections transform this way:
+The juice of this part is in the `resultsConfig` for the virtual election 
+(`id=100`). As `agora-results` doesn't know the id of the subelections, it 
+references to the subelections by array index. The virtual election (with 
+`id=100`) has always array index `0`. Then the sub-elections are indexed in the  
+order of appeareance in the `virtualSubelections` property. Thus, within 
+`agora-results` the indexes of elections transform this way:
 
-- Electoral Process #1 => Election Index 0
-- Students Election #2 => Election Index 1
-- Professors Election #3 => Election Index 2
+- Electoral Process #100 => Election Index 0
+- Students Election #101 => Election Index 1
+- Professors Election #102 => Election Index 2
 
 We are using the `multipart_tally_plaintexts_append_joiner` pipe to source 
 ballots from the subelections to the virtual election for results consolidation.
@@ -295,12 +306,12 @@ We would want three different versions of the results for Q1:
 2. Q1 Results from students.
 3. Q1 Results from professors.
 
-The consolidated results for Q1 will appear in `Electoral Process #1`. That 
-election (election #1) will also show the results for Q2 and Q3 because we
-ensured to source ballots for those questions from the sub-elections in which
-the students and professors voted.
+The consolidated results for Q1 will appear in the election with `id=100`. That 
+election will also show the results for Q2 and Q3 because we ensured to source 
+ballots for those questions from the sub-elections in which the students and 
+professors voted.
 
-We could further improve the `Electoral Process #1` election results to contain 
+We could further improve the election with `id=100` election results to contain 
 there all the electoral information and not just consolidated elections. We could
 clone twice Q1 and adjust the title of the cloned questions to do something 
 like:
@@ -309,17 +320,16 @@ like:
 
 The configuration file sketch would be:
 
-
-```json title="university_elections_3.json"
+```json
 [
   {
-    "id": 1,
+    "id": 100,
     "virtual": true,
-    "virtualSubelections": [2,3],
+    "virtualSubelections": [101, 102],
     "resultsConfig": [
       [
-        // We duplicate Q1 in election 0 (Electoral Process #1) into
-        // question indexes 1 and 2 for students and professors, 
+        // We duplicate Q1 in election with array index 0 (Electoral Process 
+        // #100) into question indexes 1 and 2 for students and professors, 
         // with empty ballots as votes will be sourced later with the 
         // multipart_tally_plaintexts_append_joiner pipe.
         "agora_results.pipes.duplicate_questions.duplicate_questions",
@@ -328,7 +338,7 @@ The configuration file sketch would be:
             {
               "source_election_index": 0,
               "base_question_index": 0,
-              "duplicated_question_indexes": [1,2],
+              "duplicated_question_indexes": [1, 2],
               "zero_plaintexts": true
             }
           ]
@@ -364,76 +374,141 @@ The configuration file sketch would be:
         {
           "mappings": [
             {
-              // From: Students Election #2 | Q1
+              // From: Students Election #101 | Q1
               "source_election_id": 1,
               "source_question_num": 0,
-              // To: Electoral Process #1 | Q1 all
+              // To: Electoral Process #100 | Q1 all
               "dst_election_id": 0,
               "dst_question_num": 0
             },
             {
-              // From: Students Election #2 | Q1
+              // From: Students Election #101 | Q1
               "source_election_id": 1,
               "source_question_num": 0,
-              // To: Electoral Process #1 | Q1 students
+              // To: Electoral Process #100 | Q1 students
               "dst_election_id": 0,
               "dst_question_num": 1
             },
             {
-              // From: Professors Election #3 | Q1
+              // From: Professors Election #102 | Q1
               "source_election_id": 2,
               "source_question_num": 0,
-              // To: Electoral Process #1 | Q1 all
+              // To: Electoral Process #100 | Q1 all
               "dst_election_id": 0,
               "dst_question_num": 0
             },
             {
-              // From: Professors Election #3 | Q1
+              // From: Professors Election #102 | Q1
               "source_election_id": 2,
               "source_question_num": 0,
-              // To: Electoral Process #1 | Q1 professors
+              // To: Electoral Process #100 | Q1 professors
               "dst_election_id": 0,
               "dst_question_num": 2
             },
             {
-              // From: Students Election #2 | Q2
+              // From: Students Election #101 | Q2
               "source_election_id": 1,
               "source_question_num": 1,
-              // To: Electoral Process #1 | Q2
+              // To: Electoral Process #100 | Q2
               "dst_election_id": 0,
               "dst_question_num": 3
             },
             {
-              // From: Professors Election #3 | Q3
+              // From: Professors Election #102 | Q3
               "source_election_id": 2,
               "source_question_num": 1,
-              // To: Electoral Process #1 | Q3
+              // To: Electoral Process #100 | Q3
               "dst_election_id": 0,
               "dst_question_num": 4
-            },
+            }
           ]
         }
-      ]
+      ],
       ["agora_results.pipes.results.do_tallies", {}],
       ["agora_results.pipes.sort.sort_non_iterative", {}]
     ]
-    // .. other properties..
+    // ..other election properties for election with id=100 missing here..
   },
   {
-    "id": 2,
+    "id": 101,
     "resultsConfig": [
       ["agora_results.pipes.results.do_tallies", {}],
       ["agora_results.pipes.sort.sort_non_iterative", {}]
     ]
-    // .. other properties..
+    // ..other election properties for election with id=101 missing here..
   },
   {
-    "id": 3,
+    "id": 102,
     "resultsConfig": [
       ["agora_results.pipes.results.do_tallies", {}],
       ["agora_results.pipes.sort.sort_non_iterative", {}]
     ]
-    // .. other properties..
+    // ..other election properties for election with id=102 missing here..
   },
 ]
 ```
+
+:::note
+In a powerful system such as the Agora Voting project, sometimes there are 
+multiple ways to do the same thing. That is the case with this last results 
+pipes configuration for election with id=1 in this last example. It is more 
+complicated than needed in this case. This is done just for demonstration 
+purposes, to demonstrate you what kind of things you can do with the agora 
+results pipe system and to demonstrate that the questions shown in the 
+election results don't need to be the same as the original election question 
+list.
+
+Instead of duplicating `Q1` twice for election with `id=100` and then changing
+those three question titles adding the prefix `Q1 all`, `Q1 students` and 
+`Q1 professors`, we could have just applied those changes directly in the list
+of original questions for the election with `id=100`. Of course, to obtain the
+same election results you would still have to apply the same 
+`multipart_tally_plaintexts_append_joiner` pipe that sources the ballots from
+the right children election questions into the pertinent parent election 
+questions.
+
+We leave to the reader the task of modifying the JSON document  of the elections
+to apply those changes as an exercise.
+:::
+
+## Create and manage the elections
+
+The complete elections JSON configuration of our university elections example 
+can be found in the 
+[university_example.json](./assets/university_example.yaml) file.
+
+:::note election cannot be created?
+If you have already not only registered but created any election with ids `100`,
+`101` or `102`, you will have to modify the ids (and all its references) to use
+other election ids. [More details here](election-creation.md#modifying-elections).
+
+Also, please note that you will need to modify the example to correctly name
+the election authorities in your deployment. We are using `test-a1` and 
+`test-a2` in the [university_example.json](./assets/university_example.yaml), 
+but you might need to change that.
+:::
+
+Please read and follow the 
+[guide on how to create the elections](election-creation.md) to do so. When you
+reach to the step of editing the elections JSON, after applying the content of
+the [university_example.json](./assets/university_example.yaml), you will see
+the following screen:
+
+![Create University Elections](./assets/university_example_create_elections.png)
+
+If you scroll down and click in `Create the elections`, they will be created.
+Afterwards, the interface will redirect you to the dashboard of the first
+election created, the parent election with `id=100`:
+
+![Parent Election Dashboard](./assets/university_example_parent_dashboard.png)
+
+If you go back to the election list (clicking in the sidebar menu item 
+`Elections`), you will notice that only the parent election is listed:
+
+![Election List shows only parent](./assets/election_list_university.png)
+
+However, you will see that this election has a left notch `>`. If you click 
+there, you will see the expanded list of children elections related to this
+parent election:
+
+![Election List with Parent expanded](./assets/election_list_university_expanded.png)
