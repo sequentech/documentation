@@ -505,10 +505,37 @@ election created, the parent election with `id=100`:
 If you go back to the election list (clicking in the sidebar menu item 
 `Elections`), you will notice that only the parent election is listed:
 
-![Election List shows only parent](./assets/election_list_university.png)
+![Election List shows only parent](./assets/university_example_election_list.png)
 
 However, you will see that this election has a left notch `>`. If you click 
 there, you will see the expanded list of children elections related to this
 parent election:
 
-![Election List with Parent expanded](./assets/election_list_university_expanded.png)
+![Election List with Parent expanded](./assets/university_example_election_list_expanded.png)
+
+If you click in the Parent Election (`id=100`), then go to the `Census Data`
+section and then click in `Actions` button and in the `Add person..` menu item,
+you will see the following dialog:
+
+![Add person to census](./assets/university_example_add_person.png)
+
+Voters can only authenticate in parent elections - they won't be able to 
+directly authenticate in the children election. And you should work the census
+in the parent elections only too. 
+
+When you add the census to the parent election, something you can do either 
+directly [during election creation](election-creation.md#census-config-object) 
+or afterwards using the actions in the `Census Data` section, you will be able 
+to assign voters to children elections in which they will be able to vote. 
+
+We'll register our census using the actions in `Census Data`. Lets register a 
+student, so we will only to let this voter in the `Students Election`:
+
+![Add person to census example](./assets/university_example_add_person_edulix.png)
+
+Once confirmed and added to the census, you will be able to see the column that
+marks in which children elections can this voter participate:
+
+![Add person to census example](./assets/university_example_filled_census.png)
+
+
