@@ -216,9 +216,9 @@
       }
     ],
     "authorities": [
-      "test-a1"
+      "test-a2"
     ],
-    "director": "test-a2",
+    "director": "test-a1",
     "presentation": {
       "theme": "default",
       "share_text": [
@@ -457,9 +457,9 @@
       }
     ],
     "authorities": [
-      "test-a1"
+      "test-a2"
     ],
-    "director": "test-a2",
+    "director": "test-a1",
     "presentation": {
       "theme": "default",
       "share_text": [
@@ -698,9 +698,9 @@
       }
     ],
     "authorities": [
-      "test-a1"
+      "test-a2"
     ],
-    "director": "test-a2",
+    "director": "test-a1",
     "presentation": {
       "theme": "default",
       "share_text": [
