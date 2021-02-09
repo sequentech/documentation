@@ -1472,11 +1472,34 @@ kind of detection won't be applied. If you need to update the census, it's best
 to first remove all the census with the `bulk_delete_voters` command before 
 executing `bulk_insert_voters`.
 
+#### Assigning children elections in parent election census
+
 If the election is a parent election, you usually set the census within the
 parent election and there assign to which children elections can that specific
 voter vote. To do so, set the `children_event_id_list` property within the 
 `metadata` field of each voter. This list is simply a list of children election
-ids in which the voter can vote.
+ids in which the voter can vote. If we had a parent election with id `100` and
+two children elections with ids `101` and `102`, we could assign one voter to
+each children election with this example:
+
+```json
+[
+  {
+    "metadata": {
+      "email": "john@example.com",
+      "name": "John",
+      "children_event_id_list": [101]
+    }
+  },
+  {
+    "metadata": {
+      "email": "marta@example.com",
+      "name": "Marta",
+      "children_event_id_list": [102]
+    }
+  }
+]
+```
 
 ### Census: `auth_method`
 
