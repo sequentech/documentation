@@ -1658,10 +1658,10 @@ need to be filled is configured in the `config.yml`
 
 See [Admin Field](#admin-field-object) for more details.
 
-### Census: `config`
+### Census: `auth_method_config`
 
-- **Property name**: `config`
-- **Type:** List<[Census Config](#census-config-object)>
+- **Property name**: `auth_method_config`
+- **Type:** List<[Auth Method Config](#auth-method-config-object)>
 - **Required:** Yes
 - **Default:** -
 - **Example:**
@@ -1947,7 +1947,122 @@ of an [Extra Field](#extra-field-object) but with some additional properties:
 
 ## Census Config Object
 
-TODO
+This JSON object type describes some census configuration parameters 
+related to the election. It is used by the [config property](#census-config) of
+the [census object](#census-object) and can have the following properties:
+
+### Census Config: `allow_user_resend`
+
+- **Property name**: `allow_user_resend`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to true, allows the voter to request the authentication code to be 
+resent. This makes sense only for authentication methods that use authentication
+codes such as `email`, `email-otp`, `sms` or `sms-otp`, but not for others such
+as `email-and-password`, `user-and-password` or `openid-connect`.
+
+### Census Config: `msg`
+
+- **Property name**: `msg`
+- **Type:** `String`
+- **Required:** In applicable authentication methods
+- **Default:** -
+- **Example:** `"Vote in __URL__ with code __CODE__"`
+
+This is the text body template used for sending the authentication codes to 
+voters. It's only applicable to authentication methods that send authentication
+codes to voters such as `email`, `email-otp`, `sms` or `sms-otp`. In the first
+two this corresponds to the Plain Text body of the email message.
+
+As mentioned earlier, this is a template. Each voter will received a taylored
+message with the template variables substituted with their values. Variables
+are identified surrounded by two `_` characters and always in upper case. 
+For example the variable `url` would appear as `__URL__`.
+
+The allowed template variables are:
+- `__URL__`: This is the voter authentication URL specific for the voter but
+not containing the voter authentication code, which the voter will have to fill
+out manually.
+- `__URL2__`: This is the voter authentication URL containing the 
+both the email/sms of the voter and the voter authentication code. If no other
+[extra_field](#census-extra_fields) is required during authentication, entering  
+in the `__URL2__` URLs allows voters to authenticate without having to fill out 
+any web form. It's easier, but also more risky because anyone with this link 
+could use it to authenticate.
+- `__CODE__`: This is the authentication code. Each time the authentication 
+codes are sent to a voter, a new code is generated and any old codes are 
+disabled.
+- `__<extra_field>__`: Each voter has some voter related information 
+associated to it. You can use those extra fields by the 
+[sluggified](https://docs.djangoproject.com/en/3.1/ref/utils/#django.utils.text.slugify) 
+and uppercased [name](#extra-field-name) property.
+
+The maximum length of the message text depends on the authentication method. By
+default the email text body can have up to `5,000` characters, and SMS text
+body can only have `200`. To change this, you would need to change the code
+in the respective authentication method code. 
+[This is the relevant code](https://github.com/agoravoting/authapi/blob/master/authapi/authmethods/m_email.py#L94) 
+in the `email` authentication method:
+
+```python title="authapi/authmethods/m_email.py" {20}
+    CONFIG_CONTRACT = [
+      {
+        'check': 'isinstance',
+        'type': dict
+      },
+      {
+        'check': 'dict-keys-exist',
+        'keys': ['msg', 'subject', 'registration-action', 'authentication-action']
+      },
+      {
+        'check': 'index-check-list',
+        'index': 'msg',
+        'check-list': [
+          {
+            'check': 'isinstance',
+            'type': str
+          },
+          {
+            'check': 'length',
+            'range': [1, 5000]
+          }
+        ]
+      },
+```
+
+### Census Config: `subject`
+
+- **Property name**: `subject`
+- **Type:** `String`
+- **Required:** In applicable authentication methods
+- **Default:** -
+- **Example:** `"Vote now with nVotes"`
+
+This is the email subject template used for sending the authentication codes to 
+voters. It's only applicable to authentication methods that send authentication
+codes to voters such as `email` and `email-otp`.
+
+The template works in the same manner as the 
+[`msg` property](#census-config-subject), see that one for more details.
+
+### Census Config: `authentication-action`
+
+- **Property name**: `authentication-action`
+- **Type:** `Object`
+- **Required:** Yes
+- **Default:** -
+- **Example:**
+```json
+{
+  "mode": "vote",
+  "mode-config": {
+    "url": ""
+  }
+}
+```
 
 ## Question Object
 
