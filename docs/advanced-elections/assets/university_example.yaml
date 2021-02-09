@@ -13,7 +13,7 @@
               {"event_id": 101, "title": "Students"},
               {"event_id": 102, "title": "Professors"}
             ],
-            "id": 0,
+            "id": 1,
             "title": "Sectors"
           }
         ]
@@ -240,7 +240,26 @@
     "num_successful_logins_allowed": 0,
     "has_ballot_boxes": false,
     "census": {
-      "voters": [],
+      "voters": [
+        {
+          "metadata": {
+            "email": "student1@example.com",
+            "children_event_id_list": [101]
+          }
+        },
+        {
+          "metadata": {
+            "email": "student2@example.com",
+            "children_event_id_list": [101]
+          }
+        },
+        {
+          "metadata": {
+            "email": "professor1@example.com",
+            "children_event_id_list": [102]
+          }
+        },
+      ],
       "auth_method": "email",
       "census": "close",
       "extra_fields": [

@@ -109,7 +109,7 @@ similar to the following sketch:
               {"event_id": 101, "title": "Students"},
               {"event_id": 102, "title": "Professors"}
             ],
-            "id": 0,
+            "id": 1,
             "title": "Sectors"
           }
         ]
@@ -467,9 +467,63 @@ same election results you would still have to apply the same
 the right children election questions into the pertinent parent election 
 questions.
 
-We leave to the reader the task of modifying the JSON document  of the elections
+We leave to the reader the task of modifying the JSON document of the elections
 to apply those changes as an exercise.
 :::
+
+### Adding census on election creation
+
+As described in 
+[the census API](election-creation.md#assigning-children-elections-in-parent-election-census)
+you can set the census for the parent election to specify in which children 
+elections can a voter vote. 
+
+Let's add a couple students and one professor in our example json config sketch:
+
+```json
+[
+  {
+    "id": 100,
+    // ..other election properties for election with id=100 missing here..
+    "census": {
+      "voters": [
+        {
+          "metadata": {
+            "email": "student1@example.com",
+            "children_event_id_list": [101]
+          }
+        },
+        {
+          "metadata": {
+            "email": "student2@example.com",
+            "children_event_id_list": [101]
+          }
+        },
+        {
+          "metadata": {
+            "email": "professor1@example.com",
+            "children_event_id_list": [102]
+          }
+        },
+      ],
+      "extra_fields": [],
+      "admin_fields": [],
+      "has_ballot_boxes": false,
+      "auth_method": "email",
+      "census": "close"
+    }
+  },
+  {
+    "id": 101
+    // ..other election properties for election with id=101 missing here..
+  },
+  {
+    "id": 102
+    // ..other election properties for election with id=102 missing here..
+  }
+]
+```
+
 
 ## Create and manage the elections
 
