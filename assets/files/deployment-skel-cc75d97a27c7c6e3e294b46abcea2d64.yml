@@ -6,24 +6,40 @@ windows:
   - s1:
     - ssh BASE-s1
     - sudo -s
-  - s1-d: cd /root/BASE-s1/
+  - s1-d:
+    - ssh BASE-s1
+    - sudo -s
+    - cd /root/BASE-s1/
+    - workon ansible
 
   - s2:
     - ssh BASE-s2
     - sudo -s
-  - s2-d: cd /root/BASE-s2
+  - s2-d:
+    - ssh BASE-s2
+    - sudo -s
+    - cd /root/BASE-s2/
+    - workon ansible
 
   - a1:
     - ssh BASE-a1
     - sudo -s
   - a1-l: ssh BASE-a1 sudo eolog
-  - a1-d: cd /root/BASE-a1
+  - a1-d:
+    - ssh BASE-a1
+    - sudo -s
+    - cd /root/BASE-a1/
+    - workon ansible
 
   - a2:
     - ssh BASE-a2
     - sudo -s
   - a2-l: ssh BASE-a2 sudo eolog
-  - a2-d: cd /root/BASE-a2 
+  - a2-d:
+    - ssh BASE-a2
+    - sudo -s
+    - cd /root/BASE-a2/
+    - workon ansible
 
   - ae:
     - ssh BASE-s1
