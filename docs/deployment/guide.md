@@ -11,7 +11,7 @@ with two Authorities for a production environment in virtual machines.
 ## Requirements
 
 You need 4 Linux x64 host machines with at least 4GB of RAM each and a clean
-Ubuntu  16.04 LTS installed and around 30GB of HD.
+Ubuntu 20.04 LTS installed and around 30GB of HD.
 
 The structure of the four machines is:
 
@@ -104,19 +104,20 @@ You can access our base skeleton configuration for a deployment in the
 1. Install `tmux` and `tmuxinator` in the `ops` machine:
 
 ```bash
-apt install tmux -y
-gem install tmuxinator
+apt install tmux tmuxinator -y
 ```
 
-2. Add the following alias to your `/root/.bashrc`: 
+2. Add an `mux` alias to your `/root/.bashrc`: 
 
 ```bash
-alias mux='tmuxinator'
+echo "alias mux='tmuxinator'" >> /root/.bashrc
 ```
 
 3. Create the base tmuxinator config file that you'll copy for each deployment
-by copying the file [deployment-skel.yml](./assets/deployment-skel.yml) into the file
-`/root/.tmuxinator/deployment-skel.yml` of the `ops` machine.
+by copying the file [deployment-skel.yml](./assets/deployment-skel.yml) into the 
+file `/root/.tmuxinator/deployment-skel.yml` of the `ops` machine, and also the
+file [.tmux.conf](./assets/tmux.conf.yml) into `/root/.tmux.conf` of the `ops`
+machine.
 
 4. Learn the basic tmuxinator & tmux commands:
  - `mux list`: List the available projects
@@ -160,9 +161,9 @@ be used for.
 For a faster deployment we recommend to increase the number of cores. This can
 be reduced later to even just 1 core and 2GB of RAM.
 
-In AWS EC2 we usually use the free `Ubuntu 16.04 LTS - Xenial (HVM)` AWS 
-Marketplace  AMI. If you are using vagrant, it will take care of the 
-provisioning of the VMs.
+In AWS EC2 we usually use the free `Ubuntu 20.04 LTS - Focal` AWS Marketplace 
+AMI provided by `Canonical Group Limited`. If you are using vagrant, it will 
+take care of the provisioning of the VMs.
 
 It's customary for us to name each machine by the hostname it will use. For 
 example in AWS EC2 an instance whose hostname is `prod-a1` (trustee #1 for the
@@ -284,9 +285,10 @@ We will first do some updates, install some dependencies, configure the
 timezone and reboot:
 
 ```bash
-echo "Europe/Madrid" > /etc/timezone
+ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime
 dpkg-reconfigure -f noninteractive tzdata
-apt-get update && apt-get upgrade -y && apt install virtualenvwrapper -y  && reboot 
+echo "source /usr/share/virtualenvwrapper/virtualenvwrapper.sh" >> /root/.bashrc
+apt-get update && apt-get dist-upgrade -y && apt install virtualenvwrapper -y  && reboot 
 ```
 
 We usually have a copy of the configuration file in `ops` then copy it to the 
@@ -315,7 +317,7 @@ mkvirtualenv ansible -p $(which python3)
 deactivate
 workon ansible
 
-# should return Python 3.5.2:
+# should return Python 3.8.5:
 python --version 
 cd /root
 git clone https://github.com/agoravoting/agora-dev-box.git $NAME
@@ -334,7 +336,7 @@ cp /home/ubuntu/config.yml config.yml
 # it needs to be using the same passwords as the master.
 DATE=$(date); cp config.yml "config_base_$DATE.yml"; python3 helper-tools/manage_config_pwd.py -c "config_base_$DATE.yml" -l 40 -o config.yml
 
-pip install ansible==2.9.4
+pip install ansible==2.9.17
 ```
 
 After this, one should edit the config.yml file and edit the appropiate values,
