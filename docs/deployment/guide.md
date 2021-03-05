@@ -336,7 +336,7 @@ cp /home/ubuntu/config.yml config.yml
 # it needs to be using the same passwords as the master.
 DATE=$(date); cp config.yml "config_base_$DATE.yml"; python3 helper-tools/manage_config_pwd.py -c "config_base_$DATE.yml" -l 40 -o config.yml
 
-pip install ansible==2.9.17
+pip install ansible==2.9.18
 ```
 
 After this, one should edit the config.yml file and edit the appropiate values,
@@ -375,8 +375,7 @@ If your machine is behind a proxy, you need to specify that in the
 
 After setting the configuration, you should set the playbook that we will use
 for deploying as master the machines, we already configured the inventory for
-deploying locally. The next step is to install ansible 2.9.4 (needs to be done
-only once) and then deploy with ansible:
+deploying locally. The next step is to deploy with ansible:
 
 ```bash
 date; time ansible-playbook -i inventory playbook.yml; date
