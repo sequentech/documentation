@@ -538,31 +538,34 @@ This `agora-elections` configuration setting will be applied independently of
 ### Election: `resultsConfig`
 
 - **Property name**: `resultsConfig`
-- **Type:** List<[Results Config Pipes](#results-config-pipes)>
+- **Type:** Object
 - **Required:** No
 - **Default:** -
 - **Example:**
 ```json
-[
-  [
-    "agora_results.pipes.results.do_tallies",
+{
+  "version": "1.0",
+  "pipes": [
     {
-      "ignore_invalid_votes": true
-    }
-  ],
-  [
-    "agora_results.pipes.sort.sort_non_iterative",
+      "type": "agora_results.pipes.results.do_tallies",
+      "params": {
+        "ignore_invalid_votes": true
+      }
+    },
     {
-      "question_indexes": [0]
+      "type": "agora_results.pipes.sort.sort_non_iterative",
+      "params": {
+        "question_indexes": [0]
+      }
     }
   ]
-]
+}
 ```
 
-Specifies how election results will be calculated. It is a set of pipes to be 
-applied, together with each pipe configuration, that will be used during the 
-calculation of election results. See [Results Config Pipes](#results-config-pipes)
-for more details.
+Specifies how election results will be calculated. It contains in the `pipes`
+parameter a set of pipes to be applied, together with each pipe configuration, 
+that will be used during the  calculation of election results. See 
+[Results Config Pipes](#results-config-pipes) for more details.
 
 ### Election: `has_ballot_boxes`
 
@@ -945,6 +948,57 @@ If set, this optional property will modify the voting booth behaviour so that
 once the ballot is cast and the success screen is shown, after the specified
 number of seconds the voter will be automatically redirected to the login page.
 
+### Election Presentation Options: `allow_casting_invalid_votes`
+
+- **Property name**: `allow_casting_invalid_votes`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `true`
+- **Example:** `false`
+
+If set, the voter will be able to cast invalid votes and there will be button
+in the votin booth to choose to do so. Still, a warning will be shown to the
+voter to ensure this is their intention. It will also allow to cast an invalid
+vote by other means, like choosing more options than configuration allows.
+
+
+### Election Presentation Options: `enable_panachage`
+
+- **Property name**: `enable_panachage`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `true`
+- **Example:** `false`
+
+If set to `true` (the default), the voter will be able to choose answers from
+multiple categories. If set to `false`, the voter will only be allowed to choose
+answers from a single category and any vote doing otherwise will be deemed 
+invalid.
+
+### Election Presentation Options: `cumulative_number_of_checkboxes`
+
+- **Property name**: `cumulative_number_of_checkboxes`
+- **Type:** `Integer`
+- **Required:** No
+- **Default:** `1`
+- **Example:** `3`
+
+Specifies the number of checkboxes shown to the side of each question's answer,
+so that the voter can check each of them. Currently only used when voting method
+is  `cummulative`. By default, if unset, its value is `1`. 
+
+### Election Presentation Options: `enable_checkable_lists`
+
+- **Property name**: `enable_checkable_lists`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true` then an answer representing the checkable category can be 
+added, and can be flagged as such by setting an url to the answer with title 
+`type` and value `checkable-list` (string).
+
 ## Results Config Pipes
 
 A results config pipe is used to specify how election results will be calculated. 
@@ -953,19 +1007,40 @@ configuration, that will be used during the  calculation of election results. It
 is configured at the election level with the 
 [resultsConfig setting](#election-resultsconfig).
 
-Each pipe is a list with two items (a pair):
-1. The pipe import path
-2. An object with that specific pipe configuration
+Each pipe is a list of pipe objects with two items:
+1. The pipe import path (the `"type"` key)
+2. An object with that specific pipe configuration (the `"params"` key)
 
-For example, a config pair could be:
+For example, a config object could be:
 
 ```json
-[
-  "agora_results.pipes.sort.sort_non_iterative",
-  {
+{
+  "type": "agora_results.pipes.sort.sort_non_iterative",
+  "params": {
     "question_indexes": [0]
   }
-]
+}
+```
+
+And multiple pipes can be included in the top-level `resultsConfig` setting
+with:
+
+```json
+{
+  "version": "1.0",
+  "pipes": [
+    {
+      "type": "agora_results.pipes.results.do_tallies",
+      "params": {}
+    },
+    {
+      "type": "agora_results.pipes.sort.sort_non_iterative",
+      "params": {
+        "question_indexes": [0]
+      }
+    }
+  ]
+}
 ```
 
 The pipes are interpreted and applied by 

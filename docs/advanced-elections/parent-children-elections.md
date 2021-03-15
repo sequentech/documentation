@@ -221,67 +221,76 @@ sketched the information regarding the virtual elections and
     "id": 100, // election id
     "virtual": true,
     "virtualSubelections": [101, 102],
-    "resultsConfig": [
-      [
-        // We source votes from source subelection questions to the 
-        // appropiate virtual election questions.
-        "agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner",
+    "resultsConfig": {
+      "version": "1.0",
+      "pipes": [
         {
-          "mappings": [
-            {
-              // From: Students Election #101 | Q1
-              "source_election_id": 1,
-              "source_question_num": 0,
-              // To: Electoral Process #100 | Q1
-              "dst_election_id": 0,
-              "dst_question_num": 0
-            },
-            {
-              // From: Professors Election #102 | Q1
-              "source_election_id": 2,
-              "source_question_num": 0,
-              // To: Electoral Process #100 | Q1
-              "dst_election_id": 0,
-              "dst_question_num": 0
-            },
-            {
-              // From: Students Election #101 | Q2
-              "source_election_id": 1,
-              "source_question_num": 1,
-              // To: Electoral Process #100 | Q2
-              "dst_election_id": 0,
-              "dst_question_num": 1
-            },
-            {
-              // From: Professors Election #102 | Q3
-              "source_election_id": 2,
-              "source_question_num": 1,
-              // To: Electoral Process #100 | Q3
-              "dst_election_id": 0,
-              "dst_question_num": 2
-            }
-          ]
-        }
-      ],
-      ["agora_results.pipes.results.do_tallies", {}],
-      ["agora_results.pipes.sort.sort_non_iterative", {}]
-    ]
+          // We source votes from source subelection questions to the 
+          // appropiate virtual election questions.
+          "type": "agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner",
+          "params": {
+            "mappings": [
+              {
+                // From: Students Election #101 | Q1
+                "source_election_id": 1,
+                "source_question_num": 0,
+                // To: Electoral Process #100 | Q1
+                "dst_election_id": 0,
+                "dst_question_num": 0
+              },
+              {
+                // From: Professors Election #102 | Q1
+                "source_election_id": 2,
+                "source_question_num": 0,
+                // To: Electoral Process #100 | Q1
+                "dst_election_id": 0,
+                "dst_question_num": 0
+              },
+              {
+                // From: Students Election #101 | Q2
+                "source_election_id": 1,
+                "source_question_num": 1,
+                // To: Electoral Process #100 | Q2
+                "dst_election_id": 0,
+                "dst_question_num": 1
+              },
+              {
+                // From: Professors Election #102 | Q3
+                "source_election_id": 2,
+                "source_question_num": 1,
+                // To: Electoral Process #100 | Q3
+                "dst_election_id": 0,
+                "dst_question_num": 2
+              }
+            ]
+          }
+        },
+        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
+        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+      ]
+    }
     // ..other election properties for election with id=100 missing here..
   },
   {
     "id": 101,
-    "resultsConfig": [
-      ["agora_results.pipes.results.do_tallies", {}],
-      ["agora_results.pipes.sort.sort_non_iterative", {}]
-    ]
+    "resultsConfig": {
+      "version": "1.0",
+      "pipes": [
+        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
+        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+      ]
+    }
     // ..other election properties for election with id=101 missing here..
   },
   {
     "id": 102,
-    "resultsConfig": [
-      ["agora_results.pipes.results.do_tallies", {}],
-      ["agora_results.pipes.sort.sort_non_iterative", {}]
-    ]
+    "resultsConfig": {
+      "version": "1.0",
+      "pipes": [
+        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
+        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+      ]
+    }
     // ..other election properties for election with id=102 missing here..
   },
 ]
@@ -326,123 +335,132 @@ The configuration file sketch would be:
     "id": 100,
     "virtual": true,
     "virtualSubelections": [101, 102],
-    "resultsConfig": [
-      [
-        // We duplicate Q1 in election with array index 0 (Electoral Process 
-        // #100) into question indexes 1 and 2 for students and professors, 
-        // with empty ballots as votes will be sourced later with the 
-        // multipart_tally_plaintexts_append_joiner pipe.
-        "agora_results.pipes.duplicate_questions.duplicate_questions",
+    "resultsConfig": {
+      "version": "1.0",
+      "pipes": [
         {
-          "duplications": [
-            {
-              "source_election_index": 0,
-              "base_question_index": 0,
-              "duplicated_question_indexes": [1, 2],
-              "zero_plaintexts": true
-            }
-          ]
-        }
-      ],
+          // We duplicate Q1 in election with array index 0 (Electoral Process 
+          // #100) into question indexes 1 and 2 for students and professors, 
+          // with empty ballots as votes will be sourced later with the 
+          // multipart_tally_plaintexts_append_joiner pipe.
+          "type": "agora_results.pipes.duplicate_questions.duplicate_questions",
+          "params": {
+            "duplications": [
+              {
+                "source_election_index": 0,
+                "base_question_index": 0,
+                "duplicated_question_indexes": [1, 2],
+                "zero_plaintexts": true
+              }
+            ]
+          }
+        },
 
-      [
-        "agora_results.pipes.modifications.apply_modifications",
         {
-          "modifications": [
-            {
-              "action": "set-title",
-              "question_index": 0,
-              "title": "Q1 all: Do you want John to be the University Dean?"
-            },
-            {
-              "action": "set-title",
-              "question_index": 1,
-              "title": "Q1 students: Do you want John to be the University Dean?"
-            },
-            {
-              "action": "set-title",
-              "question_index": 2,
-              "title": "Q1 professors: Do you want John to be the University Dean?"
-            }
-          ]
-        }
-      ],
-      [
-        // We source votes from source subelection questions to the
-        // appropiate virtual election questions.
-        "agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner",
+          "type": "agora_results.pipes.modifications.apply_modifications",
+          "params": {
+            "modifications": [
+              {
+                "action": "set-title",
+                "question_index": 0,
+                "title": "Q1 all: Do you want John to be the University Dean?"
+              },
+              {
+                "action": "set-title",
+                "question_index": 1,
+                "title": "Q1 students: Do you want John to be the University Dean?"
+              },
+              {
+                "action": "set-title",
+                "question_index": 2,
+                "title": "Q1 professors: Do you want John to be the University Dean?"
+              }
+            ]
+          }
+        },
         {
-          "mappings": [
-            {
-              // From: Students Election #101 | Q1
-              "source_election_id": 1,
-              "source_question_num": 0,
-              // To: Electoral Process #100 | Q1 all
-              "dst_election_id": 0,
-              "dst_question_num": 0
-            },
-            {
-              // From: Students Election #101 | Q1
-              "source_election_id": 1,
-              "source_question_num": 0,
-              // To: Electoral Process #100 | Q1 students
-              "dst_election_id": 0,
-              "dst_question_num": 1
-            },
-            {
-              // From: Professors Election #102 | Q1
-              "source_election_id": 2,
-              "source_question_num": 0,
-              // To: Electoral Process #100 | Q1 all
-              "dst_election_id": 0,
-              "dst_question_num": 0
-            },
-            {
-              // From: Professors Election #102 | Q1
-              "source_election_id": 2,
-              "source_question_num": 0,
-              // To: Electoral Process #100 | Q1 professors
-              "dst_election_id": 0,
-              "dst_question_num": 2
-            },
-            {
-              // From: Students Election #101 | Q2
-              "source_election_id": 1,
-              "source_question_num": 1,
-              // To: Electoral Process #100 | Q2
-              "dst_election_id": 0,
-              "dst_question_num": 3
-            },
-            {
-              // From: Professors Election #102 | Q3
-              "source_election_id": 2,
-              "source_question_num": 1,
-              // To: Electoral Process #100 | Q3
-              "dst_election_id": 0,
-              "dst_question_num": 4
-            }
-          ]
-        }
-      ],
-      ["agora_results.pipes.results.do_tallies", {}],
-      ["agora_results.pipes.sort.sort_non_iterative", {}]
-    ]
+          // We source votes from source subelection questions to the
+          // appropiate virtual election questions.
+          "type": "agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner",
+          "params": {
+            "mappings": [
+              {
+                // From: Students Election #101 | Q1
+                "source_election_id": 1,
+                "source_question_num": 0,
+                // To: Electoral Process #100 | Q1 all
+                "dst_election_id": 0,
+                "dst_question_num": 0
+              },
+              {
+                // From: Students Election #101 | Q1
+                "source_election_id": 1,
+                "source_question_num": 0,
+                // To: Electoral Process #100 | Q1 students
+                "dst_election_id": 0,
+                "dst_question_num": 1
+              },
+              {
+                // From: Professors Election #102 | Q1
+                "source_election_id": 2,
+                "source_question_num": 0,
+                // To: Electoral Process #100 | Q1 all
+                "dst_election_id": 0,
+                "dst_question_num": 0
+              },
+              {
+                // From: Professors Election #102 | Q1
+                "source_election_id": 2,
+                "source_question_num": 0,
+                // To: Electoral Process #100 | Q1 professors
+                "dst_election_id": 0,
+                "dst_question_num": 2
+              },
+              {
+                // From: Students Election #101 | Q2
+                "source_election_id": 1,
+                "source_question_num": 1,
+                // To: Electoral Process #100 | Q2
+                "dst_election_id": 0,
+                "dst_question_num": 3
+              },
+              {
+                // From: Professors Election #102 | Q3
+                "source_election_id": 2,
+                "source_question_num": 1,
+                // To: Electoral Process #100 | Q3
+                "dst_election_id": 0,
+                "dst_question_num": 4
+              }
+            ]
+          }
+        },
+        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
+        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+      ]
     // ..other election properties for election with id=100 missing here..
+    }
   },
   {
     "id": 101,
-    "resultsConfig": [
-      ["agora_results.pipes.results.do_tallies", {}],
-      ["agora_results.pipes.sort.sort_non_iterative", {}]
-    ]
+    "resultsConfig": {
+      "version": "1.0",
+      "pipes": [
+        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
+        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+      ]
+    }
     // ..other election properties for election with id=101 missing here..
   },
   {
     "id": 102,
-    "resultsConfig": [
-      ["agora_results.pipes.results.do_tallies", {}],
-      ["agora_results.pipes.sort.sort_non_iterative", {}]
-    ]
+    "resultsConfig": {
+      "version": "1.0",
+      "pipes": [
+        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
+        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+      ]
+    }
     // ..other election properties for election with id=102 missing here..
   },
 ]

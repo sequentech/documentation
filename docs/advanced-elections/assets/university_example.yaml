@@ -19,41 +19,44 @@
         ]
       }
     },
-    "resultsConfig": [
-      [
-        "agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner",
+    "resultsConfig": {
+      "version": "1.0",
+      "pipes": [
         {
-          "mappings": [
-            {
-              "source_election_id": 1,
-              "source_question_num": 0,
-              "dst_election_id": 0,
-              "dst_question_num": 0
-            },
-            {
-              "source_election_id": 2,
-              "source_question_num": 0,
-              "dst_election_id": 0,
-              "dst_question_num": 0
-            },
-            {
-              "source_election_id": 1,
-              "source_question_num": 1,
-              "dst_election_id": 0,
-              "dst_question_num": 1
-            },
-            {
-              "source_election_id": 2,
-              "source_question_num": 1,
-              "dst_election_id": 0,
-              "dst_question_num": 2
-            }
-          ]
-        }
+          "type": "agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner",
+          "params": {
+            "mappings": [
+              {
+                "source_election_id": 1,
+                "source_question_num": 0,
+                "dst_election_id": 0,
+                "dst_question_num": 0
+              },
+              {
+                "source_election_id": 2,
+                "source_question_num": 0,
+                "dst_election_id": 0,
+                "dst_question_num": 0
+              },
+              {
+                "source_election_id": 1,
+                "source_question_num": 1,
+                "dst_election_id": 0,
+                "dst_question_num": 1
+              },
+              {
+                "source_election_id": 2,
+                "source_question_num": 1,
+                "dst_election_id": 0,
+                "dst_question_num": 2
+              }
+            ]
+          }
+        ],
+        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
+        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
       ],
-      ["agora_results.pipes.results.do_tallies", {}],
-      ["agora_results.pipes.sort.sort_non_iterative", {}]
-    ],
+    },
     "questions": [
       {
         "answer_total_votes_percentage": "over-total-valid-votes",
@@ -363,10 +366,13 @@
     "id": 101,
     "title": "Students election",
     "parent_id": 100,
-    "resultsConfig": [
-      ["agora_results.pipes.results.do_tallies", {}],
-      ["agora_results.pipes.sort.sort_non_iterative", {}]
-    ],
+    "resultsConfig": {
+      "version": "1.0",
+      "pipes": [
+        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
+        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+      ]
+    },
     "questions": [
       {
         "answer_total_votes_percentage": "over-total-valid-votes",
@@ -604,10 +610,13 @@
     "id": 102,
     "title": "Professors election",
     "parent_id": 100,
-    "resultsConfig": [
-      ["agora_results.pipes.results.do_tallies", {}],
-      ["agora_results.pipes.sort.sort_non_iterative", {}]
-    ],
+    "resultsConfig": {
+      "version": "1.0",
+      "pipes": [
+        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
+        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+      ]
+    },
     "questions": [
       {
         "answer_total_votes_percentage": "over-total-valid-votes",
