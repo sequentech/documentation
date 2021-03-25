@@ -23,6 +23,7 @@ module.exports = {
     'File Formats': [
       'file-formats/introduction',
       'file-formats/ballot-encoding',
+      'file-formats/election-creation-json',
     ]
   }
 };

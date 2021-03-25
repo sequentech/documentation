@@ -2,7 +2,7 @@
 id: ballot-encoding
 title: Ballot Encoding
 sidebar_label: Ballot Encoding
-slug: /ballot-encoding
+slug: /file-formats/ballot-encoding
 ---
 
 ## Introduction

@@ -2,7 +2,7 @@
 id: introduction
 title: File Formats
 sidebar_label: Introduction
-slug: /introduction
+slug: /file-formats/introduction
 ---
 
 The Agora Voting project receives and produces multiple files with specific
