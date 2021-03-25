@@ -1,5 +1,5 @@
 module.exports = {
-  mainSidebar: {
+  docsSidebar: {
     Deployment: [
       'deployment/guide',
       'deployment/troubleshooting'
@@ -19,4 +19,11 @@ module.exports = {
       'contribute/guide'
     ]
   },
+  fileFormatsSidebar: {
+    'File Formats': [
+      'file-formats/introduction',
+      'file-formats/ballot-encoding',
+      'file-formats/election-creation-json',
+    ]
+  }
 };
