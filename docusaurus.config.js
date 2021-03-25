@@ -20,10 +20,16 @@ module.exports = {
       },
       items: [
         {
-          to: 'docs/deployment/guide',
-          activeBasePath: 'docs',
+          type: 'doc',
+          position: 'left',
+          docId: 'deployment/guide',
           label: 'Docs',
-          position: 'right',
+        },
+        {
+          type: 'doc',
+          position: 'left',
+          docId: 'file-formats/introduction',
+          label: 'File Formats',
         },
         {
           href: 'https://nvotes.com/blog/',

@@ -1142,9 +1142,11 @@ order:
 - **Pipe path**: [`agora_results.pipes.results.do_tallies`](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/results.py#L24)
 - **Example usage**:
 ```json
-"agora_results.pipes.results.do_tallies",
 {
-  "question_indexes": [0]
+  "type": "agora_results.pipes.results.do_tallies",
+  "params": {
+    "question_indexes": [0]
+  }
 }
 ```
 
@@ -1278,9 +1280,11 @@ format which does not allow for comments.
 - **Pipe path**: [`agora_results.pipes.sort.sort_non_iterative`](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/sort.py#L35)
 - **Example usage**:
 ```json
-"agora_results.pipes.sort.sort_non_iterative",
 {
-  "question_indexes": [0, 1]
+  "type": "agora_results.pipes.sort.sort_non_iterative",
+  "params": {
+    "question_indexes": [0, 1]
+  }
 }
 ```
 
