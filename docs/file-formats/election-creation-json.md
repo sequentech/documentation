@@ -828,57 +828,6 @@ If set, this optional property will modify the voting booth behaviour so that
 once the ballot is cast and the success screen is shown, after the specified
 number of seconds the voter will be automatically redirected to the login page.
 
-### Election Presentation Options: `allow_casting_invalid_votes`
-
-- **Property name**: `allow_casting_invalid_votes`
-- **Type:** `Boolean`
-- **Required:** No
-- **Default:** `true`
-- **Example:** `false`
-
-If set, the voter will be able to cast invalid votes and there will be button
-in the votin booth to choose to do so. Still, a warning will be shown to the
-voter to ensure this is their intention. It will also allow to cast an invalid
-vote by other means, like choosing more options than configuration allows.
-
-
-### Election Presentation Options: `enable_panachage`
-
-- **Property name**: `enable_panachage`
-- **Type:** `Boolean`
-- **Required:** No
-- **Default:** `true`
-- **Example:** `false`
-
-If set to `true` (the default), the voter will be able to choose answers from
-multiple categories. If set to `false`, the voter will only be allowed to choose
-answers from a single category and any vote doing otherwise will be deemed 
-invalid.
-
-### Election Presentation Options: `cumulative_number_of_checkboxes`
-
-- **Property name**: `cumulative_number_of_checkboxes`
-- **Type:** `Integer`
-- **Required:** No
-- **Default:** `1`
-- **Example:** `3`
-
-Specifies the number of checkboxes shown to the side of each question's answer,
-so that the voter can check each of them. Currently only used when voting method
-is  `cummulative`. By default, if unset, its value is `1`. 
-
-### Election Presentation Options: `enable_checkable_lists`
-
-- **Property name**: `enable_checkable_lists`
-- **Type:** `Boolean`
-- **Required:** No
-- **Default:** `false`
-- **Example:** `true`
-
-If set to `true` then an answer representing the checkable category can be 
-added, and can be flagged as such by setting an url to the answer with title 
-`type` and value `checkable-list` (string).
-
 ## Results Config Pipes
 
 A results config pipe is used to specify how election results will be calculated. 
@@ -2026,8 +1975,247 @@ The template works in the same manner as the
 
 ## Question Object
 
-TODO
+This JSON object type describes a question (or [contest](https://pages.nist.gov/ElectionGlossary/#contest) in NIST terminology) in which a voter can vote. It is used inside the [Election: `questions`](#election-questions) property of
+the [Election object](#election-object) and can have the following properties:
+
+### Question: `title`
+
+- **Property name**: `title`
+- **Type:** `Short String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"Do you approve the Annual Accounts of 2021?"`
+
+Title of the question. Will be shown in the voting booth and in the election 
+results.
+
+### Question: `description`
+
+- **Property name**: `description`
+- **Type:** `Long String`
+- **Required:** Yes
+- **Default:** -
+- **Example:** 
+
+```
+"This is the description of the question. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs."
+```
+
+Question description. It will appear below the title in the voting booth. 
+As shown in the example it allows for some basic HTML.
+
+### Question: `layout`
+
+- **Property name**: `layout`
+- **Type:** `String`
+- **Required:** Yes
+- **Default:** -
+- **Allowed values:**:
+  - `"accordion"`
+  - `"simultaneous-questions"`
+  - `"pcandidates-election"`
+  - `"conditional-accordion"`
+- **Example:** `"simultaneous-questions"`
+
+Indicates the layout to be applied in the voting booth for this question. 
+Different layouts imply different presentation of the question. Note that not
+all the features are available for all the layouts. The layout that supports
+more features and has been most used is the `"accordion"` layout.
+
+### Question: `max`
+
+- **Property name**: `max`
+- **Type:** `Positive Integer`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `1`
+
+Maximum number of answers that a voter can choose in the voting booth to 
+consider the vote valid. It must be greater or equal to 
+[Question: `min`](#question-min) and be greater than zero.
+
+### Question: `min`
+
+- **Property name**: `min`
+- **Type:** `Positive Integer`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `2`
+
+Minimum number of answers that a voter can choose in the voting booth to 
+consider the vote valid. It must be less or equal to 
+[Question: `max`](#question-max) and be greater or equal to zero.
+
+### Question: `num_winners`
+
+- **Property name**: `num_winners`
+- **Type:** `Positive Integer`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `3`
+
+Number of winner answers to appoint in the electoral results.
+
+### Question: `tally_type`
+
+- **Property name**: `tally_type`
+- **Type:** `Short String`
+- **Required:** Yes
+- **Default:** -
+- **Allowed values:**:
+  - `"plurality-at-large"`
+  - `"borda"`
+  - `"borda-custom"`
+  - `"borda-nauru"`
+  - `"desborda"`
+  - `"desborda2"`
+  - `"desborda3"`
+- **Example:** `"borda"`
+
+Indicates the name of the algorithm to apply to count the votes and calculate
+the results of this question.
+
+### Question: `answer_total_votes_percentage`
+
+- **Property name**: `answer_total_votes_percentage`
+- **Type:** `Short String`
+- **Required:** Yes
+- **Default:** -
+- **Allowed values:**:
+  - `"over-total-valid-votes"`
+  - `"over-total-votes"`
+- **Example:** `"over-total-votes"`
+
+Indicates if the percentages of votes shown in the election results should be
+calculated over votes to options or over all votes.
+
+### Question: `answers`
+
+- **Property name**: `answers`
+- **Type:** List<[Answer](#answer-object)>
+- **Required:** Yes
+- **Default:** -
+- **Example:** 
+```json
+[
+  {
+    "category": "Liste 1: Die Linken",
+    "details": "",
+    "id": 0,
+    "sort_order": 0,
+    "text": "Liste 1: Die Linken",
+    "urls": [
+      {
+        "title": "URL",
+        "url": ""
+      },
+      {
+        "title": "Image URL",
+        "url": ""
+      },
+      {
+        "title": "isCategoryList",
+        "url": "true"
+      }
+    ]
+  },
+  {
+    "category": "Liste 1: Die Linken",
+    "details": "",
+    "id": 1,
+    "sort_order": 1,
+    "text": "Schulze, Alexander",
+    "urls": [
+      {
+        "title": "URL",
+        "url": ""
+      },
+      {
+        "title": "Image URL",
+        "url": ""
+      }
+    ]
+  }
+]
+```
+
+List of candidate [answers](#answer-object) in the question.
+
+### Question: `extra_options`
+
+- **Property name**: `extra_options`
+- **Type:** [Question Extra](#question-extra-object)
+- **Required:** No
+- **Default:** `{}`
+- **Example:**  `{}`
+
+Set of [extra options](#question-extra-object) to configure this question.
+
+## Question Extra Object
+
+An object describing a set of additional of question configuration options, 
+currently used to modify the voting booth presentation behaviour. It is used 
+[here](#question-extra_options) and it can have the following 
+properties:
+
+TODO: there are many more options, not yet documented here.
+
+### Election Presentation Options: `invalid_vote_policy`
+
+- **Property name**: `invalid_vote_policy`
+- **Type:** `Short String`
+- **Required:** No
+- **Allowed values:**
+  - `"allowed"`
+  - `"warn"`
+  - `"not-allowed"`
+- **Default:** `"warn"`
+- **Example:** `"allowed"`
+
+Indicates whether an invalid vote should be allowed without warning, allowed
+but warning the voter, or not allowed.
+
+### Question Extra: `enable_panachage`
+
+- **Property name**: `enable_panachage`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `true`
+- **Example:** `false`
+
+If set to `true` (the default), the voter will be able to choose answers from
+multiple categories. If set to `false`, the voter will only be allowed to choose
+answers from a single category and any vote doing otherwise will be deemed 
+invalid.
+
+### Question Extra: `cumulative_number_of_checkboxes`
+
+- **Property name**: `cumulative_number_of_checkboxes`
+- **Type:** `Integer`
+- **Required:** No
+- **Default:** `1`
+- **Example:** `3`
+
+Specifies the number of checkboxes shown to the side of each question's answer,
+so that the voter can check each of them. Currently only used when voting method
+is  `cummulative`. By default, if unset, its value is `1`. 
+
+### Question Extra: `enable_checkable_lists`
+
+- **Property name**: `enable_checkable_lists`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true` then an answer representing the checkable category can be 
+added, and can be flagged as such by setting an url to the answer with title 
+`type` and value `checkable-list` (string).
 
 ## Children Election Info Object
 
-TODO
+TODO 
+
+## Answer Object
+
+TODO 
