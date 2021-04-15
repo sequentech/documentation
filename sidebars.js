@@ -2,7 +2,8 @@ module.exports = {
   docsSidebar: {
     Deployment: [
       'deployment/guide',
-      'deployment/troubleshooting'
+      'deployment/troubleshooting',
+      'deployment/browsers-and-cookies'
     ],
     Translation: [
       'translation/guide'
