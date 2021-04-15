@@ -5,7 +5,7 @@ sidebar_label: Deployment Troubleshooting
 slug: /deployment/troubleshooting
 ---
 
-## 1. Problems when creating the election
+## Problems when creating the election
 
 This is usually a problem with election authorities. Unfortunately, most of the
 issues related to election authorities do not get reported to the user nor the
@@ -133,7 +133,7 @@ the director election authority, the callback url will always point to the
 same master agora server ip address. Also, note that the TLS certificate of
 all the agora servers will be the same.
 
-## 2. The election tally never succeeds
+## The election tally never succeeds
 
 a) If the election public keys are correctly created, this means that the
 connection between election authorities and the agora servers are usually all
@@ -170,7 +170,7 @@ ballots when calculating the tally:
 
     agora $ sudo supervisorctl tail -f agora-elections
 
-## 3. Supervisor is not running
+## Supervisor is not running
 
 If the login page (/admin/login) loads but the form doesn't show up, and when
 you analyze traffic some queries (for example  https://agora/authapi/api/auth-event/1/) return
@@ -203,7 +203,7 @@ Afterwards, supervisor status should return something like this, which is ok:
         sentry_celery                    RUNNING    pid 7666, uptime 0:00:04
         Connection to 127.0.0.1 closed.
 
-## 4. Problems provisioning
+## Problems provisioning
 
 Sometimes the provisioning fails. This can be related to some syntax changes on
 ansible's playbooks format. Check that you have Ansible 2.x or superior. If you
@@ -217,7 +217,7 @@ On Ubuntu, you can install the latest version of Ansible by executing:
     $ sudo apt-get update
     $ sudo apt-get install ansible -y
 
-## 5. Issues deploying High Availability / Load Balancer
+## Issues deploying High Availability / Load Balancer
 
 If you encounter the following issue when deploying:
 
@@ -230,4 +230,66 @@ verify that when you execute within the deployed machine `ping <machine-name>`
 it should be answering with the private ip address you configured in 
 `config.private_ipaddress`. Edit `/etc/hosts` to fix that if it is not.
 
+## Correctly recreating the TLS certificate
 
+Sometimes a misconfiguration of the `config.hostname` or 
+`config.agora_elections.domain` deployment variables happen. For example, you 
+might have used the wrong DNS or hostname by error, or maybe you need to change 
+it to their new value(s). 
+
+Here we will document what needs to be done depending on the type of machine 
+that is affected if this happens. 
+
+Please review the [Connecting Authorities section](./guide#connecting-authorities)
+of the [deployment guide](./guide) to understand the general procedures when connecting
+the authorities and the agora servers.
+
+### For an election authority
+
+You need to set the `config.yml` variables (`config.hostname` and/or 
+`config.agora_elections.domain`) to their new value.
+
+You also need to set the `config.cert.force_create` to `'true'` and re-deploy. 
+This will force regeneration of the TLS self-signed certificate of the machine.
+After redeploying, it's **important** to set back `config.cert.force_create` to 
+the default value (`'false'`). Otherwise, in future redeployments you might 
+forget about this setting but still re-generate the TLS self-signed certificate,
+and thus other machines will stop working with the redeployed machine because
+they won't have this new certificate installed.
+
+After redeploying the affected machine, you just need to uninstall the old
+certificate in the connected peers and install the new one. Let's say that in
+our example we have a deployment with three machines, `focal-s1`, `focal-a1` and
+`focal-a2` and we are changing the hostname of the election authority `focal-a2`
+to `focal-a3`.
+
+These would be the steps:
+1. Obtain the new eopeer package executing `sudo eopeers --show-mine` (or 
+`sudo eopeers --show-mine --private-ip` if it's going to be used in a local 
+network). Write that certificate in a file called `focal-a3.pkg` that we will
+use later, both in `focal-s1` and `focal-a1`.
+2. Uninstall the previous eopeer package for `focal-a2` in `focal-s1` and 
+`focal-a1` executing `sudo eopeers --uninstall focal-a2`. Note that if the 
+election authority being uninstalled is the master authority in the agora server
+and was installed using `--keystore /home/agoraelections/keystore.jks`, then the
+uninstall in `focal-s1` also needs to have that parameter to remove the 
+certificate also from there. In that case, the command to execute would be
+`eopeers --uninstall focal-a2 --keystore /home/agoraelections/keystore.jks`.
+3. Install the new eopeer package in for `focal-a3` in `focal-s1` and 
+`focal-a1` executing `sudo eopeers --install focal-a3.pkg`. Again, if this 
+authority is to be the master authority in the agora server, then append
+`--keystore /home/agoraelections/keystore.jks` to that command when being 
+executed in `focal-s1`.
+
+### For an agora server
+
+The process with an agora server is similar but a bit more nuanced because the
+certificate lies in multiple places. Before redeploying, you need to uninstall
+all the eopeers installed in the server using `eopeers --list` and 
+`eopeers --uninstall <hostname> [<hostname> ..]`.
+
+Then, you need to remove the files `/home/agoraelections/keystore.jks` and
+`/home/agoraelections/certs.p12`. Afterwards, you can follow the instructions
+in the previous section to redeploy and redistribute the certificate to the
+peers. Finally, you need to re-install the certificates of the peers in the
+agora server again.
