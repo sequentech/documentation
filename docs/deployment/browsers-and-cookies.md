@@ -45,3 +45,13 @@ module.
 ### Election
 
 No special cookies are used here.
+
+### Configuration
+
+The login cookies expiration time can be configured to be a fixed period
+instead of session cookies.
+
+To do that, just find the line with the `cookies_expires` configuration in the
+`config.yml` file and uncomment it. The expiration time will be set in minutes,
+but you can use a number bigger than 60 to set hours. For example if you want
+to set one day you can put `1440`.
