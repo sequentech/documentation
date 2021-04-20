@@ -7,13 +7,36 @@ slug: /deployment/browsers-and-cookies
 
 ## 1. Supported browsers
 
+The nVotes web interface should work correctly on any modern browser. It's
+always recommended to use the most updated version of your favourite browser to
+have more security, but the interface can work on older version if it's needed.
+
+The interface has been tested with the following browsers, so it's certified
+that it works on this versions and newers:
+
+ * Mozilla Firefox 36
+ * Google Chrome 50
+ * Microsoft Edge 15 (All versions)
+ * Safari 7.1
+ * Safari on iPhone 5 (iOS v7)
+ * Chrome on Android (v6)
+
+### Javascript and old browsers
+
+The web interface requires javascript to work, so make sure that you don't have
+javascript disabled on your browser.
+
+The minimum required version of javascript is the ES6 (ECMAScript 2015). This
+version is supported on most browsers, but it's not supported on Microsoft
+Internet Explorer 11, so this browser is not supported.
+
 ## 2. Cookies required and allowed
 
-Nvotes uses the bare minimum cookies needed for the interface usability. These
+nVotes uses the bare minimum cookies needed for the interface usability. These
 cookies are the needed to login and for security reasons.
 
 There's no tracking code or external cookies, all the cookies used by the
-NVotes interface are used just as an local storage for the interface state, and
+nVotes interface are used just as an local storage for the interface state, and
 in any case these cookies are sent to any external server, they are just used
 to be able to query the API with the authentication and the corresponding
 parameters.
