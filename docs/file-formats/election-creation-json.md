@@ -778,6 +778,23 @@ If set, this optional property will modify the voting booth behaviour and the
 success screen will not show the link to download the ballot ticket PDF. This 
 option does not hide the ballot tracker hash nor the QR code to the ballot 
 tracker.
+### Election Presentation Options: `success_screen__redirect__url`
+
+- **Property name**: `success_screen__redirect__url`
+- **Type:** `Short String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"https://myvotingplace.com"`
+- **Related:**
+  - [`success_screen__redirect_to_login`](#election-presentation-options-success_screen__redirect_to_login)
+  - [`success_screen__redirect_to_login__text`](#election-presentation-options-success_screen__redirect_to_login__text)
+  - [`success_screen__redirect_to_login__auto_seconds`](#election-presentation-options-success_screen__redirect_to_login__auto_seconds)
+
+If set, this optional property will modify the voting booth behaviour so that 
+when the success screen is going to redirect to the login screen, it will 
+redirect to this URL instead. This means that if there's an automatic 
+redirect to login or a redirect to login button (using [success_screen__redirect_to_login](#election-presentation-options-success_screen__redirect_to_login)), all this
+redirect links will go to this url instead.
 ### Election Presentation Options: `success_screen__redirect_to_login`
 
 - **Property name**: `success_screen__redirect_to_login`
@@ -785,6 +802,10 @@ tracker.
 - **Required:** No
 - **Default:** -
 - **Example:** `true`
+- **Related:**
+  - [`success_screen__redirect__url`](#election-presentation-options-success_screen__redirect__url)
+  - [`success_screen__redirect_to_login__text`](#election-presentation-options-success_screen__redirect_to_login__text)
+  - [`success_screen__redirect_to_login__auto_seconds`](#election-presentation-options-success_screen__redirect_to_login__auto_seconds)
 
 If set, this optional property will modify the voting booth behaviour so that 
 the success screen will show a link to redirect to the voter login page. Use
@@ -798,12 +819,31 @@ because the link will have that text, so you need to set it.
 - **Required:** No
 - **Default:** -
 - **Example:** `Go to login`
+  - [`success_screen__redirect__url`](#election-presentation-options-success_screen__redirect__url)
+  - [`success_screen__redirect_to_login`](#election-presentation-options-success_screen__redirect_to_login)
+  - [`success_screen__redirect_to_login__auto_seconds`](#election-presentation-options-success_screen__redirect_to_login__auto_seconds)
 
 If set, this optional property will modify the voting booth behaviour so that 
 the redirect to login link in the  success screen will have the text specified
 in this string. Use
 together with [success_screen__redirect_to_login](#election-presentation-options-success_screen__redirect_to_login)
 because the link will only appear if that option is set to `true`.
+
+### Election Presentation Options: `success_screen__redirect_to_login__auto_seconds`
+
+- **Property name**: `success_screen__redirect_to_login__auto_seconds`
+- **Type:** `Positive Integer`
+- **Required:** No
+- **Default:** -
+- **Example:** `10`
+  - [`success_screen__redirect__url`](#election-presentation-options-success_screen__redirect__url)
+  - [`success_screen__redirect_to_login`](#election-presentation-options-success_screen__redirect_to_login)
+  - [`success_screen__redirect_to_login__text`](#election-presentation-options-success_screen__redirect_to_login__text)
+
+If set, this optional property will modify the voting booth behaviour so that 
+once the ballot is cast and the success screen is shown, after the specified
+number of seconds the voter will be automatically redirected to the login page.
+
 ### Election Presentation Options: `disable_voting_booth_audit_ballot`
 
 - **Property name**: `disable_voting_booth_audit_ballot`
@@ -815,18 +855,6 @@ because the link will only appear if that option is set to `true`.
 If set, this optional property will modify the voting booth behaviour so that 
 the review ballot screen, shown before casting the vote, will not show the hash
 of the ballot nor the link to audit the ballot.
-
-### Election Presentation Options: `success_screen__redirect_to_login__auto_seconds`
-
-- **Property name**: `success_screen__redirect_to_login__auto_seconds`
-- **Type:** `Positive Integer`
-- **Required:** No
-- **Default:** -
-- **Example:** `10`
-
-If set, this optional property will modify the voting booth behaviour so that 
-once the ballot is cast and the success screen is shown, after the specified
-number of seconds the voter will be automatically redirected to the login page.
 
 ## Results Config Pipes
 
