@@ -766,6 +766,7 @@ If set, this optional property will modify the voting booth behaviour and the
 success screen will not show the QR code that encodes a link to the ballot 
 tracker URL. This option does not hide the ballot tracker hash nor the link
 to download the ballot ticket PDF.
+
 ### Election Presentation Options: `success_screen__hide_download_ballot_ticket`
 
 - **Property name**: `success_screen__hide_download_ballot_ticket`
@@ -773,11 +774,127 @@ to download the ballot ticket PDF.
 - **Required:** No
 - **Default:** -
 - **Example:** `true`
+- **Related:**
+  - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
+  - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
+  - [`success_screen__ballot_ticket__h3`](#election-presentation-options-success_screen__ballot_ticket__h3)
+  - [`success_screen__ballot_ticket__h4`](#election-presentation-options-success_screen__ballot_ticket__h4)
 
 If set, this optional property will modify the voting booth behaviour and the
 success screen will not show the link to download the ballot ticket PDF. This 
 option does not hide the ballot tracker hash nor the QR code to the ballot 
-tracker.
+
+### Election Presentation Options: `success_screen__ballot_ticket__logo_url`
+
+- **Property name**: `success_screen__ballot_ticket__logo_url`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"nVotes"`
+- **Related:**
+  - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
+  - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
+  - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
+  - [`success_screen__ballot_ticket__h3`](#election-presentation-options-success_screen__ballot_ticket__h3)
+  - [`success_screen__ballot_ticket__h4`](#election-presentation-options-success_screen__ballot_ticket__h4)
+
+If set, this optional property will modify the heading logo that appears next 
+in the PDF ballot ticket that the voter can download from  the voting booth 
+success screen.
+
+By default, if this optional property is not set, then the  election's
+`logo_url` property is tried to be used as the logo, and if not, the 
+`config.agora_gui.organization.big_logo_url` property in the deployment YAML 
+is used to load the logo, or otherwise no logo is shown in the ballot ticket 
+PDF.
+
+### Election Presentation Options: `success_screen__ballot_ticket__logo_header`
+
+- **Property name**: `success_screen__ballot_ticket__logo_header`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"nVotes"`
+- **Related:**
+  - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
+  - [`success_screen__ballot_ticket__logo_url`](#election-presentation-options-success_screen__ballot_ticket__logo_url)
+  - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
+  - [`success_screen__ballot_ticket__h3`](#election-presentation-options-success_screen__ballot_ticket__h3)
+  - [`success_screen__ballot_ticket__h4`](#election-presentation-options-success_screen__ballot_ticket__h4)
+
+If set, this optional property will modify the heading text that appears next 
+to the header logo in the PDF ballot ticket that the voter can download from 
+the voting booth success screen.
+
+By default, if this optional property is not set, then the 
+`config.agora_gui.organization.name` property in the deployment YAML appears 
+in the same position in the ballot ticket PDF.
+
+### Election Presentation Options: `success_screen__ballot_ticket__logo_subheader`
+
+- **Property name**: `success_screen__ballot_ticket__logo_subheader`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"Subheader line"`
+- **Related:**
+  - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
+  - [`success_screen__ballot_ticket__logo_url`](#election-presentation-options-success_screen__ballot_ticket__logo_url)
+  - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
+  - [`success_screen__ballot_ticket__h3`](#election-presentation-options-success_screen__ballot_ticket__h3)
+  - [`success_screen__ballot_ticket__h4`](#election-presentation-options-success_screen__ballot_ticket__h4)
+
+If set, this optional property will modify the subheading text that appears next 
+to the header logo in the PDF ballot ticket that the voter can download from the 
+voting booth success screen.
+
+By default, if this optional property is not set, then the 
+`config.agora_gui.organization.subtitle` property in the deployment YAML appears 
+in the same position in the ballot ticket PDF.
+
+### Election Presentation Options: `success_screen__ballot_ticket__h3`
+
+- **Property name**: `success_screen__ballot_ticket__h3`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"Vote receipt"`
+- **Related:**
+  - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
+  - [`success_screen__ballot_ticket__logo_url`](#election-presentation-options-success_screen__ballot_ticket__logo_url)
+  - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
+  - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
+  - [`success_screen__ballot_ticket__h4`](#election-presentation-options-success_screen__ballot_ticket__h4)
+
+If set, this optional property will modify the title of the ballot ticket 
+that appears below the header logo in the PDF ballot ticket that the voter can 
+download from the voting booth success screen.
+
+By default, if this optional property is not set, then an i18n string saying
+`Vote receipt` will appear in the same position in the ballot ticket PDF.
+
+### Election Presentation Options: `success_screen__ballot_ticket__h4`
+
+- **Property name**: `success_screen__ballot_ticket__h4`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"Your vote has been cast correctly. This document justifies its issuance."`
+- **Related:**
+  - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
+  - [`success_screen__ballot_ticket__logo_url`](#election-presentation-options-success_screen__ballot_ticket__logo_url)
+  - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
+  - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
+  - [`success_screen__ballot_ticket__h3`](#election-presentation-options-success_screen__ballot_ticket__h3)
+
+If set, this optional property will modify the text of the ballot ticket 
+that appears below the title of the PDF ballot ticket that the voter can 
+download from the voting booth success screen.
+
+By default, if this optional property is not set, then an i18n string saying
+`Your vote has been cast correctly. This document justifies its issuance.` 
+will appear in the same position in the ballot ticket PDF.
+
 ### Election Presentation Options: `success_screen__redirect__url`
 
 - **Property name**: `success_screen__redirect__url`
