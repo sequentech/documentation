@@ -564,6 +564,17 @@ implemented in a very similar way to the login form, but without sending any
 One Time Passwords and instead of authenticating the user to vote it shows the
 user if he will be able to vote, even before or after the voting process starts.
 
+### Election: `logo_url`
+
+- **Property name**: `logo_url`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"https://example.com/path/to/logo.png"`
+
+URL of the logo to be shown in public election site and voting booth in the
+page header.
+
 ### Election: `start_date`
 
 - **Property name**: `start_date`
@@ -2209,6 +2220,7 @@ Number of winner answers to appoint in the electoral results.
 - **Default:** -
 - **Allowed values:**:
   - `"plurality-at-large"`
+  - `"cumulative"`
   - `"borda"`
   - `"borda-custom"`
   - `"borda-nauru"`
