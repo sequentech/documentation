@@ -784,6 +784,30 @@ If set, this optional property will modify the voting booth behaviour and the
 success screen will not show the link to download the ballot ticket PDF. This 
 option does not hide the ballot tracker hash nor the QR code to the ballot 
 
+### Election Presentation Options: `success_screen__ballot_ticket__logo_url`
+
+- **Property name**: `success_screen__ballot_ticket__logo_url`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"nVotes"`
+- **Related:**
+  - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
+  - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
+  - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
+  - [`success_screen__ballot_ticket__logo_h3`](#election-presentation-options-success_screen__ballot_ticket__logo_h3)
+  - [`success_screen__ballot_ticket__logo_h4`](#election-presentation-options-success_screen__ballot_ticket__logo_h4)
+
+If set, this optional property will modify the heading logo that appears next 
+in the PDF ballot ticket that the voter can download from  the voting booth 
+success screen.
+
+By default, if this optional property is not set, then the  election's
+`logo_url` property is tried to be used as the logo, and if not, the 
+`config.agora_gui.organization.big_logo_url` property in the deployment YAML 
+is used to load the logo, or otherwise no logo is shown in the ballot ticket 
+PDF.
+
 ### Election Presentation Options: `success_screen__ballot_ticket__logo_header`
 
 - **Property name**: `success_screen__ballot_ticket__logo_header`
@@ -793,6 +817,7 @@ option does not hide the ballot tracker hash nor the QR code to the ballot
 - **Example:** `"nVotes"`
 - **Related:**
   - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
+  - [`success_screen__ballot_ticket__logo_url`](#election-presentation-options-success_screen__ballot_ticket__logo_url)
   - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
   - [`success_screen__ballot_ticket__logo_h3`](#election-presentation-options-success_screen__ballot_ticket__logo_h3)
   - [`success_screen__ballot_ticket__logo_h4`](#election-presentation-options-success_screen__ballot_ticket__logo_h4)
@@ -814,6 +839,7 @@ in the same position in the ballot ticket PDF.
 - **Example:** `"Subheader line"`
 - **Related:**
   - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
+  - [`success_screen__ballot_ticket__logo_url`](#election-presentation-options-success_screen__ballot_ticket__logo_url)
   - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
   - [`success_screen__ballot_ticket__logo_h3`](#election-presentation-options-success_screen__ballot_ticket__logo_h3)
   - [`success_screen__ballot_ticket__logo_h4`](#election-presentation-options-success_screen__ballot_ticket__logo_h4)
@@ -835,6 +861,7 @@ in the same position in the ballot ticket PDF.
 - **Example:** `"Vote receipt"`
 - **Related:**
   - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
+  - [`success_screen__ballot_ticket__logo_url`](#election-presentation-options-success_screen__ballot_ticket__logo_url)
   - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
   - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
   - [`success_screen__ballot_ticket__logo_h4`](#election-presentation-options-success_screen__ballot_ticket__logo_h4)
@@ -855,6 +882,7 @@ By default, if this optional property is not set, then an i18n string saying
 - **Example:** `"Your vote has been cast correctly. This document justifies its issuance."`
 - **Related:**
   - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
+  - [`success_screen__ballot_ticket__logo_url`](#election-presentation-options-success_screen__ballot_ticket__logo_url)
   - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
   - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
   - [`success_screen__ballot_ticket__logo_h3`](#election-presentation-options-success_screen__ballot_ticket__logo_h3)
