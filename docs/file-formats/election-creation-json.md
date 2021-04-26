@@ -790,7 +790,7 @@ option does not hide the ballot tracker hash nor the QR code to the ballot
 - **Type:** `String`
 - **Required:** No
 - **Default:** -
-- **Example:** `"nVotes"`
+- **Example:** `"https://example.com/path/to/logo.png"`
 - **Related:**
   - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
   - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
