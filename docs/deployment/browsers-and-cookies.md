@@ -102,8 +102,8 @@ No special cookies are used here.
 
 ### Configuration
 
-The login cookies expiration time can be configured to be a fixed period
-instead of session cookies.
+The login session cookies expiration time can be configured instead of having 
+no expiration time.
 
 To do that, just find the line with the `cookies_expires` configuration in the
 `config.yml` file and uncomment it. The expiration time will be set in minutes,
