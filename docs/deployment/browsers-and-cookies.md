@@ -21,6 +21,30 @@ that it works on this versions and newers:
  * Safari on iPhone 5 (iOS v7)
  * Chrome on Android (v6)
 
+We use https://browser-update.org to check the browser support and notify to
+the user. If the browser is too old the user get the following notification:
+
+![browser-update notification with Chrome 50](/img/old-browser-error2.png "browser-update notification")
+
+You can disable this option in the `config.yml`, just disabling the
+`check_browser_version` option. If that option is null, we don't check
+the browser version.
+
+The minimum browser version is also configurable in a deployment. The default
+value can be modified in the `avConfig.js`, updating the `browserUpdate` field,
+but that requires a bit more of knowledge because it will require to rebuild
+all the agora-gui modules in that deployment:
+
+1. Edit the `/home/agoragui/avConfig.js` file
+2. Run the `/home/agoragui/build.sh` script as `agoragui` user.
+
+### Mobile browsers
+
+The voting interface is responsive, that means that it adapts to the browser
+size and this makes the application usable on mobile phones:
+
+![Voting on smart phones](/img/mobile.png "Voting on smart phones")
+
 ### Javascript and old browsers
 
 The web interface requires javascript to work, so make sure that you don't have
@@ -29,6 +53,13 @@ javascript disabled on your browser.
 The minimum required version of javascript is the ES6 (ECMAScript 2015). This
 version is supported on most browsers, but it's not supported on Microsoft
 Internet Explorer 11, so this browser is not supported.
+
+In some old browsers, it's possible that the interface works but the encryption
+fails with an error like this:
+
+![Ballot encoding error](/img/old-browser-error1.png "Ballot encoding error")
+
+In any case, this kind of errors only occurs in the not supported browsers.
 
 ## 2. Cookies required and allowed
 
