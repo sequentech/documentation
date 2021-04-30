@@ -7,12 +7,11 @@ slug: /deployment/browsers-and-cookies
 
 ## 1. Supported browsers
 
-The nVotes web interface should work correctly on any modern browser. It's
+The web interface should work correctly on any modern browser. It's
 always recommended to use the most updated version of your favourite browser to
-have more security, but the interface can work on older version if it's needed.
+have more security, but the interface can work on older versions if required.
 
-The interface has been tested with the following browsers, so it's certified
-that it works on this versions and newers:
+The interface has been tested with the following browsers version and newer:
 
  * Mozilla Firefox 36
  * Google Chrome 50
@@ -21,22 +20,20 @@ that it works on this versions and newers:
  * Safari on iPhone 5 (iOS v7)
  * Chrome on Android (v6)
 
-We use https://browser-update.org to check the browser support and notify to
-the user. If the browser is too old the user get the following notification:
+We use https://browser-update.org to check the web browser used by the user
+and notify the user if it's unsupported. If the browser is too old the user 
+get the following notification:
 
 ![browser-update notification with Chrome 50](/img/old-browser-error2.png "browser-update notification")
 
-You can disable this option in the `config.yml`, just disabling the
-`check_browser_version` option. If that option is null, we don't check
-the browser version.
+You can disable this option in the `config.yml` deployment configuration file, 
+just disabling the `config.agora_gui.check_browser_version` option. If that 
+option is null,  we don't check the browser version.
 
 The minimum browser version is also configurable in a deployment. The default
-value can be modified in the `avConfig.js`, updating the `browserUpdate` field,
-but that requires a bit more of knowledge because it will require to rebuild
-all the agora-gui modules in that deployment:
-
-1. Edit the `/home/agoragui/avConfig.js` file
-2. Run the `/home/agoragui/build.sh` script as `agoragui` user.
+value can be modified in the `agora-gui/templates/avConfig.js` in 
+`agora-dev-box`, updating the `browserUpdate` field, but that requires a bit 
+more of knowledge as you need to edit the ansible template and re-deploying.
 
 ### Mobile browsers
 
@@ -59,9 +56,11 @@ fails with an error like this:
 
 ![Ballot encoding error](/img/old-browser-error1.png "Ballot encoding error")
 
-In any case, this kind of errors only occurs in the not supported browsers.
+In any case, this kind of errors only occurs in the unsupported browsers, and
+the `browser-update` library will show a warning about the usage of an old
+browser in those cases.
 
-## 2. Cookies required and allowed
+## 2. Required and allowed cookies
 
 nVotes uses the bare minimum cookies needed for the interface usability. These
 cookies are the needed to login and for security reasons.
@@ -105,7 +104,8 @@ No special cookies are used here.
 The login session cookies expiration time can be configured instead of having 
 no expiration time.
 
-To do that, just find the line with the `cookies_expires` configuration in the
-`config.yml` file and uncomment it. The expiration time will be set in minutes,
-but you can use a number bigger than 60 to set hours. For example if you want
-to set one day you can put `1440`.
+To do that, just find the line with the `config.agora_gui.cookies_expires` 
+configuration in the `config.yml` deployment configuration file and uncomment 
+it. The expiration time  will be set in minutes, but you can use a number 
+bigger than 60 to set hours. For example if you want to set one day you can 
+put `1440`.
