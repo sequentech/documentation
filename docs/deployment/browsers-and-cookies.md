@@ -1,0 +1,111 @@
+---
+id: browsers-and-cookies
+title: Supported Browsers and Cookies used
+sidebar_label: Browsers and Cookies
+slug: /deployment/browsers-and-cookies
+---
+
+## 1. Supported browsers
+
+The web interface should work correctly on any modern browser. It's
+always recommended to use the most updated version of your favourite browser to
+have more security, but the interface can work on older versions if required.
+
+The interface has been tested with the following browsers version and newer:
+
+ * Mozilla Firefox 36
+ * Google Chrome 50
+ * Microsoft Edge 15 (All versions)
+ * Safari 7.1
+ * Safari on iPhone 5 (iOS v7)
+ * Chrome on Android (v6)
+
+We use https://browser-update.org to check the web browser used by the user
+and notify the user if it's unsupported. If the browser is too old the user 
+get the following notification:
+
+![browser-update notification with Chrome 50](/img/old-browser-error2.png "browser-update notification")
+
+You can disable this option in the `config.yml` deployment configuration file, 
+just disabling the `config.agora_gui.check_browser_version` option. If that 
+option is null,  we don't check the browser version.
+
+The minimum browser version is also configurable in a deployment. The default
+value can be modified in the `agora-gui/templates/avConfig.js` in 
+`agora-dev-box`, updating the `browserUpdate` field, but that requires a bit 
+more of knowledge as you need to edit the ansible template and re-deploying.
+
+### Mobile browsers
+
+The voting interface is responsive, that means that it adapts to the browser
+size and this makes the application usable on mobile phones:
+
+![Voting on smart phones](/img/mobile.png "Voting on smart phones")
+
+### Javascript and old browsers
+
+The web interface requires javascript to work, so make sure that you don't have
+javascript disabled on your browser.
+
+The minimum required version of javascript is the ES6 (ECMAScript 2015). This
+version is supported on most browsers, but it's not supported on Microsoft
+Internet Explorer 11, so this browser is not supported.
+
+In some old browsers, it's possible that the interface works but the encryption
+fails with an error like this:
+
+![Ballot encoding error](/img/old-browser-error1.png "Ballot encoding error")
+
+In any case, this kind of errors only occurs in the unsupported browsers, and
+the `browser-update` library will show a warning about the usage of an old
+browser in those cases.
+
+## 2. Required and allowed cookies
+
+nVotes uses the bare minimum cookies needed for the interface usability. These
+cookies are the needed to login and for security reasons.
+
+There's no tracking code or external cookies, all the cookies used by the
+nVotes interface are used just as an local storage for the interface state, and
+in any case these cookies are sent to any external server, they are just used
+to be able to query the API with the authentication and the corresponding
+parameters.
+
+You can check the cookies present and the use in the following lists by GUI
+module.
+
+### Used in all modules
+
+ * **lang**: Used to store the interface language. It'll be set even without
+   login to keep track of the language selected by the user for the next use.
+   again. These cookies are present until the user logouts.
+
+### Admin
+
+ * **\*authevent\***: A set of cookies used to store the admin interface state.
+   This is used to keep the user loged in if the browser is closed and opened
+   again. These cookies are present until the user logouts.
+
+### Booth
+
+ * **\*authevent\***: A set of cookies used to store the booth interface state.
+   In the booth we just store:
+    * The current election ID
+    * The user email and authentication token
+    * If the user is admin
+   These cookies are removed once the user emits the vote.
+
+### Election
+
+No special cookies are used here.
+
+### Configuration
+
+The login session cookies expiration time can be configured instead of having 
+no expiration time.
+
+To do that, just find the line with the `config.agora_gui.cookies_expires` 
+configuration in the `config.yml` deployment configuration file and uncomment 
+it. The expiration time  will be set in minutes, but you can use a number 
+bigger than 60 to set hours. For example if you want to set one day you can 
+put `1440`.
