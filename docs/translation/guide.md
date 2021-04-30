@@ -24,7 +24,15 @@ The user interface is divided in 4 different repositories:
 Each repository has its own set of translation files. The format of these files
 is in JSON and is [roughly defined here (JSON v1 i18next format)](https://www.i18next.com/misc/json-format#i-18-next-json-v1).
 
-## How to translate
+There's also translation files in **agora-results**, currently just for 
+generating PDF results in the chosen language. These work with `gettext` `.po`
+and `.pot` files. 
+
+This guide is grouped in two sections:
+1. How to translate `agora-gui-*`.
+2. How to translate `agora-results`.
+
+## How to translate `agora-gui`
 
 ### Step 1. Writing the translations
 
@@ -256,3 +264,34 @@ We welcome your contributions. This is an open source project and we'll be happy
 to accept your pull request adding support for a new language or updating an 
 existing translation. Please ensure you read and follow the step in the 
 [Contribution Guide](../contribute/guide) to do so.
+
+
+## How to translate `agora-results`
+
+### Step 1. Writing the translations
+
+The English version of the translation JSON files is usually the most up to 
+date, and it is the most international language. For these reasons, to create
+your translation we recommend to base it on the English JSON file for each
+repository. This English base translation is located in the `locales/en.json` 
+in each repository:
+
+- [agora-gui-common/locales/en.json](https://github.com/agoravoting/agora-gui-common/blob/master/locales/en.json)
+- [agora-gui-admin/locales/en.json](https://github.com/agoravoting/agora-gui-admin/blob/master/locales/en.json)
+- [agora-gui-elections/locales/en.json](https://github.com/agoravoting/agora-gui-elections/blob/master/locales/en.json)
+- [agora-gui-booth/locales/en.json](https://github.com/agoravoting/agora-gui-booth/blob/master/locales/en.json)
+
+To create a translation, just copy each of those files into the same `locales/`
+directory as a new file with a name following the pattern 
+`<language-code>.json`. The language code for each language is defined in 
+ISO 639-1 and a [table of codes can be found in Wikipedia](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes). For example, the language code for Spanish is `es`
+and for German is `de`.
+
+Currently the Agora Voting Project contains translations for the following 
+languages:
+- Catalan (ca)
+- English (en)
+- Finnish (fi)
+- Galician (gl)
+- Spanish (es)
+- Swedish (sv)
