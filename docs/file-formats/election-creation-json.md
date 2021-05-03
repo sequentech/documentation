@@ -984,6 +984,19 @@ If set, this optional property will modify the voting booth behaviour so that
 the review ballot screen, shown before casting the vote, will not show the hash
 of the ballot nor the link to audit the ballot.
 
+### Election Presentation Options: `review_screen__split_cast_edit`
+
+- **Property name**: `review_screen__split_cast_edit`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set, this optional property will modify the voting booth behaviour so that 
+the review screen instead of showing below just the button for 
+`Cast your ballot` it will also show a button to `Edit ballot`, showing both
+side by side (50% of horizontal space for each).
+
 ## Results Config Pipes
 
 A results config pipe is used to specify how election results will be calculated. 
