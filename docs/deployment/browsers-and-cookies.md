@@ -27,8 +27,8 @@ get the following notification:
 ![browser-update notification with Chrome 50](/img/old-browser-error2.png "browser-update notification")
 
 You can disable this option in the `config.yml` deployment configuration file, 
-just disabling the `config.agora_gui.check_browser_version` option. If that 
-option is null,  we don't check the browser version.
+just disabling the `config.agora_gui.browser_update_config` option. If that 
+option is set to `false`, we don't check the browser version.
 
 The minimum browser version is also configurable in a deployment. The default
 value can be modified in the `agora-gui/templates/avConfig.js` in 
@@ -60,6 +60,40 @@ In any case, this kind of errors only occurs in the unsupported browsers, and
 the `browser-update` library will show a warning about the usage of an old
 browser in those cases.
 
+### Insecure browsers
+
+By default, we set `insecure: true` setting of the `browser-update` library. 
+This means that all browser that are severely insecure get notified. "Severely
+insecure" means that the browser has security issues that allow remote code 
+execution and similar stuff, and that they are being actively exploited on 
+the Internet.
+
+At the moment of writing this document, it means that anyone using a web browser
+older than the following ones will get the notification for security reasons, 
+**even if the browser is supported by our software**:
+
+ - Edge/IE < 16
+ - Firefox < 76
+ - Opera < 62
+ - Safari < 11.1.1
+ - Chrome < 88.0.4324.150
+
+If you want to disable this feature, which we don't recommend, you should change
+the `config.agora_gui.browser_update_config` setting in the `config.yml` 
+deployment configuration file, setting `insecure: false`:
+
+```yaml title="config.yml fragment" {7}
+    # Shows a dialog if the browser is too old to notify the user. Set this to
+    # false to disable. See how to customize in
+    #  http://browser-update.org/customize.html
+    browser_update_config: >
+      {
+        required: {e:15,f:36,o:65,s:7,c:50},
+        insecure:false,
+        api: "2021.04"
+      }
+```
+
 ## 2. Required and allowed cookies
 
 nVotes uses the bare minimum cookies needed for the interface usability. These
@@ -82,13 +116,13 @@ module.
 
 ### Admin
 
- * **\*authevent\***: A set of cookies used to store the admin interface state.
+ * **authevent**: A set of cookies used to store the admin interface state.
    This is used to keep the user loged in if the browser is closed and opened
    again. These cookies are present until the user logouts.
 
 ### Booth
 
- * **\*authevent\***: A set of cookies used to store the booth interface state.
+ * **authevent**: A set of cookies used to store the booth interface state.
    In the booth we just store:
     * The current election ID
     * The user email and authentication token
