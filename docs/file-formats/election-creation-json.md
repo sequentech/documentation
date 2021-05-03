@@ -997,6 +997,18 @@ the review screen instead of showing below just the button for
 `Cast your ballot` it will also show a button to `Edit ballot`, showing both
 side by side (50% of horizontal space for each).
 
+### Election Presentation Options: `show_skip_question_button`
+
+- **Property name**: `show_skip_question_button`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set, this optional property will modify the voting booth behaviour so that 
+it will show `Skip question(s)` link over the `Continue` button to skip to the
+next question. Only support for `simultaneous-questions` layout.
+
 ## Results Config Pipes
 
 A results config pipe is used to specify how election results will be calculated. 
