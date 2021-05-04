@@ -52,7 +52,7 @@
               }
             ]
           }
-        ],
+        },
         {"type": "agora_results.pipes.results.do_tallies", "params": {}},
         {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
       ],
@@ -261,7 +261,7 @@
             "email": "professor1@example.com",
             "children_event_id_list": [102]
           }
-        },
+        }
       ],
       "auth_method": "email",
       "census": "close",
