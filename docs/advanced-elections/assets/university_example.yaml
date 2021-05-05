@@ -52,10 +52,10 @@
               }
             ]
           }
-        ],
+        },
         {"type": "agora_results.pipes.results.do_tallies", "params": {}},
         {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
-      ],
+      ]
     },
     "questions": [
       {
@@ -208,7 +208,7 @@
         "min": 0,
         "num_winners": 1,
         "tally_type": "plurality-at-large",
-        "title": "Q3: Do you want Robert to be the Faculty representative?",
+        "title": "Q3: Do you want Robert to be the Faculty Representative?",
         "extra_options": {
           "shuffle_categories": false,
           "shuffle_all_options": true,
@@ -245,10 +245,10 @@
     "census": {
       "voters": [
         {
-          "metadata": {
+           "metadata": {
             "email": "student1@example.com",
-            "children_event_id_list": [101]
-          }
+             "children_event_id_list": [101]
+           }
         },
         {
           "metadata": {
@@ -261,7 +261,7 @@
             "email": "professor1@example.com",
             "children_event_id_list": [102]
           }
-        },
+        }
       ],
       "auth_method": "email",
       "census": "close",
@@ -325,7 +325,7 @@
           "label": "Election: Legal Notice",
           "description": "Optional. Please add any legal notice required to be shown to voters by the law of your country. It will be shown as part of the public information in a section inside the election public page.",
           "placeholder": "",
-          "value": "This is an example legal notice. Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.\n\nLorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.",
+          "value": "This is an example legal notice. Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.",
           "required": false,
           "private": true,
           "type": "textarea"
@@ -569,7 +569,7 @@
           "label": "Election: Legal Notice",
           "description": "Optional. Please add any legal notice required to be shown to voters by the law of your country. It will be shown as part of the public information in a section inside the election public page.",
           "placeholder": "",
-          "value": "This is an example legal notice. Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.\n\nLorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.",
+          "value": "This is an example legal notice. Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.",
           "required": false,
           "private": true,
           "type": "textarea"
@@ -715,7 +715,7 @@
         "min": 0,
         "num_winners": 1,
         "tally_type": "plurality-at-large",
-        "title": "Q3: Do you want Robert to be the Faculty representative?",
+        "title": "Q3: Do you want Robert to be the Faculty Representative?",
         "extra_options": {
           "shuffle_categories": false,
           "shuffle_all_options": true,
@@ -813,7 +813,7 @@
           "label": "Election: Legal Notice",
           "description": "Optional. Please add any legal notice required to be shown to voters by the law of your country. It will be shown as part of the public information in a section inside the election public page.",
           "placeholder": "",
-          "value": "This is an example legal notice. Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.\n\nLorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.",
+          "value": "This is an example legal notice. Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem.",
           "required": false,
           "private": true,
           "type": "textarea"
