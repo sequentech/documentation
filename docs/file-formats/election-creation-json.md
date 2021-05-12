@@ -1615,6 +1615,11 @@ is requested by voters during the authentication process each time they execute
 it. If used, an [extra_field](#census-extra_fields) of type `email` and named 
 `email` is  required.
 
+- **email-and-password**: The voters will authenticate simply by the email 
+and password. You can assign the `password` field of each voter appropiately.
+If used, an [extra_field](#census-extra_fields) of type `password` and named 
+`password` is required.
+
 - **sms**: The user will be authenticate through a code sent via SMS.
 The SMS is sent by the adminstrators to voters using the `Send authentication` 
 option in the Election Dashboard or the `Send auth codes` to specific voters
@@ -1646,10 +1651,12 @@ directly set within the `config.yml`
 (`config.authapi.admin_user`). If used, an [extra_field](#census-extra_fields) 
 of type `password` and named `password` is required.
 
-- **email-and-password**: The voters will authenticate simply by the email 
-and password. You can assign the `password` field of each voter appropiately.
-If used, an [extra_field](#census-extra_fields) of type `password` and named 
-`password` is required.
+- **smart-link**: The voters will authenticate using a smart link that includes
+a secure authentication token using a keyed
+[HMAC](https://en.wikipedia.org/wiki/HMAC). It's a straightforward way to
+implement Single sign-on (SSO) and integrate with a third-party site or 
+plataform. Read about how to use it in the
+[Smart Link Authentication Guide](../integrations/smart-link-auth).
 
 - **dnie**: The voters will authenticate using a TLS client authentication
 certificate. This authentication method requires some updates to be usable in 
