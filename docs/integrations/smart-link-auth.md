@@ -140,15 +140,14 @@ the voting is finished. If for some reason the action is activated when the
 election is not within the voting period, the authentication will fail and the
 voter will be redirected to the election public page.
 
-An important fact is that in nVotes platform each voter can in some cases vote 
-multiple times, depeding on the [election configuration](/docs/file-formats/election-creation-json##election-num_successful_logins_allowed). In any case,
-only the last vote cast by each voter will be counted. This is therefore not a 
-security breach, but on the contrary a typical security measure in secure 
-electronic voting systems to mitigate coercion, and we comment on it because 
-it implies that in the cases where vote changing is allowed, the access to the 
-vote action should not disappear when the voter has voted. The reason is simple:
-the voter can change his/her vote by casting another vote during the voting 
-period.
+In nVotes platform voters can in some cases vote multiple times, depending on the 
+[election configuration](/docs/file-formats/election-creation-json##election-num_successful_logins_allowed). In any case, only the last vote cast by each voter will be counted. This is 
+therefore not a security breach, but on the contrary a typical security measure 
+in secure electronic voting systems to mitigate coercion, and we comment on it 
+because it implies that in the cases where vote changing is allowed, the access
+to the vote action should not disappear when the voter has voted. The reason is 
+simple: the voter can change his/her vote by casting another vote during the 
+voting period.
 
 According to the above, it is not strictly necessary for the application to 
 monitor whether the voter has already clicked on the vote button, or whether 
