@@ -7,7 +7,7 @@
 <link rel="alternate" type="application/rss+xml" href="/admin-manual/blog/rss.xml" title="admin-manual Blog RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/admin-manual/blog/atom.xml" title="admin-manual Blog Atom Feed"><title data-react-helmet="true">SmartLink Authentication | admin-manual</title><meta data-react-helmet="true" name="twitter:card" content="summary_large_image"><meta data-react-helmet="true" name="docusaurus_locale" content="en"><meta data-react-helmet="true" name="docusaurus_version" content="current"><meta data-react-helmet="true" name="docusaurus_tag" content="docs-default-current"><meta data-react-helmet="true" property="og:title" content="SmartLink Authentication | admin-manual"><meta data-react-helmet="true" name="description" content="Introduction"><meta data-react-helmet="true" property="og:description" content="Introduction"><meta data-react-helmet="true" property="og:url" content="https://your-docusaurus-test-site.com/admin-manual/docs/integrations/smart-link-auth"><link data-react-helmet="true" rel="shortcut icon" href="/admin-manual/img/favicon.ico"><link data-react-helmet="true" rel="canonical" href="https://your-docusaurus-test-site.com/admin-manual/docs/integrations/smart-link-auth"><link rel="stylesheet" href="/admin-manual/styles.21f0090d.css">
 <link rel="preload" href="/admin-manual/styles.d85a0ff1.js" as="script">
-<link rel="preload" href="/admin-manual/runtime~main.04205f86.js" as="script">
+<link rel="preload" href="/admin-manual/runtime~main.844d25ea.js" as="script">
 <link rel="preload" href="/admin-manual/main.927ef6d6.js" as="script">
 <link rel="preload" href="/admin-manual/1.3bb728ba.js" as="script">
 <link rel="preload" href="/admin-manual/2.051074c9.js" as="script">
@@ -15,7 +15,7 @@
 <link rel="preload" href="/admin-manual/22.d8edfeb2.js" as="script">
 <link rel="preload" href="/admin-manual/935f2afb.f666be2e.js" as="script">
 <link rel="preload" href="/admin-manual/17896441.3aa936f4.js" as="script">
-<link rel="preload" href="/admin-manual/2d0d4fa5.0e202d85.js" as="script">
+<link rel="preload" href="/admin-manual/2d0d4fa5.4e4622ac.js" as="script">
 </head>
 <body>
 <script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){var t=null;try{t=localStorage.getItem("theme")}catch(t){}return t}();t(null!==e?e:"light")}()</script><div id="__docusaurus">
@@ -35,59 +35,60 @@ means that the administrator need to upload the census in nVotes platform.</p><p
 platform (the <code>external application</code>).</li><li>In the external application, voters launch the action to vote, and this
 redirects them to a SmartLink in nVotes Platform.</li><li>The nVotes platform loads the SmartLink, performing authentication and
 authorization and automatically redirecting to the voting booth when
-authentication and authorization succeed.</li></ol><p>A more detailed sequence diagram of the steps involved is show below:</p><div style="text-align:center"><p><img alt="SmartLink Sequence Diagram" src="/admin-manual/assets/images/smartlink-sequence-diagram-85c2b9e56e94f58c116393a4b6844818.png"></p></div><p>As can be seen in the sequence diagram, the single interaction of the voter
+authentication and authorization succeed.</li></ol><p>A more detailed sequence diagram of the steps involved is shown below:</p><div style="text-align:center"><p><img alt="SmartLink Sequence Diagram" src="/admin-manual/assets/images/smartlink-sequence-diagram-85c2b9e56e94f58c116393a4b6844818.png"></p></div><p>As can be seen in the sequence diagram, the single interaction of the voter
 clicking in the action to Vote inside the External Application triggers a
 series of events that ends up loading nVotes User Interface (UI) with an
 internal authentication token. </p><p>After the final step shown in the sequence diagram (number 10), nVotes UI will
-automatically loads the voting booth and the voter can vote correctly
-authenticated.</p><h3><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="auth-token-overview"></a><code>auth-token</code> overview<a class="hash-link" href="#auth-token-overview" title="Direct link to heading">#</a></h3><p>The auth-token is generated in the external application, and verified by nVotes
+automatically load the voting booth and the voter&#x27;s will be vote correctly
+authenticated when cast.</p><h3><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="auth-token-overview"></a><code>auth-token</code> overview<a class="hash-link" href="#auth-token-overview" title="Direct link to heading">#</a></h3><p>The auth-token is generated in the external application, and verified by nVotes
 platform. It is a cryptographically secure to transmit information between the
-external application and nVotes plataform.</p><p>The following data is securely transmitted through the auth-token:</p><ul><li><code>user-id</code>: An unique identifier string of the voter. This is the way nVotes
+external application and nVotes plataform.</p><p>The following data is securely transmitted through the auth-token:</p><ul><li><code>user-id</code>: A unique identifier string of the voter. This is the way nVotes
 platform matches the user with the previously census loaded in the election.</li><li><code>election-id</code>: The identifier of the election in which the voter will be
 authenticated in and in which he is eligible to participate.</li><li><code>timestamp</code>: Timestamp in which the token was generated. It allows the toke
 to expire.</li></ul><p>There are some other related data fields, but we will delve into the details
 later. </p><p>All this data is signed by the usage of a keyed hash-based message
 authentication code (also called a keyed
-<a href="https://en.wikipedia.org/wiki/HMAC" target="_blank" rel="noopener noreferrer">HMAC</a>). An HMAC is cryptographic
+<a href="https://en.wikipedia.org/wiki/HMAC" target="_blank" rel="noopener noreferrer">HMAC</a>). An HMAC is a cryptographic
 mechanism that uses the fact that
 <a href="https://en.wikipedia.org/wiki/Hash_function" target="_blank" rel="noopener noreferrer">hash functions</a> are
 <a href="https://en.wikipedia.org/wiki/One-way_function" target="_blank" rel="noopener noreferrer">one-way functions</a> to use the
 hashing as a secure signature mechanism. A one-way function is a function that
-is easy to calculate in one direction, but difficult or impossible to calculate
-in the opposite direction. Hash functions are one-way functions.</p><p>The external application will generate the message to be signed, then hash it
-using the HMAC mechanism and the HMAC hash signature. The auth-token is
-composed by both the message and the HMAC hash.</p><p>We use a keyed HMAC, which means that the hashing is of two things together:</p><ol><li>The message</li><li>A shared secret, that only the external application and nVotes platform know.</li></ol><p>Because hash functions are one-way functions, the resulting HMAC hash can only
-be calculated having access to the hashed data. The HMAC hash serves as a
+is easy to calculate in one direction, but very difficult or impossible to
+calculate in the opposite direction. Hash functions are one-way functions.</p><p>The external application will generate the message to be signed, then hash it
+using the HMAC mechanism and the HMAC signature. The auth-token is
+composed by both the message and the HMAC code (or HMAC for short).</p><p>We use a keyed HMAC, which means that the hashing is of two things together:</p><ol><li>The message</li><li>A shared secret, that only the external application and nVotes platform know.</li></ol><p>Because hash functions are one-way functions, the resulting HMAC can only
+be calculated having access to the hashed data. The HMAC serves as a
 signature because part of the hashed data (the shared secret) is secret. nVotes
 platform can authenticate that the message was generated by an authorized
-party by receiving the authentication token, and calculating the HMAC hash by
+party by receiving the authentication token, and calculating the HMAC by
 using the message included in the auth-token with the shared secret. If
-the resulting HMAC hash matches the hash included in the auth-token, then nVotes
+the resulting HMAC matches the hash included in the auth-token, then nVotes
 platform has successfully verified that the hash was generated by someone with
-access to the shared secret, which means the external application.</p><p>The auth-token cannot be generated in the web-client of the
+access to the shared secret, which means the external application in our case.</p><p>The auth-token cannot be generated in the web-client of the
 external application, because that would mean that the shared secret would be
 accessible by the voter. The shared secret cannot be accessible by anyone else
-but nVotes Platform and the external application. The shared secret needs to
-remain in the backend servers and not leave them. Of course, in nVotes platform
-the same principle applies, and only the backend servers can and do verify the
-auth-token.</p><h2><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="integration"></a>Integration<a class="hash-link" href="#integration" title="Direct link to heading">#</a></h2><p>The steps 4 to 7 as shown in the sequence diagram shown in the
+but nVotes Platform and the external application backend servers. The shared
+secret needs to  remain in the backend servers and not leave them. Of course,
+in nVotes platform the same principle applies, and only the backend servers can
+and do verify the auth-token.</p><h2><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="integration"></a>Integration<a class="hash-link" href="#integration" title="Direct link to heading">#</a></h2><p>The steps 4 to 7 as shown in the sequence diagram from the
 <a href="#how-it-works">how it works section</a>, need to be implemented in the external
 application.</p><h3><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="step-4-showing-the-vote-action"></a>Step 4: Showing the vote action<a class="hash-link" href="#step-4-showing-the-vote-action" title="Direct link to heading">#</a></h3><div style="text-align:center"><p><img alt="SmartLink Sequence Diagram: Step 4" src="/admin-manual/assets/images/step-4-e92e7d6430244f8249f2867442e5eb9e.png"></p></div><p>At this step we start assuming the voter is correctly authenticated in the
 external application and the external application is being run in the voter&#x27;s
 device.</p><p>The voter should be presented an action to be able to request to vote. This can
-be button or any other user interface representation. This action to vote MUST
+be a button or any other user interface representation. This action to vote MUST
 only be enabled during the voting period in which this specific voter can
-participate, and the action must be related to a specific electoral process.</p><p>nVotes platform assumes that the vote action will not be enabled once
+participate, and the action must be related to a specific election.</p><p>The nVotes platform assumes that the vote action will not be enabled once
 the voting is finished. If for some reason the action is activated when the
 election is not within the voting period, the authentication will fail and the
-voter will be redirected to the election public page.</p><p>An important fact is that in nVotes platform each voter can potentially vote
+voter will be redirected to the election public page.</p><p>An important fact is that in nVotes platform each voter can in some cases vote
 multiple times, depeding on the <a href="/admin-manual/docs/file-formats/election-creation-json##election-num_successful_logins_allowed">election configuration</a>. In any case,
 only the last vote cast by each voter will be counted. This is therefore not a
 security breach, but on the contrary a typical security measure in secure
 electronic voting systems to mitigate coercion, and we comment on it because
-it implies that access to the voting booth that will appear in the application.
-It should not disappear when the voter has voted if this security feature is to
-be used. </p><p>According to the above, it is not strictly necessary for the application to
+it implies that in the cases where vote changing is allowed, the access to the
+vote action should not disappear when the voter has voted. The reason is simple:
+the voter can change his/her vote by casting another vote during the voting
+period.</p><p>According to the above, it is not strictly necessary for the application to
 monitor whether the voter has already clicked on the vote button, or whether
 the voter has clicked on the vote button but has not finished voting, or whether
 the voter has clicked on the vote button and has effectively cast the vote
@@ -100,85 +101,87 @@ that the authentication did not succeed, mentioning multiple possible reasons
 why this error might happen.</p><p>Authentication error messages are explicitly vague for security reasons. Showing
 different error messages might unintentionally reveal information to an
 attacker.</p><h3><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="step-5-requesting-the-smartlink"></a>Step 5: Requesting the SmartLink<a class="hash-link" href="#step-5-requesting-the-smartlink" title="Direct link to heading">#</a></h3><div style="text-align:center"><p><img alt="SmartLink Sequence Diagram: Step 5" src="/admin-manual/assets/images/step-5-065de389dfe8cbd2d7f0b7e340eb1bd7.png"></p></div><p>When the voter clicks the vote action button, the external application should
-request to the external application interface the SmartLink. The SmartLink
+request to the external application backend servers the SmartLink. The SmartLink
 should:</p><ol><li>Not be pre-generated or preloaded, as the SmartLink contains the auth-token
-and the auth-token has a limited lifetime for security reason because it is a
-bearer token.</li><li>Should be generated in the backend and not in javascript in the web browser
+and the auth-token has a limited lifetime for security reasons related to it
+being a bearer token.</li><li>Should be generated in the backend and not in javascript in the web browser
 of the voting device, because the generation of the SmartLink requires access
 to the shared secret and the shared secret should not leave the backend servers.</li></ol><p>The connection betweeen the external application user interface and the
-external device backend servers should be encrypted end-to-end, typically using
-TLS, so that the bearer token cannot be sniffed by any third-party attacker.</p><p>Of course, this request must be properly authenticated using whichever
-authentication procedures that the external application uses internally.</p><h3><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="step-6-generating-and-returning-the-smartlink"></a>Step 6: Generating and returning the SmartLink<a class="hash-link" href="#step-6-generating-and-returning-the-smartlink" title="Direct link to heading">#</a></h3><div style="text-align:center"><p><img alt="SmartLink Sequence Diagram: Step 6" src="/admin-manual/assets/images/step-6-fa5b6e77c3d03fb4da7a48f97a8b5bcf.png"></p></div><p>The external application backend servers receives the SmartLink generation
+external application backend servers should be encrypted end-to-end, typically
+using TLS, so that the bearer token cannot be sniffed by any third-party
+attacker.</p><p>Of course, this request must be properly authenticated using whichever
+authentication procedures that the external application uses internally.</p><h3><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="step-6-generating-and-returning-the-smartlink"></a>Step 6: Generating and returning the SmartLink<a class="hash-link" href="#step-6-generating-and-returning-the-smartlink" title="Direct link to heading">#</a></h3><div style="text-align:center"><p><img alt="SmartLink Sequence Diagram: Step 6" src="/admin-manual/assets/images/step-6-fa5b6e77c3d03fb4da7a48f97a8b5bcf.png"></p></div><p>The external application backend servers receive the SmartLink generation
 request and need to safely process it, generate the SmartLink and return the
 SmartLink to the external application user interface.</p><p>First, the request needs to be validated and authenticated. Failing to correctly
 verify the authentication of the request to generate the SmartLink would
-generate a security vulnerability, because an attacker could generate a
+generate a security vulnerability, because an attacker could receive a
 SmartLink to vote in place of other voters. It&#x27;s the responsability of the
-external application to setup the proper request authentication verification
-mechanisms.</p><p>Once the request is verified to be authenticated, then the application needs to
+external application to setup proper request authentication verification
+mechanisms.</p><p>Once the request is authenticated, then the application needs to
 verify that voter is eligible to vote in the specific requested election and
 that this specific election is in the voting period. In nVotes platform,
 elections are identifed by the <code>election-id</code>, a positive integer that
-identifies the election.</p><h4><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="the-smartlink-format"></a>The SmartLink format<a class="hash-link" href="#the-smartlink-format" title="Direct link to heading">#</a></h4><p>The SmartLink is a string that follows the following pattern:</p><div class="mdxCodeBlock_1zKU"><div class="codeBlockContent_actS"><div tabindex="0" class="prism-code language-undefined codeBlock_tuNs thin-scrollbar"><div class="codeBlockLines_3uvA" style="color:#bfc7d5;background-color:#292d3e"><div class="token-line" style="color:#bfc7d5"><span class="token plain">https://example.com/election/&lt;election-id&gt;/public/login?auth-token=&lt;auth-token&gt;</span></div></div></div><button type="button" aria-label="Copy code to clipboard" class="copyButton_2GIj">Copy</button></div></div><p>For example, if nVotes platform is deployed in the domain
-<code>vote.university.com</code>, and the election id was <code>150017</code>, the SmartLink for
+identifies the election.</p><h4><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="the-smartlink-format"></a>The SmartLink format<a class="hash-link" href="#the-smartlink-format" title="Direct link to heading">#</a></h4><p>The SmartLink is a string with the following pattern:</p><div class="mdxCodeBlock_1zKU"><div class="codeBlockContent_actS"><div tabindex="0" class="prism-code language-undefined codeBlock_tuNs thin-scrollbar"><div class="codeBlockLines_3uvA" style="color:#bfc7d5;background-color:#292d3e"><div class="token-line" style="color:#bfc7d5"><span class="token plain">https://example.com/election/&lt;election-id&gt;/public/login?auth-token=&lt;auth-token&gt;</span></div></div></div><button type="button" aria-label="Copy code to clipboard" class="copyButton_2GIj">Copy</button></div></div><p>For example, if nVotes platform is deployed in the domain
+<code>vote.university.com</code>, and the election id is <code>150017</code>, the SmartLink for a
 voter whose <code>user-id</code> is <code>example@nvotes.com</code> would look similar to the
 following:</p><div class="mdxCodeBlock_1zKU"><div class="codeBlockContent_actS"><div tabindex="0" class="prism-code language-undefined codeBlock_tuNs thin-scrollbar"><div class="codeBlockLines_3uvA" style="color:#bfc7d5;background-color:#292d3e"><div class="token-line" style="color:#bfc7d5"><span class="token plain">https://vote.university.com/election/150017/public/login?auth-token=</span></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">khmac:///sha-256;8e0b1b553c29046cf5988a0e24d6ce276f6d14d27918da5d219</span></div><div class="token-line" style="color:#bfc7d5"><span class="token plain">b634970c3f706/example@nvotes.com:AuthEvent:150017:vote:1620805691</span></div></div></div><button type="button" aria-label="Copy code to clipboard" class="copyButton_2GIj">Copy</button></div></div><p>For the same election, the only part that varies in each smart link is the
 <code>auth-token</code>.</p><h4><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="the-auth-token-format"></a>The <code>auth-token</code> format<a class="hash-link" href="#the-auth-token-format" title="Direct link to heading">#</a></h4><p>Please refer to the <a href="#auth-token-overview">auth-token overview</a> section in which
-we explain how the auth-token works.</p><p>The auth-token has the following format:</p><div class="mdxCodeBlock_1zKU"><div class="codeBlockContent_actS"><div tabindex="0" class="prism-code language-undefined codeBlock_tuNs thin-scrollbar"><div class="codeBlockLines_3uvA" style="color:#bfc7d5;background-color:#292d3e"><div class="token-line" style="color:#bfc7d5"><span class="token plain">khmac:///sha-256;&lt;code&gt;/&lt;message&gt;</span></div></div></div><button type="button" aria-label="Copy code to clipboard" class="copyButton_2GIj">Copy</button></div></div><p>The code is generated by applying the HMAC function to the messages plus the
+we explain how the auth-token works.</p><p>The auth-token is a string that has the following format:</p><div class="mdxCodeBlock_1zKU"><div class="codeBlockContent_actS"><div tabindex="0" class="prism-code language-undefined codeBlock_tuNs thin-scrollbar"><div class="codeBlockLines_3uvA" style="color:#bfc7d5;background-color:#292d3e"><div class="token-line" style="color:#bfc7d5"><span class="token plain">khmac:///sha-256;&lt;code&gt;/&lt;message&gt;</span></div></div></div><button type="button" aria-label="Copy code to clipboard" class="copyButton_2GIj">Copy</button></div></div><p>The code is generated by applying the HMAC function to the message plus the
 shared secret. The code is generated with the standard HMAC procedure with the
 SHA-256 hashing function, further defined in the
-<a href="https://web.archive.org/web/20201208050119/http://csrc.nist.gov/publications/fips/fips198-1/FIPS-198-1_final.pdf" target="_blank" rel="noopener noreferrer">U.S. Federal Information Processing Standards Publication 198</a>. </p><p>We provide two examples of how to generate the auth-token:</p><ul><li><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=bb69ae8415e95815ee8d1d722873c79b" target="_blank" rel="noopener noreferrer">Auth-token generation in Rust language</a></li><li><a href="https://play.golang.org/p/lp44mNTxfeu" target="_blank" rel="noopener noreferrer">Auth-token generation in Go language</a></li></ul><p>In other programming languages it is possible to generate HMAC codes in a
-similar way.</p><h4><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="the-auth-token-message-format"></a>The <code>auth-token</code> message format<a class="hash-link" href="#the-auth-token-message-format" title="Direct link to heading">#</a></h4><p>The message is the string to be signed using the HMAC procedure. It has the
-following format:</p><div class="mdxCodeBlock_1zKU"><div class="codeBlockContent_actS"><div tabindex="0" class="prism-code language-undefined codeBlock_tuNs thin-scrollbar"><div class="codeBlockLines_3uvA" style="color:#bfc7d5;background-color:#292d3e"><div class="token-line" style="color:#bfc7d5"><span class="token plain">&lt;user-id: String&gt;:AuthEvent:&lt;election-id: Int&gt;:vote:&lt;timestamp: Int&gt;</span></div></div></div><button type="button" aria-label="Copy code to clipboard" class="copyButton_2GIj">Copy</button></div></div><p>For example, a valid message could be:</p><div class="mdxCodeBlock_1zKU"><div class="codeBlockContent_actS"><div tabindex="0" class="prism-code language-undefined codeBlock_tuNs thin-scrollbar"><div class="codeBlockLines_3uvA" style="color:#bfc7d5;background-color:#292d3e"><div class="token-line" style="color:#bfc7d5"><span class="token plain">example@nvotes.com:AuthEvent:150017:vote:1620927640</span></div></div></div><button type="button" aria-label="Copy code to clipboard" class="copyButton_2GIj">Copy</button></div></div><p>As can be seen there are three pieces of information within the message:</p><ul><li><p><strong>user-id</strong> It is a text string used by nVotes Platform as an identifier of
-the voter. There are several important considerations in the user-id:</p><ol><li>The user-id must always be the same for each voter on each vote. That is,
-if a voter votes twice in the same election, the user-id must be the same.
-This is very important, because the user-id is the way nVotes Platform will
-find if the voter previously voted, and in that way nVotes Platform decides
-whether to save the vote as a new vote or overwrite the voter&#x27;s previous vote.</li><li>The user-id is the lookup field by which nVotes will try to find the voter
-in the census. If the user-id is not included in the census of the election,
-authorization will fail. If the user-id is from another voter, the voter would
-be voting in place of this other voter. Thus, it&#x27;s critical to correctly set
-this field.</li><li>For security, to avoid transmitting any additional information about the
-voter beyond a unique identifier, the voter id can be a hash of a unique
-internal identifier of the voter, known only to the external application. In
-this manner this information does not have to transcend outside the external
-application. For example, the affiliate number in an assocation or internal
-database unique user id can be used.</li><li>We recommend using SHA-256 as a hashing function, and avoiding SHA-1 or MD5
+<a href="https://web.archive.org/web/20201208050119/http://csrc.nist.gov/publications/fips/fips198-1/FIPS-198-1_final.pdf" target="_blank" rel="noopener noreferrer">U.S. Federal Information Processing Standards Publication 198</a>. </p><p>We provide two examples of how to generate the auth-token:</p><ul><li><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=bb69ae8415e95815ee8d1d722873c79b" target="_blank" rel="noopener noreferrer">Auth-token generation in Rust language</a></li><li><a href="https://play.golang.org/p/lp44mNTxfeu" target="_blank" rel="noopener noreferrer">Auth-token generation in Go language</a></li></ul><p>In other programming languages it is possible to generate the HMAC in a
+similar way, as it is a standard security mechanism.</p><h4><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="the-auth-token-message-format"></a>The <code>auth-token</code> message format<a class="hash-link" href="#the-auth-token-message-format" title="Direct link to heading">#</a></h4><p>The message is the string to be signed using the HMAC procedure. It has the
+following format:</p><div class="mdxCodeBlock_1zKU"><div class="codeBlockContent_actS"><div tabindex="0" class="prism-code language-undefined codeBlock_tuNs thin-scrollbar"><div class="codeBlockLines_3uvA" style="color:#bfc7d5;background-color:#292d3e"><div class="token-line" style="color:#bfc7d5"><span class="token plain">&lt;user-id: String&gt;:AuthEvent:&lt;election-id: Int&gt;:vote:&lt;timestamp: Int&gt;</span></div></div></div><button type="button" aria-label="Copy code to clipboard" class="copyButton_2GIj">Copy</button></div></div><p>For example, a valid message could be:</p><div class="mdxCodeBlock_1zKU"><div class="codeBlockContent_actS"><div tabindex="0" class="prism-code language-undefined codeBlock_tuNs thin-scrollbar"><div class="codeBlockLines_3uvA" style="color:#bfc7d5;background-color:#292d3e"><div class="token-line" style="color:#bfc7d5"><span class="token plain">example@nvotes.com:AuthEvent:150017:vote:1620927640</span></div></div></div><button type="button" aria-label="Copy code to clipboard" class="copyButton_2GIj">Copy</button></div></div><p>As can be seen there are three pieces of information within the message:</p><ul><li><strong>user-id</strong> It is a text string used by nVotes Platform as an identifier of
+the voter. There are several important considerations with regards to the
+user-id:<ol><li>The user-id must always be the same for each voter on each election. That
+is, if a voter votes twice in the same election, the user-id must be the same.
+The user-id is the way nVotes Platform will find if the voter previously
+voted, and in that way nVotes Platform decides whether to save the vote as a
+new vote or overwrite the voter&#x27;s previous vote.</li><li>The user-id is the lookup field by which nVotes will try to find the voter
+in the census to perform authorization. If the user-id is not included in the
+census of the election, authorization will fail. If the user-id is from
+another voter, the voter would be voting in place of this other voter. Thus,
+it&#x27;s critical to correctly set this field.</li><li>To avoid transmitting any additional information about the voter beyond a
+unique identifier, the voter id can be a hash of a unique internal identifier
+of the voter, known only to the external application. In this manner this
+information does not have to transcend outside the external application. For
+example, the affiliate number in an assocation or internal database unique
+user id can be used.</li><li>We recommend using SHA-256 as a hashing function, and avoiding SHA-1 or MD5
 for security reasons.</li><li>We recommend that you do not directly hash the voter&#x27;s id, but rather hash
 the id plus a salt. The salt must be another secret key, which is only known
 by the external application servers, and thus protects against attacks that
 reveal the voter&#x27;s id.</li><li>It is recommended that the salt varies for each election. That way in each
 election the user-id for the same voter will be different, thus reducing the
 information revealed through the user-id to nVotes platform strictly to the
-minimum necessary. Therefore, it is recommended that you include the election
-id of the vote in the salt to be hashed.</li></ol></li><li><p><strong>election-id</strong> Is the identifier of the election. It is necessary to include
-it so that the message, which is trusted by nVotes platform because it is
-cryptographicall signed, associates the user-id to a specific election, and
-thus the same message cannot be used for different elections, in the event that
-there are two or more elections within the voting period. The election-id
-will be provided by nVotes Platform for each election, and it will be a positive
-integer.</p></li><li><p><strong>timestamp</strong> It is the date on which the message was generated, in
+minimum necessary. Therefore, it is recommended that you include the
+election-id in the salt to be hashed.</li></ol></li><li><strong>election-id</strong> The unique identifier of the election. It is necessary to
+include it so that the message, which is trusted by nVotes platform because it
+is cryptographicall signed, associates the user-id to a specific election, and
+thus the same message cannot be used for different elections in the event that
+there are two or more elections running at once. The election-id will be
+provided by nVotes Platform for each election, and it will be a positive
+integer.</li><li><strong>timestamp</strong> It is the date on which the message was generated, in
 &quot;UNIX timestamp&quot; format, that is, an integer with the number of seconds since
 January 1, 1970 (<a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank" rel="noopener noreferrer">more information</a>).
 The message includes the timestamp as a way to calculate an expiration date
 for said authenticated message, as we have explained previously. The auth-token
 needs to expire because it is a bearer token, meaning that anyone with access
-to it will be able to use it. For this reason it&#x27;s lifetime needs to be
-limited. It&#x27;s important to verify that the clocks of both backend servers (that of
-nVotes Platform and that of the external application) are synchronized, so that
-the message expiration calculation is possible.</p></li></ul><h3><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="step-7-loading-the-smartlink"></a>Step 7: Loading the SmartLink<a class="hash-link" href="#step-7-loading-the-smartlink" title="Direct link to heading">#</a></h3><div style="text-align:center"><p><img alt="SmartLink Sequence Diagram: Step 7" src="/admin-manual/assets/images/step-7-dd78d62ad1758962424334eb515fd142.png"></p></div><p>Once the external application receives the SmartLink, the next step is very
-simple: load the SmartLink URL. This can be done however you see fit within
-some constraints: </p><ul><li>Load the URL in a web browser Widget if the external application is a native
+to it will be able to use it. For this reason its lifetime needs to be
+limited. It&#x27;s important to verify that the clocks of both backend servers (that
+of nVotes Platform and that of the external application) are synchronized, so
+that the message expiration calculation is possible.</li></ul><h3><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_prK2" id="step-7-loading-the-smartlink"></a>Step 7: Loading the SmartLink<a class="hash-link" href="#step-7-loading-the-smartlink" title="Direct link to heading">#</a></h3><div style="text-align:center"><p><img alt="SmartLink Sequence Diagram: Step 7" src="/admin-manual/assets/images/step-7-dd78d62ad1758962424334eb515fd142.png"></p></div><p>Once the external application receives the SmartLink, the next step is very
+simple: load the SmartLink URL. This can be performed using one of the following
+methods: </p><ul><li>Load the URL in a web browser widget if the external application is a native
 mobile or desktop application and you don&#x27;t want to move the voter to a web
 browser.</li><li>Load the URL in a new web browser window if the external application is a
 native mobile or desktop application and you don&#x27;t mind moving the voter to a
 web browser.</li><li>Load the URL in a new tab if the external application is a website and you
 don&#x27;t want the voter to close the external application tab.</li><li>Load the URL changing the current <code>window.location.href</code> if the external
-application is a website and you don&#x27;t want the voter to close the external
-application tab.</li></ul><p>Note that currently you <strong>cannot</strong> load the SmartLink in an iframe, as it would
+application is a website and you don&#x27;t mind closing the external application
+website.</li></ul><p>Note that currently you <strong>cannot</strong> load the SmartLink in an iframe, as it would
 interfere with other integration methods and would not work.</p></div></article><div class="margin-vert--xl"><div class="row"><div class="col"><a href="https://github.com/agoravoting/admin-manual/edit/master/docs/integrations/smart-link-auth.md" target="_blank" rel="noreferrer noopener"><svg fill="currentColor" height="1.2em" width="1.2em" preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 40 40" class="iconEdit_2LL7"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div></div></div><div class="margin-vert--lg"><nav class="pagination-nav" aria-label="Blog list page navigation"><div class="pagination-nav__item"><a class="pagination-nav__link" href="/admin-manual/docs/advanced-elections/parent-and-children-elections"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">« Parent and Children Elections</div></a></div><div class="pagination-nav__item pagination-nav__item--next"><a class="pagination-nav__link" href="/admin-manual/docs/contribute/guide"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Contribution Guide »</div></a></div></nav></div></div></div><div class="col col--3"><div class="tableOfContents_2xL- thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#introduction" class="table-of-contents__link">Introduction</a></li><li><a href="#what-it-is" class="table-of-contents__link">What it is</a></li><li><a href="#how-it-works" class="table-of-contents__link">How it works</a><ul><li><a href="#auth-token-overview" class="table-of-contents__link"><code>auth-token</code> overview</a></li></ul></li><li><a href="#integration" class="table-of-contents__link">Integration</a><ul><li><a href="#step-4-showing-the-vote-action" class="table-of-contents__link">Step 4: Showing the vote action</a></li><li><a href="#step-5-requesting-the-smartlink" class="table-of-contents__link">Step 5: Requesting the SmartLink</a></li><li><a href="#step-6-generating-and-returning-the-smartlink" class="table-of-contents__link">Step 6: Generating and returning the SmartLink</a></li><li><a href="#step-7-loading-the-smartlink" class="table-of-contents__link">Step 7: Loading the SmartLink</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container"><div class="row footer__links"><div class="col footer__col"><h4 class="footer__title">Docs</h4><ul class="footer__items"><li class="footer__item"><a class="footer__link-item" href="/admin-manual/docs/deployment/guide">Deployment</a></li><li class="footer__item"><a class="footer__link-item" href="/admin-manual/docs/translation/guide">Translation</a></li><li class="footer__item"><a class="footer__link-item" href="/admin-manual/docs/testing/bulk">Election Testing</a></li><li class="footer__item"><a class="footer__link-item" href="/admin-manual/docs/advanced-elections/introduction">Advanced Elections</a></li><li class="footer__item"><a class="footer__link-item" href="/admin-manual/docs/contribute/guide">Contribute</a></li></ul></div><div class="col footer__col"><h4 class="footer__title">Community</h4><ul class="footer__items"><li class="footer__item"><a href="https://github.com/agoravoting" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub</a></li><li class="footer__item"><a href="https://discord.gg/BSqF8Cbr" target="_blank" rel="noopener noreferrer" class="footer__link-item">Discord</a></li><li class="footer__item"><a href="https://twitter.com/nvotes_com" target="_blank" rel="noopener noreferrer" class="footer__link-item">Twitter</a></li></ul></div><div class="col footer__col"><h4 class="footer__title">More</h4><ul class="footer__items"><li class="footer__item"><a href="https://nvotes.com/blog/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Blog</a></li><li class="footer__item"><a href="https://github.com/agoravoting/admin-manual" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub</a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2021 nVotes</div></div></div></footer></div>
 <script src="/admin-manual/styles.d85a0ff1.js"></script>
-<script src="/admin-manual/runtime~main.04205f86.js"></script>
+<script src="/admin-manual/runtime~main.844d25ea.js"></script>
 <script src="/admin-manual/main.927ef6d6.js"></script>
 <script src="/admin-manual/1.3bb728ba.js"></script>
 <script src="/admin-manual/2.051074c9.js"></script>
@@ -186,6 +189,6 @@ interfere with other integration methods and would not work.</p></div></article>
 <script src="/admin-manual/22.d8edfeb2.js"></script>
 <script src="/admin-manual/935f2afb.f666be2e.js"></script>
 <script src="/admin-manual/17896441.3aa936f4.js"></script>
-<script src="/admin-manual/2d0d4fa5.0e202d85.js"></script>
+<script src="/admin-manual/2d0d4fa5.4e4622ac.js"></script>
 </body>
 </html>
