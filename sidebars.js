@@ -16,6 +16,9 @@ module.exports = {
       'advanced-elections/election-creation',
       'advanced-elections/parent-and-children-elections'
     ],
+    Integrations: [
+      'integrations/smart-link-auth'
+    ],
     Contribute: [
       'contribute/guide'
     ]
