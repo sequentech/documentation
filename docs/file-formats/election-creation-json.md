@@ -2349,7 +2349,7 @@ properties:
 
 TODO: there are many more options, not yet documented here.
 
-### Election Presentation Options: `invalid_vote_policy`
+### Question Extra: `invalid_vote_policy`
 
 - **Property name**: `invalid_vote_policy`
 - **Type:** `Short String`
@@ -2400,6 +2400,35 @@ is  `cummulative`. By default, if unset, its value is `1`.
 If set to `true` then an answer representing the checkable category can be 
 added, and can be flagged as such by setting an url to the answer with title 
 `type` and value `checkable-list` (string).
+
+### Question Extra: `show_points`
+
+- **Property name**: `show_points`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+Indicates whether to show the points for each candidate and default to `false`.
+If set to `true`, then the review screen where the voter can review the ballot
+choices before casting the vote will show the points assigned to each selected
+candidate next to the selected candidate in questions where the tally mechanism
+allows us to do so. 
+
+The `accordion` question layout will also show the points assigned to each 
+candidate if this setting is set to `true`.
+
+### Question Extra: `review_screen__show_question_description`
+
+- **Property name**: `review_screen__show_question_description`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+Indicate whether the question description should be shown in the review screen
+of the voting booth below the election title for this specific question. 
+Defaults to `false`.
 
 ## Children Election Info Object
 
