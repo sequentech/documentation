@@ -311,7 +311,7 @@ user-id:
   election-id in the salt to be hashed.
 - **election-id** The unique identifier of the election. It is necessary to 
 include it so that the message, which is trusted by nVotes platform because it 
-is cryptographicall signed, associates the user-id to a specific election, and 
+is cryptographically signed, associates the user-id to a specific election, and 
 thus the same message cannot be used for different elections in the event that
 there are two or more elections running at once. The election-id will be 
 provided by nVotes Platform for each election, and it will be a positive

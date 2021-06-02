@@ -297,7 +297,7 @@ Currently `agora-results` contains translations for the following languages:
 ### Step 2. Building the translations
 
 Each time an i18n string is changed, removed or added to the code, you should 
-run:the following command to update the translation template (the 
+run the following command to update the translation template (the 
 `agora_results/pipes/locale/pipes.pot` file):
 
 ```bash
