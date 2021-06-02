@@ -999,6 +999,9 @@ config:
     # Default: false
     allow_admin_registration: false
 
+    # Number of seconds after which an authentication token expires.
+    auth_token_expiration_seconds: 3600
+
     # callbacks given to agora_elections instances, for now related to sending
     # the result of uploading tally sheets only. It's a list so that it can
     # upload multiple agora_elections instances
