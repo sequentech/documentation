@@ -464,7 +464,7 @@ directly accessing to this website will be shown a generic error:
 
 ![Public election site error auth](./assets/public-election-site-error-auth.png)
 
-# Authentication testing
+### Authentication testing
 
 Once we have added voter(s), you need to 
 [integrate the external application](#integration) to test the whole 
