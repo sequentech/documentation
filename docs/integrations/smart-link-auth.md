@@ -352,3 +352,140 @@ website.
 
 Note that currently you **cannot** load the SmartLink in an iframe, as it would
 interfere with other integration methods and would not work.
+
+## Example: How to use smart-link auth
+
+### Election creation
+
+We will create an election with a smart-link and authenticate with it. The 
+easiest way to do it is using the Administrative Interface. First click in 
+the `New Election` sidebar action, which will lead to a page similar to this:
+
+![New Election](./assets/new-election.png)
+
+Then in the sidebar click in the `Authentication` section, and inside it choose
+the `Smart Link` authentication method:
+
+![Smart Link Authentication](./assets/admin-auth.png)
+
+Note that the list of authentication methods shown in the list depends on which
+ones you have enabled to be shown in the `config.agora_gui.shown_auth_methods`
+setting in the`config.yml` deployment configuration file. If `Smart Link` is not
+shown here, please enable it in the `config.yml` and redeploy.
+
+After doing that, if you click in the `Census Configuration` section you will
+find that an mandatory extra field called `user_id` has been added:
+
+![Admin extra fields](./assets/extra-fields.png)
+
+The `user_id` field is used during authorization. It's matched against the 
+census as explained earlier in this document.
+
+### JSON configuration
+
+Other than that, we can leave the rest of the election configuration by default
+and create the election as is. In the `Create Election` sidebar section, if you
+click in the pencil button you can see and edit the election configuration json.
+It will be similar to this [example-smart-link.json](./assets/example-smart-link.yaml).
+You can follow the same patterns in there to create the election using JSON
+yourself.
+
+In particular, you will see that the authentication method has been set to
+`smart-link` and it contains the `user_id` extra field:
+
+```json title="example-smart-link.json fragment" {7-18}
+... rest of the configution ....
+
+    "census": {
+      "has_ballot_boxes": false,
+      "voters": [],
+      "census": "close",
+      "auth_method": "smart-link",
+      "extra_fields": [
+        {
+          "must": true,
+          "name": "user_id",
+          "type": "text",
+          "required": true,
+          "min": 1,
+          "max": 255,
+          "required_on_authentication": true
+        }
+      ],
+
+... rest of the configution ....
+```
+
+You could add more extra fields if you wanted. For example you could add an 
+extra field that has the 
+[private property](/docs/file-formats/election-creation-json#extra-field-private) 
+set to `true`. This would allow to have some voter related data in the
+census that is only visible to election administrators.
+
+### Census
+
+Once you create the election, you will be able to access to the dashboard of the
+election as usual. You can add manually voter(s) like we do in the picture 
+below. As usual, you could have done it also in the previous step in the 
+json configuration or through the admin user interface during election creation.
+
+![Adding voters](./assets/adding-voters.png)
+
+### Parent and Children elections
+
+Adding the voters to the census is required. The external application does the
+authentication, but nVotes systems will be in charge of authorization. Also,
+if you want to use 
+[parent-children elections](/docs/advanced-elections/parent-children-elections.md), 
+ you can do it. It works like explained there. You can just the 
+`smart-link` authentication, and it will work as expected: each voter in the
+parent election will be able to vote only in the children elections assigned
+to the voter.
+
+### Public site
+
+Through the election dashboard you can access to the `Election public site`. 
+This goes to a link typically with the format 
+`https://example.com/election/<election-id>/public/home` that shows a page 
+similar to:
+
+![Public election site](./assets/public-election-site.png)
+
+Even if the election is within the voting period, the voting site does not show
+a link to the authentication page. Because of how this authentication method
+works, the voter is expected to do the authentication through the external
+application and not through our public election site.
+
+The voter authentication page still exists, though. It's URL typically follows
+the pattern `https://example.com/election/<election-id>/public/login`. As usual, if the 
+voting period is not open, that page will redirecto the home of the public site
+(ending in `/public/home`). If the election is during the voting period, a voter
+directly accessing to this website will be shown a generic error:
+
+![Public election site error auth](./assets/public-election-site-error-auth.png)
+
+# Authentication testing
+
+Once we have added voter(s), you need to 
+[integrate the external application](#integration) to test the whole 
+authentication process.
+
+You can also test the authentication method manually to ensure it works without
+using the external application. To do so, you need to craft a valid 
+SmartLink:
+
+```
+https://example.com/election/<election-id>/public/login?auth-token=<auth-token>
+```
+
+To generate the `auth-token`, we can use the 
+[Auth-token generation in Rust language](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=bb69ae8415e95815ee8d1d722873c79b) that we mentioned in the integration 
+guide.
+
+You can just change the default data provided in that code using the appropiate 
+`user_id`, `election-id` and unix timestamp. If you don't know what is the
+current timestamp, you can run the command `date +%s` in your server (or any 
+other machine with the same timezone) to obtain it.
+
+Inserting the auth-token into the SmartLink should directly authenticate you
+and show the voting booth allowing you to cast a valid vote.

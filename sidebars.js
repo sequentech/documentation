@@ -14,7 +14,8 @@ module.exports = {
     "Advanced Elections": [
       'advanced-elections/introduction',
       'advanced-elections/election-creation',
-      'advanced-elections/parent-and-children-elections'
+      'advanced-elections/parent-and-children-elections',
+      'advanced-elections/write-ins'
     ],
     Integrations: [
       'integrations/smart-link-auth'
