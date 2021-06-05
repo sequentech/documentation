@@ -436,7 +436,7 @@ json configuration or through the admin user interface during election creation.
 Adding the voters to the census is required. The external application does the
 authentication, but nVotes systems will be in charge of authorization. Also,
 if you want to use 
-[parent-children elections](/docs/advanced-elections/parent-children-elections.md), 
+[parent-children elections](/docs/advanced-elections/parent-and-children-elections/), 
  you can do it. It works like explained there. You can just the 
 `smart-link` authentication, and it will work as expected: each voter in the
 parent election will be able to vote only in the children elections assigned
