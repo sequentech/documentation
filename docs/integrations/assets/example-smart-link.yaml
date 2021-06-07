@@ -61,9 +61,8 @@
       ],
       "admin_fields": [],
       "config": {
+        "shared_secret": "the cake is in the oven",
         "allow_user_resend": false,
-        "msg": "Vote in __URL__ with code __CODE__",
-        "subject": "Vote now with nVotes",
         "authentication-action": {
           "mode": "vote",
           "mode-config": {

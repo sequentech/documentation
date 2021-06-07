@@ -240,6 +240,26 @@ b634970c3f706/example@nvotes.com:AuthEvent:150017:vote:1620805691
 For the same election, the only part that varies in each smart link is the
 `auth-token`.
 
+:::note Auth-token and URI encoding
+The auth-token is provided as an URI parameter and thus needs to be encoded
+properly. Usually, if you use characters like `a-zA-Z@:0-9` it's not going to
+pose a problem. You don't need to actually process the auth-token as it will be 
+automatically done by the web browser. It will just work out.
+
+But if you are going to use some other characters, even a simple `+` or `%` 
+character in the shared secret or in the user-id, you need to URI encode the 
+auth-token. We **strongly recommend** always applying URI encoding of the 
+auth-token just in case to avoid encoding issues in the  future.
+
+A way to do this is using the 
+[encodeURIComponent()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) 
+Javascript function. As the code that will redirect or load the SmartLink runs 
+in the web browser, this function should be available for you to use. 
+
+For manual testing purposes, you can use the 
+[urlencoder.org](https://www.urlencoder.org/) website.
+:::
+
 #### The `auth-token` format
 
 Please refer to the [auth-token overview](#auth-token-overview) section in which
@@ -421,6 +441,42 @@ extra field that has the
 [private property](/docs/file-formats/election-creation-json#extra-field-private) 
 set to `true`. This would allow to have some voter related data in the
 census that is only visible to election administrators.
+
+### Shared Secret configuration
+
+The shared secret that is used in authapi to verify that the auth-token comes
+from a trusted source can be configured for authapi in two different manners:
+
+1. The election specific shared-secret, set in the election JSON configuration 
+file in the `census.config.shared_secret` key. It's not required, but if 
+provided it will be used.
+2. As a shared-secret used for the whole deployment. This is configured in the
+`config.agora_elections.shared_secret` setting within the `config.yml` 
+deployment configuration file. It's used by default.
+
+Below you can see a fragment of the election JSON configuration file with
+the election-specific shared secret set to `the cake is in the oven`.
+
+
+```json title="example-smart-link.json fragment" {4}
+    ... rest of the configution ....
+    "census": {
+      "config": {
+        "shared_secret": "the cake is in the oven",
+        "allow_user_resend": false,
+        "authentication-action": {
+          "mode": "vote",
+          "mode-config": {
+            "url": ""
+          }
+        },
+        "registration-action": {
+          "mode": "vote",
+          "mode-config": null
+        }
+      }
+      ... rest of the configution ....
+```
 
 ### Census
 
