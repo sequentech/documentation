@@ -168,7 +168,7 @@ for normal candidates, in order and as if the write-ins were in
 the list of candidates. It asumes all write-ins (even if not
 selected) are in the list of candidates and they are flagged as
 such simply by an element in `answer.urls` as
-`{title: 'isWriteIn', url: 'true'}`.
+`{"title": "isWriteIn", "url": "true"}`.
 
 For example in a plurality-at-large question example with three
 normal candidates `A`, `B` and `C` and two write-ins, where the
@@ -186,6 +186,7 @@ and the encoded choices would be:
            |  |  |  |  |  |
 bases   = [2, 2, 2, 2, 2, 2]
 choices = [0, 0, 0, 0, 1, 1]
+
 encodedChoices = 1*2^4 + 1*2^5 = 48
 ```
 
@@ -219,6 +220,7 @@ encoded choices would be:
            |  |  |  |  |  |   |    |    |         |
 bases   = [2, 2, 2, 2, 2, 2, 256, 256, 256, 256, 256]
 choices = [0, 0, 0, 0, 1, 1, 68,  0,   69,  100, 0  ]
+
 encodedChoices = 1*(2^4) + 1*(2^5) + 68*(2^6) + 69*(2^6)*(256^2) + 100*(2^6)*(256^3) = 107663593776
 ```
 
@@ -242,6 +244,7 @@ in our example), the full encoding would be:
            |  |  |  |  |  |   |    |
 bases   = [2, 2, 2, 2, 2, 2, 256, 256]
 choices = [0, 1, 0, 0, 0  0, 0,   0  ]
+
 encodedChoices = 1*(2**1) = 2
 ```
 

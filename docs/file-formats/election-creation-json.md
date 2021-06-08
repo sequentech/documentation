@@ -2430,6 +2430,69 @@ Indicate whether the question description should be shown in the review screen
 of the voting booth below the election title for this specific question. 
 Defaults to `false`.
 
+### Question Extra: `allow_writeins`
+
+- **Property name**: `allow_writeins`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+Indicate whether this question can include any write-ins. Needed to set to
+`true` if you are using [write-ins](/docs/advanced-elections/write-ins) in the 
+question. Defaults to `false`.
+
+### Question Extra: `answer_group_columns_size`
+
+- **Property name**: `answer_group_columns_size`
+- **Type:** `Integer`
+- **Required:** No
+- **Allowed values:** `3, 4, 6, 12`
+- **Default:** `6`
+- **Example:** `12`
+- **Related:**
+  - [`answer_columns_size`](#question-extra-answer_columns_size)
+
+Specifies the relative width of each answer category in the `simulaneous-questions`
+layout in the voting booth.
+
+It uses [bootstrap 12 columns system](https://getbootstrap.com/docs/3.3/css/#grid-options),
+meaning the sizes need to be an integer from the allowed values (`3, 4, 6, 12`).
+
+For example, if it's set to `12`, it means that each category will use the full
+width. But if it's set to `6`, then two categories will appear next to the other. 
+Note that we are using `col-md-<number>`, so in small devices each category will
+neverless use the full width, equivalent to using the value `12`.
+
+All answers with no category set (category empty) are considered to be in the 
+same category with respect to this setting.
+
+### Question Extra: `answer_columns_size`
+
+- **Property name**: `answer_columns_size`
+- **Type:** `Integer`
+- **Required:** No
+- **Allowed values:** `3, 4, 6, 12`
+- **Default:** `12`
+- **Example:** `4`
+- **Related:**
+  - [`answer_group_columns_size`](#question-extra-answer_group_columns_size)
+
+Specifies the relative width of each answer within each answer category in the 
+`simulaneous-questions` layout in the voting booth. 
+
+It uses [bootstrap 12 columns system](https://getbootstrap.com/docs/3.3/css/#grid-options),
+meaning the sizes need to be an integer  from the allowed values (`3, 4, 6, 12`).
+
+For example, if the `answer_group_columns_size` is set to `12` and the 
+`answer_columns_size` is set to `6`, then each category will use the full width
+and each answer will only use 50%, showing themselves in pairs.
+
+However if `answer_group_columns_size` is set to `6` and the 
+`answer_columns_size` is set to `12`, then it would be answer categories using 
+half of the screen, appearing side by side in pairs. And within each category, 
+each answer will use the full width of the category.
+
 ## Children Election Info Object
 
 TODO 
