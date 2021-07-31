@@ -21,7 +21,8 @@ module.exports = {
       'integrations/smart-link-auth'
     ],
     Contribute: [
-      'contribute/guide'
+      'contribute/guide',
+      'contribute/release-lifecycle'
     ]
   },
   fileFormatsSidebar: {
