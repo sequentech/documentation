@@ -14,7 +14,7 @@ latest version within a reasonable roadmap.
 
 nVotes Platform follows a [Semantic Versioning scheme](https://semver.org/). 
 Each  release has a version number following the `major.minor.patch` pattern and
-each version number is increased monotonously. For  example, `2.1.0` is valid 
+each version number is increased monotonically. For  example, `2.1.0` is valid 
 version number.
 
 ### Version numbers for each project
