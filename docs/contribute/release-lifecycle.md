@@ -22,27 +22,27 @@ version number.
 [Multiple projects](https://github.com/agoravoting/) compromise nVotes platform 
 architecture: agora-gui-booth, agora-elections, election-orchestra, etc.
 
-Backwards compatible releases for new features or bugfixes are published 
+Patch releases for bugfixes or security updates are published 
 independently for each project. For example `agora-tally` might be published 
-with version `4.2.0` while `agora-results` stays at `4.1.1`.
+with version `4.0.3` while `agora-results` stays at `4.0.1`.
 
-Major release versions are published at once for all projects of the release.
-This allows us to ensure sure that any `agora-gui-booth` release versioned 
-`5.x.y` (for example  `5.1.1`  or `5.4.11`) will work with `agora-gui-commons` 
-version `5.3.4`.
-
+Feature release versions are published at once for all projects of the release.
+A Feature release can either be a new major or minor version, depending if the 
+release contains backwards incompatible new features. This allows us to ensure 
+sure that any `agora-gui-booth` release versioned `5.1.x` (for example  `5.1.1` 
+or `5.1.11`) will work with `agora-gui-commons` version `5.1.x`.
 ## Release cadence and Enterprise Support
 
-Releases are published every 3 months in February, May, August and November
-each year. nVotes offers up to 6 months of 
+Feature releases are published every 3 months in February, May, August and 
+November each year. nVotes offers up to 6 months of 
 [Enterprise Support](https://nvotes.com) to its partners and clients for all 
-major releases.
+Feature releases.
 
 ![Releases timeline](./assets/releases-timeline.svg)
 
-## Major Release schedule
+## Feature Release schedule
 
-Each release will be published under a schedule that includes:
+Each Feature release will be published under a schedule that includes:
 - A feature freeze date, usually 1 month before the final release date.
 - A beta release, usually 2 weeks before the final release date.
 
@@ -61,7 +61,9 @@ earlier. Bugfixes (if any) will also be included in these bi-weeekly releases.
 
 Due to enterprise requirements, nVotes might publish Specific purpose beta 
 releases of nVotes platform. These will only follow an Enterprise Support Plan
-ad-hoc for the specific-purpose of these beta releases.
+ad-hoc for the specific-purpose of these beta releases. These beta releases will
+be considered a beta for the next Feature release - i.e. next major or minor 
+version depending on the case.
 
 ## Proprietary modules releases
 
