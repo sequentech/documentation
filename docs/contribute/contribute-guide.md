@@ -84,7 +84,7 @@ requests that reformat the code will usually not be accepted.
 ## Releases
 
 The **master** branch will be the latest version of the project. Specific 
-releases (for example v20.2.0) will be marked with git tags. Currently we don't
+releases (for example 4.0.0) will be marked with git tags. Currently we don't
 maintain older versions of the software because we currently lack the resources
 to do it. Please ensure you use the latest release or **master** to ensure you
 are up to date.

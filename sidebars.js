@@ -22,7 +22,8 @@ module.exports = {
     ],
     Contribute: [
       'contribute/guide',
-      'contribute/release-lifecycle'
+      'contribute/release-lifecycle',
+      'contribute/release-howto'
     ]
   },
   fileFormatsSidebar: {
