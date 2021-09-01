@@ -84,6 +84,8 @@ released using the previous command:
 - authapi
 - agora-tools
 - vfork
+- admin-manual
+- agora-release
 
 # Release Testing and version schedule
 
