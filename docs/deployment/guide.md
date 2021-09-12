@@ -447,6 +447,20 @@ Edit the config.yml file following the instructions inside. Specifically, don't 
 * config.hostname
 * config.public_ipaddress
 * config.private_ipaddress
+* config.hosts
+
+In particular, you need to ensure that the FQDN points to the private network
+IP Address of the master machine using config.hosts, using a configuration 
+similar to:
+
+```yaml
+hosts:
+- hostname: demo.example.com
+  ip: 192.168.50.14 # this should be the ip of the new master
+```
+
+Note that the above is required only if the authority is in a private network
+and cannot reach to this web server using the public ip address.
 
 Then deploy as usual:
 
@@ -625,10 +639,10 @@ agora@prod-a1:~ $ sudo eopeers --remove prod-s1
 2. adding an alias to /etc/hosts in **prod-a1** config.yml variable **config.hosts**,
    setting it to something like:
 
-```
+```yaml
 hosts:
 - hostname: prod-s1
-  ip: 192.168.50.14
+  ip: 192.168.50.14 # this should be the ip of the new master
 ```
 
 3. re-executing ansible in **prod-a1**:
