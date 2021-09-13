@@ -447,6 +447,20 @@ Edit the config.yml file following the instructions inside. Specifically, don't 
 * config.hostname
 * config.public_ipaddress
 * config.private_ipaddress
+* config.hosts
+
+In particular, you need to ensure that the FQDN points to the private network
+IP Address of the master machine using config.hosts, using a configuration 
+similar to:
+
+```yaml
+hosts:
+- hostname: demo.example.com
+  ip: 192.168.50.14 # this should be the ip of the new master
+```
+
+Note that the above is required only if the authority is in a private network
+and cannot reach to this web server using the public ip address.
 
 Then deploy as usual:
 
@@ -498,7 +512,7 @@ root@prod-a1:/root/prod-a1/ $ sudo eolog
 Run eotest in the other terminal window from the other auth server:
 
 ```bash
-root@prod-a1:/root/prod-a1/ $ eotest full --vmnd --vcount 100
+root@prod-a1:/root/prod-a1/ $ eotest full --vmnd --vcount 100 --peers prod-a2
 ```
 
 You should see the software working as eolog output will appear in the
@@ -535,7 +549,14 @@ authorities. Then install them:
 root@prod-s1:/root/prod-s1/ $ eopeers --install prod-a1.pkg --keystore /home/agoraelections/keystore.jks
 root@prod-s1:/root/prod-s1/ $ eopeers --install prod-a2.pkg
 root@prod-s1:/root/prod-s1/ $ service nginx restart
+root@prod-s1:/root/prod-s1/ $ supervisorctl restart agora-elections
 ```
+
+Please note that there's a difference between the first two eopeers commands.
+The first one is configured to be executed to add the key to agora-elections
+keystore for the director authority `prod-a1`. Afterwards, we need to restart
+not only `nginx` but also `agora-elections` precisely because this service needs
+to reload the ``prod-a1` TLS certificate keys.
 
 Before completion, the installation of the certificate of the **prod-s1** and
 **prod-s2** servers needs to be installed in the election authorities, because
@@ -548,7 +569,7 @@ root@prod-a1:/root/prod-a1/ $ eopeers --install prod-s2.pkg
 root@prod-a1:/root/prod-a1/ $ service nginx restart
 ```
 
-### Create a test election
+## Create a test election
 
 Go to https://prod-s1/admin/login and create a test election. Then execute
 the following to create some votes. Change '2' in the following commands with
@@ -575,7 +596,8 @@ agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py stop $ELECTION_ID
 agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py tally $ELECTION_ID
 ```
 
-### Check high availability and load balancing
+## High availability and load balancing (HA/LB)
+### Checking HA/LB
 
 The high availability configuration in this configuration basically means that
 **prod-s2** is a server that is replicating in a hot standby mode the database of
@@ -625,10 +647,10 @@ agora@prod-a1:~ $ sudo eopeers --remove prod-s1
 2. adding an alias to /etc/hosts in **prod-a1** config.yml variable **config.hosts**,
    setting it to something like:
 
-```
+```yaml
 hosts:
 - hostname: prod-s1
-  ip: 192.168.50.14
+  ip: 192.168.50.14 # this should be the ip of the new master
 ```
 
 3. re-executing ansible in **prod-a1**:

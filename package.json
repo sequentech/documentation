@@ -1,6 +1,6 @@
 {
   "name": "admin-manual",
-  "version": "0.0.0",
+  "version" : "master",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
