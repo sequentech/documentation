@@ -1,14 +1,20 @@
 name: documentation
 
 on:
-  pull_request:
-    branches: [master]
   push:
-    branches: [master]
+    branches:
+    - master
+    - '[0-9]+.[0-9]+.x'
+    tags:
+    - '**'
+  pull_request:
+    branches:
+    - master
+    - '[0-9]+.[0-9]+.x'
 
 jobs:
   checks:
-    if: github.event_name != 'push'
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -26,7 +32,7 @@ jobs:
           fi
           npm run build
   gh-release:
-    if: github.event_name != 'pull_request'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
