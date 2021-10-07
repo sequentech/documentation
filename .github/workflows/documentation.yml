@@ -1,10 +1,16 @@
 name: documentation
 
 on:
-  pull_request:
-    branches: [master]
   push:
-    branches: [master]
+    branches:
+    - master
+    - '\d+\.(\d+|x)\.(\d+|x)'
+    tags:
+    - '.*'
+  pull_request:
+    branches:
+    - master
+    - '\d+\.(\d+|x)\.(\d+|x)'
 
 jobs:
   checks:
@@ -17,16 +23,10 @@ jobs:
           node-version: '12.x'
       - name: Test Build
         run: |
-          if [ -e yarn.lock ]; then
           yarn install --frozen-lockfile
-          elif [ -e package-lock.json ]; then
-          npm ci
-          else
-          npm i
-          fi
-          npm run build
+          yarn build
   gh-release:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request'  && github.ref == 'refs/head/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -53,11 +53,5 @@ jobs:
         run: |
           git config --global user.email "actions@gihub.com"
           git config --global user.name "gh-actions"
-          if [ -e yarn.lock ]; then
           yarn install --frozen-lockfile
-          elif [ -e package-lock.json ]; then
-          npm ci
-          else
-          npm i
-          fi
           yarn docusaurus deploy
