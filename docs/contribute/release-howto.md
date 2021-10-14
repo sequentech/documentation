@@ -95,11 +95,11 @@ released using the previous command:
 - agora-gui-admin
 - agora-gui-elections
 - agora-gui-booth
-- agora-verifier
 - agora_elections
 - agora-dev-box
-- agora-results
 - agora-tally
+- agora-results
+- agora-verifier
 - frestq
 - election-orchestra
 - authapi
@@ -107,6 +107,12 @@ released using the previous command:
 - vfork
 - admin-manual
 - agora-release
+
+Note that the order listed above is important for automatic unit tests. For
+example, `agora-verifier` uses `agora-results`, which in turn depends on
+`agora-tally`. Please do the releasing in order. If you don't, you'll get some
+github actions failed. If this happens, just rerun the github actions after all
+the releases have been done and that should fix the problem.
 
 # Release Testing and version schedule
 
