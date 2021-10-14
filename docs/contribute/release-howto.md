@@ -133,7 +133,6 @@ them within each different project instead of having a separate repository to
 handle this.
 
 Some tools we might take a look at to do so:
-- https://github.com/release-it/release-it
 - https://github.com/marketplace/actions/automatic-releases
 
 Also we should automate the releases for the admin-manual itself, allowing
