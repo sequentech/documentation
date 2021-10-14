@@ -9,11 +9,16 @@ In this howto we will explain how can a new release be published step by step.
 Please refer to the [Release Lifecycle](../contribute/release-lifecycle) document to
 know more about when to do what type of release.
 
-# Release commands
+# Setup
 
 Releases are managed using the 
 [agora-release project](https://github.com/agoravoting/agora-release). Each 
 repository can be released independently.
+
+Please install and setup agora-release as described in the repository's
+README file.
+
+# Release commands
 
 Publishing a release is actually compromised of multiple (and sometimes 
 optional) steps:
@@ -44,21 +49,11 @@ We can do all this in one go with the following command:
     --create-branch 4.0.x \
     --create-tag \
     --release-title "4.0.0-beta.1 release" \
-    --release-notes-file notes.4.0.0-beta.1.md \
+    --generate-release-notes \
     --prerelease \
     --create-release \
     --path ../agora-gui-elections
 ```
-
-Please note that in order to execute this, you need:
-- To have Python 3 installed
-- To be inside the directory containing `agora-release`
-- To have git username and email configured
-- To have the `agora-gui-elections` repository in the parent directory and 
-with the origin remote having write permissions and the ssh-agent active
-to be able to push automatically
-- To have the github cli [gh](https://github.com/cli/cli) installed, 
-configured and authenticated
 
 Also note that the `release.py` script in this configuration will:
 - Stash your current changes in the `agora-gui-elections` repository
@@ -67,6 +62,32 @@ Also note that the `release.py` script in this configuration will:
 the origin
 - Create tag from the just created commit and force push it to the origin
 - Create a release from the just created tag
+
+If you are releasing in an existing branch for a minor release, the command
+would probably be more similar to:
+
+```bash
+./release.py \
+    --version 4.0.0-beta.2 \
+    --change-version \
+    --base-branch 4.0.x \
+    --push-current-branch \
+    --create-tag \
+    --release-title "4.0.0-beta.2 release" \
+    --previous-tag-name '4.0.0-beta.1' \
+    --generate-release-notes \
+    --prerelease \
+    --create-release \
+    --path ../agora-gui-elections
+```
+
+Note that here:
+- We are not creating the `4.0.x`  branch, because it already exists. Instead,
+we are pushing current branch (4.0.x, set with `--base-branch 4.0.x`).
+- We are specifying `--previous-tag-name '4.0.0-beta.1'`, because otherwise the
+github-generated release notes would use the most recent release as a base, and
+that might not be what we want as the previous release might have been for 
+a different major version.
 
 To do a full plataform release, these are all the projects that need to be 
 released using the previous command:
