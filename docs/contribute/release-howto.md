@@ -106,6 +106,7 @@ released using the previous command:
 - agora-tools
 - vfork
 - admin-manual
+- agora-airgap
 - agora-release
 
 Note that the order listed above is important for automatic unit tests. For
