@@ -743,6 +743,28 @@ properties:
 If set, this optional property will modify the voting booth behaviour and the
 start screen of the voting booth will not be shown.
 
+### Election Presentation Options: `disable__demo_voting_booth`
+
+- **Property name**: `disable__demo_voting_booth`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true` (default is `false`), this optional property will disable the
+demo voting booth.
+
+### Election Presentation Options: `disable__public_home`
+
+- **Property name**: `disable__public_home`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true` (default is `false`), this optional property will disable the
+public home page for the election.
+
 ### Election Presentation Options: `public_title`
 
 - **Property name**: `public_title`
