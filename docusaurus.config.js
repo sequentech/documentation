@@ -67,7 +67,7 @@ module.exports = {
               to: 'docs/testing/bulk',
             },
             {
-              label: 'Advanced Elections',
+              label: 'Advanced Topics',
               to: 'docs/advanced-elections/introduction',
             },
             {

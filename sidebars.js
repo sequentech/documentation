@@ -11,11 +11,12 @@ module.exports = {
     "Election Testing": [
       'testing/bulk'
     ],
-    "Advanced Elections": [
+    "Advanced Topics": [
       'advanced-elections/introduction',
       'advanced-elections/election-creation',
       'advanced-elections/parent-and-children-elections',
-      'advanced-elections/write-ins'
+      'advanced-elections/write-ins',
+      'advanced-elections/authentication-timeouts'
     ],
     Integrations: [
       'integrations/smart-link-auth'
