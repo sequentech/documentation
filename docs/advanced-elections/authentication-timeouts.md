@@ -89,3 +89,13 @@ voter interface:
 - It does contain a button through which the admin user can explicitly log out
   of the admin interface, erasing the admin authentication cookies from the
   browser.
+
+## OTP token expiration
+
+Independently if it's used for authentication of voters or administrators,
+there's another `config.yml` that can apply to both. When
+[authentication-method](../file-formats/election-creation-json#census-auth_method)
+is either `email-otp` or `sms-otp`, the One Time Tokens (OTPs) received by the
+person being authenticated have an timeout after a given period of time, which
+can be configured in the `config.authapi.sms_otp.expire_seconds` setting in
+`config.yml` deployment configuration file.
