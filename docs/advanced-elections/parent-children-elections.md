@@ -67,10 +67,13 @@ children election.
 
 ## University elections example
 
+The full configuration file for this example can be accesed in
+[university_example.json](./assets/university_example.yaml).
+
 Apart from the brief description above, we recommend you delve in to the details
 of election creation reading the 
 [election creation documentation](election-creation.md) for reference 
-documentation.
+documentation. 
 
 In this tutorial we are going to create an university electoral process 
 compromised of 3 different elections. The electoral process contains 3 Yes/No 
