@@ -195,6 +195,7 @@ Firewall rules should be created to allow the following kind of connections:
 
 -  **postgresql:** prod-s1 **<<tcp:5432>>** prod-s2
 -  **postgresql's rsync:** prod-s1 **<<tcp:22>>** prod-s2
+-  **memcached:** prod-s1 **<<udp:11211>>** prod-s2
 -  **web site:** [prod-s1, prod-s2] **<<tcp:443>>** Internet
 -  **sentry api:** [prod-s1, prod-s2] **<<tcp:9090>>** Internet
 -  **sentry web site:** [prod-s1, prod-s2] **<<tcp:8443>>** Internet
@@ -355,8 +356,8 @@ sample production config files for both agora and auth machines in the
 
 Both machines prod-s1 and prod-s2 should be setup with the same passwords,
 because they will be a replica of each other: the slave will be in hot standby
-configuration. The only difference between the configuration file of **prod-s1**
-and **prod-s2** should be the following config keys:
+configuration. The only difference between the configuration file of `pro-s1`
+and `prod-s2` should be the following config keys:
 
 * config.hostname
 * config.public_ipaddress
@@ -394,34 +395,34 @@ webserver from prod-s1 to prod-s2 ip easily for testing purposes.
 ### Configure the slave
 
 To configure prod-s2 as a slave, we need to import the ssh keys from the
-agoraelections and postgres users in ***prod-s1*** to add them in ***prod-s2**.
+agoraelections and postgres users in *`prod-s1`* to add them in *`prod-s2`.
 
-To get the keys execute these commands in ***prod-s2***:
+To get the keys execute these commands in *`prod-s2`*:
 
 ```bash
 sudo -u agoraelections cat /home/agoraelections/.ssh/id_rsa.pub
 sudo -u postgres cat /var/lib/postgresql/.ssh/id_rsa.pub
 ```
 
-Copy those keys and set them in the **prod-s1** **config.yml** file in
+Copy those keys and set them in the `prod-s1` **config.yml** file in
 the variables **config.load_balancing.master.slave_agoraelections_ssh_keys**
 and **config.load_balancing.master.slave_postgres_ssh_keys**.
 
-Then, execute again ansible in ***prod-s1*** to apply the changes:
+Then, execute again ansible in *`prod-s1`* to apply the changes:
 
 ```bash
 date; time ansible-playbook -i inventory playbook.yml; date
 ```
 
-After that, then you can change the **config.yml** for **prod-s2** to set
+After that, then you can change the **config.yml** for `prod-s2` to set
 the variable **config.load_balancing.is_master** to **false**,
-**config.load_balancing.slave.master_hostname** to the hostname of **prod-s1** 
+**config.load_balancing.slave.master_hostname** to the hostname of `prod-s1` 
 and **config.load_balancing.repmgr_node_id** to **2**.
 
 If your machine is behind a proxy, you need to specify that in the
 **config.has_https_proxy** variable.
 
-Then you can run again ansible in **prod-s2** to apply the changes, using the
+Then you can run again ansible in `prod-s2` to apply the changes, using the
 slave specific playbook, which can only work after having executed
 **playbook.agora.yml**:
 
@@ -429,6 +430,10 @@ slave specific playbook, which can only work after having executed
 root@prod-s2:/root/prod-s2/ $ cp doc/production/playbook.slave.yml playbook.yml
 root@prod-s2:/root/prod-s2/ $ time sudo ansible-playbook -i inventory playbook.yml
 ```
+
+See the [High availability and load balancing (HA/LB)](#high-availability-and-load-balancing-halb)
+section to see more information about how to check if everything is working
+and how to promote the slave to be master and also change it back to be a slave.
 
 ## Deployment of authorities
 
@@ -479,13 +484,13 @@ The deployment script creates a certificate for each authority in
 /srv/cert/selfsigned/ and we manage the authority communication and
 certificate sharing with the eopeers tool.
 
-Execute the following in **prod-a1**:
+Execute the following in `prod-a1`:
 
 ```bash
 root@prod-a1:/root/prod-a1/ $ eopeers --show-mine
 ```
 
-Copy the output to a file in **prod-a2**, then install it:
+Copy the output to a file in `prod-a2`, then install it:
 
 ```bash
 root@prod-a2:/root/prod-a2/ $ eopeers --install prod-a1.pkg
@@ -539,7 +544,7 @@ You can execute each of the steps individually using `create`, `encrypt` or
 
 ### Connecting web servers with authorities
 
-The following commands should be executed in both **prod-s1** and **prod-s2**
+The following commands should be executed in both `prod-s1` and `prod-s2`
 machines:
 
 Create **prod-a1.pkg** and **prod-a2.pkg** files with the configuration of both
@@ -558,8 +563,8 @@ keystore for the director authority `prod-a1`. Afterwards, we need to restart
 not only `nginx` but also `agora-elections` precisely because this service needs
 to reload the ``prod-a1` TLS certificate keys.
 
-Before completion, the installation of the certificate of the **prod-s1** and
-**prod-s2** servers needs to be installed in the election authorities, because
+Before completion, the installation of the certificate of the `prod-s1` and
+`prod-s2` servers needs to be installed in the election authorities, because
 even though i'ts the same TLS cert, they have different hostnames. So copy
 them (get it with "eopeers --show-mine") to the authorities and install them:
 
@@ -597,21 +602,102 @@ agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py tally $ELECTION_ID
 ```
 
 ## High availability and load balancing (HA/LB)
-### Checking HA/LB
 
-The high availability configuration in this configuration basically means that
-**prod-s2** is a server that is replicating in a hot standby mode the database of
-**prod-s1**. **prod-s2** has also replicated everything needed to be able to
-change the server from slave to master at any time.
+nVotes platform can be configured to support both load balancing and high
+availability, using a master-slaves configuration.
 
-To test that **prod-s2** is correctly deployed as a slave, you can directly
-connect to https://prod-s2/admin/login and it should allow you to access and work
-normally, because **prod-s2** is a slave that also works as a web server
-(authapi, agora-elections) connected directly to the **prod-s1** master database
-server.
+High availability means that the slaves contain a replica of the master, so in
+the event of the master machine failing, one of the slaves can take over by
+being promoted to master. This is a process that currently have to be executed
+manually following the steps in the 
+[Promoting a slave to be master](#promoting-a-slave-to-be-master) section.
+
+Load balancing allows to partially scale horizontally, allowing to serve more
+http requests per second. nVotes platform allows to perform load balancing only
+in the web servers (`prod-s1`, `prod-s2`, etc) but not in the election authority
+servers (`prod-a1`, `prod-a2`, etc). For scaling election authorities, currently
+the only way to do it is either subdividing an electoral process in multiple
+elections with different election authority servers, or scaling vertically the
+election authorities by adding more CPU/RAM/Disk resources to these machines.
+
+The way nVotes deploys the master and the slave means that the master
+(`prod-s1` in this guide) has the readwrite instance of the PostgreSQL database
+and the slaves (`prod-s2`) have only a read-only database replica.
+
+However, other than that, all the backend services are replicated in both master
+and slaves machines (`authapi`, `authapi_celery`, `agora-elections` and `nginx`).
+`agora-elections` uses `memcached` to cache queries and improve performance, and
+all slaves connect directly to the `memcached` instance of the master machine.
+
+On the other hand, there are currently some limitations on the load balancing:
+`authapi`, `authapi_celery` and `agora-elections` connect directly to the master
+PostgreSQL instance, and no load balancing is performed in the database level,
+only at the application level.
+
+Finally, `authapi_celery` uses `RabbitMQ` as its broker to manage messages and 
+queues. Each server, independing of it being a master or a slave, currently
+runs its own `RabbitMQ` queue. That means that a task to send an SMS message
+scheduled by `prod-s1` will only be run by `prod-s1`, and same for any other
+server (for example `prod-s2`).
+
+### Checking the cluster
+
+The master/slave configuration in this configuration basically means that:
+1. `prod-s2` is a server that is replicating in a hot standby mode the database
+   of `prod-s1`. 
+2. `prod-s2` has also replicated everything needed to be able to change the
+   server from slave to master at any time.
+
+### Checking that the slave works using a Load Balancer
+
+One simple way to test that the slave machines work is simply using a load
+balancer. You can deregister the master from the load balancer, and then only
+the slave machines will receive requests. You can check that this is true
+by watching the logs of `nginx`, `agora-elections`, or `authapi` in both
+machines, and checking that only the slave is receiving requests with the 
+following commands:
+
+```bash
+supervisorctl tail -f agora-elections
+supervisorctl tail -f authapi
+tail -F /var/log/nginx/access.log
+```
+
+Note that you can configure the load balancer to establish a health check to
+the PATH `/admin-api/authapi/api/auth-event/1/`. This should return a HTTP
+status 200 through TLS and port 443, when authapi is running.
+
+#### Checking database replication
+
+You can also test that the database replication is working both `prod-s2` and
+`prod-s1` that the following command has this kind of output:
+
+```bash
+sudo -u postgres /usr/lib/postgresql/12/bin/repmgr -f /etc/repmgr/repmgr.conf cluster show
+
+ ID | Name        | Role    | Status    | Upstream    | Location | Priority | Timeline | Connection string
+----+-------------+---------+-----------+-------------+----------+----------+----------+--------------------------------------------
+ 1  | prod-s1     | primary | * running |             | default  | 100      | 1        | host=prod-s1 user=repmgr dbname=repmgr
+ 2  | prod-s2     | standby |   running | prod-s1     | default  | 100      | 1        | host=prod-s2 user=repmgr dbname=repmgr
+```
+
+Execution in either of them should result in the same results. Additionally, you
+can verify that any change in the database in `prod-s1` is reflected in
+`prod-s2`. For example, if you have created elections using the UI or otherwise,
+they should appear in both machines:
+
+```bash
+sudo -u postgres psql agora_elections -tAc "select id,state from election;"
+5001|registered
+5002|registered
+5003|registered
+5005|results_ok
+```
+
+#### Checking certificates and public keys synchronization
 
 If you list the files inside the datastore and the server certificate in
-both **prod-s1** and **prod-s2**, it should list the same files:
+both `prod-s1` and `prod-s2`, it should list the same files:
 
 ```bash
 root@prod-s1:/root/prod-s1/ $ sudo -u agoraelections find /home/agoraelections/datastore/ -type f | xargs md5sum
@@ -623,20 +709,158 @@ d811c3e92162ade25f21f1d782f32c6e  /srv/certs/selfsigned/calist
 a9bf327511b67100c096aebed5b46c94  /srv/certs/selfsigned/cert.pem
 ```
 
-### Test changing a slave to be a master and do a tally
+#### Checking memcached configuration
 
-This requires to create an election in **prod-s1** and cast some votes, then
-launch the tally successfully from within the authorities.
+Memcached is a service used by `agora-elections` to cache data to avoid hitting
+the database and improve performance. Only master's memcached instance is used.
+The `agora-elections` process in the slave machines will connect to it.
 
-To promote **prod-s2** to be a master, change set to **true** the config.yml
-config variable **config.load_balancing.is_master**, then execute again ansible:
+You can review the following:
+
+**1. Check that the memcached service is running in the master (`prod-s1`)**
+
+```bash
+service memcached status
+
+● memcached.service - memcached daemon
+     Loaded: loaded (/lib/systemd/system/memcached.service; enabled; vendor preset: enabled)
+     Active: active (running) since Thu 2021-12-02 08:32:13 CET; 3h 37min ago
+       Docs: man:memcached(1)
+   Main PID: 219127 (memcached)
+      Tasks: 10 (limit: 4693)
+     Memory: 1.5M
+     CGroup: /system.slice/memcached.service
+             └─219127 /usr/bin/memcached -m 64 -p 11211 -u memcache -l 127.0.0.1,172.31.43.83 -P /var/run/memcached/memcached.pid
+
+Dec 02 08:32:13 test-500-s1 systemd[1]: Started memcached daemon.
+```
+
+Note that the memcached process is listening on (UDP) port 11211 for both local
+(127.0.0.1) and the private IP of the master machine (in this example, 
+172.31.43.83).
+
+Remember that as described in the
+[Network, firewall & DNS](#network-firewall--dns) section, UDP Port 11211 needs
+to be open in the private network between the servers for memcached to work 
+properly.
+
+**2. Check the statistics of the memcached within the master**
+
+You can see some statistics of the master machine with memcache-top:
+
+```bash
+git clone https://github.com/eculver/memcache-top.git
+perl memcache-top/memcache-top --instances=127.0.0.1
+memcache-top v0.7       (default port: 11211, color: on, refresh: 3 seconds)
+
+INSTANCE                USAGE   HIT %   CONN    TIME    ITEMS   EVICT/s READ/s  WRITE/s
+127.0.0.1:11211         0.0%    0.0%    4       1.3ms           0.0     2       639
+
+AVERAGE:                0.0%    0.0%    4       1.3ms           0.0     2       639
+
+TOTAL:          0B/     64.0MB          4       1.3ms           0.0     2       639
+(ctrl-c to quit.)
+```
+
+**3. Check conectivity to master from a slave machine**
+
+You can use again memcached-top to see if you can connect to the master 
+(`prod-s1`) from the slave machine (`prod-s2`), executing memcached-top in
+the slave (`prod-s2`):
+
+```bash
+git clone https://github.com/eculver/memcache-top.git
+perl memcache-top/memcache-top --instances=prod-s1
+memcache-top v0.7       (default port: 11211, color: on, refresh: 3 seconds)
+
+INSTANCE                USAGE   HIT %   CONN    TIME    ITEMS   EVICT/s READ/s  WRITE/s
+prod-s1:11211           0.0%    0.0%    4       1.3ms           0.0     2       639
+
+AVERAGE:                0.0%    0.0%    4       1.3ms           0.0     2       639
+
+TOTAL:          0B/     64.0MB          4       1.3ms           0.0     2       639
+(ctrl-c to quit.)
+```
+
+If the connection to `prod-s1` had not been working, it would have shown 
+something like:
+
+```bash
+perl memcache-top/memcache-top --instances=prod-s1
+memcache-top v0.7       (default port: 11211, color: on, refresh: 3 seconds)
+
+INSTANCE                USAGE   HIT %   CONN    TIME    ITEMS   EVICT/s READ/s  WRITE/s
+test-500-s3:11211 is DOWN.
+
+AVERAGE:                0.0%    0.0%            0.0ms           0.0     0       0
+
+TOTAL:          0B/     0B                      0.0ms           0.0     0       0
+```
+
+**4. Check the correct configuration of `agora-elections` in both master and slaves**
+
+You can check that memcached is being properly configured in `agora-elections``
+in both the master:
+
+```bash
+grep memcache /home/agoraelections/agora-elections/conf/application.local.conf -C 1
+
+# memcached
+ehcacheplugin=disabled
+memcached.host="127.0.0.1:11211"
+logger.memcached=WARN
+```
+
+And within the slave:
+
+```bash
+grep memcache /home/agoraelections/agora-elections/conf/application.local.conf -C 1
+
+# memcached
+ehcacheplugin=disabled
+memcached.host="prod-s1:11211"
+logger.memcached=WARN
+```
+
+### Promoting a slave to be master
+
+In this example we would be:
+1. Creating an election in `prod-s1`.
+2. Casting some votes.
+3. Promoting the `prod-s2` to master.
+4. Continue casting votes.
+5. Sucessfully tally the election.
+
+We'll be asuming you know how to perform steps 1 and 2.
+
+#### Step 3: Promoting the `prod-s2` to master
+
+You should first ensure that now `prod-s1` is either demoted to be configured
+as a slave or is not receiving any more requests from the client. Otherwise, you
+could end up with two different servers acting as Database Masters, and thus
+with some votes arriving to one server and not in the other. You don't want 
+that.
+
+Thus, if you are using a load balancer, configure it to prevent `prod-s1` from
+receiving votes. Otherwise, you could point voters to `prod-s2` reassigning the 
+public IP of the server `prod-s1` to `prod-s2`, or something along the lines.
+
+Afterwards, to promote `prod-s2` to be the master, change set to `true` the
+`config.yml` config variable `config.load_balancing.is_master`, and then execute
+ansible for `prod-s2` with the `playbook.agora.yml` playbook:
 
 ```bash
 date; time ansible-playbook -i inventory playbook.yml; date
 ```
 
+#### Step 4: Continue casting votes
+
+Once step 3 is done, you can continue casting the votes normally if needed.
+
+#### Step 5: Run the tally
+
 To be able to receive successfully the tally, prod-s2 needs to "impersonate"
-prod-s1 in the director election authority. This can be done by:
+prod-s1 as the director election authority. This can be done by:
 
 1. removing the prod-s1 eopeer package:
 
@@ -644,7 +868,7 @@ prod-s1 in the director election authority. This can be done by:
 agora@prod-a1:~ $ sudo eopeers --remove prod-s1
 ```
 
-2. adding an alias to /etc/hosts in **prod-a1** config.yml variable **config.hosts**,
+2. adding an alias to /etc/hosts in `prod-a1` config.yml variable **config.hosts**,
    setting it to something like:
 
 ```yaml
@@ -653,7 +877,7 @@ hosts:
   ip: 192.168.50.14 # this should be the ip of the new master
 ```
 
-3. re-executing ansible in **prod-a1**:
+3. re-executing ansible in `prod-a1`:
 
 ```bash
 date; time ansible-playbook -i inventory playbook.yml; date
@@ -661,4 +885,5 @@ date; time ansible-playbook -i inventory playbook.yml; date
 
 ## Troubleshooting
 
-For troubleshooting please read the [Deployment Troubleshooting](./troubleshooting).
+For troubleshooting please read the 
+[Deployment Troubleshooting](./troubleshooting).
