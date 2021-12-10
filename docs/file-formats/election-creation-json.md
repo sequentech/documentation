@@ -754,6 +754,22 @@ start screen of the voting booth will not be shown.
 If set to `true` (default is `false`), this optional property will disable the
 demo voting booth.
 
+### Election Presentation Options: `disable__election_chooser_screen`
+
+- **Property name**: `disable__election_chooser_screen`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true` (default is `false`), the voting booth of a parent election
+will not show an election chooser where the voter gets to choose the next
+election to vote. Instead, the voter will be shown one after the other the
+elections in which he can vote, not allowing to choose a specific election to
+vote each time. The voter can skip a specific election if 
+[show_skip_question_button](#election-presentation-options-show_skip_question_button)
+is enabled.
+
 ### Election Presentation Options: `disable__public_home`
 
 - **Property name**: `disable__public_home`
