@@ -275,6 +275,28 @@ root@prod-s1 # wget https://raw.githubusercontent.com/agoravoting/agora-dev-box/
 root@prod-s1 # cat agora.sudoers >> /etc/sudoers
 ```
 
+### Timezones details
+
+Once deployed, the server will be configured to use UTC timezone. This is
+automatically done by the ansible deployment scripts. This is considered a
+[good practice](http://yellerapp.com/posts/2015-01-12-the-worst-server-setup-you-can-make.html),
+and is performed by the ansible deployment scripts by executing the following
+commands automatically:
+
+```bash
+ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+dpkg-reconfigure -f noninteractive tzdata
+```
+
+Server logs, therefore, will all be in UTC.
+
+Any date and time you input in your data will be in UTC timezone. You can
+configure the output timezone and date format of the election results PDFs using
+the
+[configure_pdf pipe](../file-formats/election-creation-json#pipe-configure_pdf).
+See [Results Config Pipes](../file-formats/election-creation-json#results-config-pipes)
+for more information about how this works.
+
 ### Install and configure deployment dependencies
 
 Within the provisioned machine (for example `prod-s1`), there are a series of 
@@ -282,12 +304,9 @@ steps required for a  proper and successful deployment. We will from now on
 assume we are using the root user (`sudo -s`) inside the provisioned VM to 
 execute all the tasks.
 
-We will first do some updates, install some dependencies, configure the
-timezone and reboot:
+We will first install some dependencies and reboot:
 
 ```bash
-ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime
-dpkg-reconfigure -f noninteractive tzdata
 echo "source /usr/share/virtualenvwrapper/virtualenvwrapper.sh" >> /root/.bashrc
 apt-get update && apt-get dist-upgrade -y && apt install virtualenvwrapper -y  && reboot 
 ```

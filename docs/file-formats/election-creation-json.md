@@ -1511,6 +1511,105 @@ writter of the results configuration pipes to explain anything relating to this
 particular pipe + pipe configuration pair, as usually configuration is in JSON
 format which does not allow for comments.
 
+
+### Pipe: `configure_pdf`
+
+- **Pipe path**: 
+### Pipe: `configure_pdf`
+- [agora_results.pipes.pdf.configure_pdf](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/pdf.py#L40)
+- **Example usage**:
+```json
+{
+  "type": "agora_results.pipes.pdf.configure_pdf",
+  "params": {
+    "languages": ["es"],
+    "timezone": "Europe/Madrid"
+  }
+}
+```
+
+The `configure_pdf` pipe is used to configure the PDF format election results.
+For example, it can allow to change the language or the timezone of the date
+and times that appear in that document.
+
+The following configuration options can be set in the pipe configuration object:
+
+#### `configure_pdf`: `title`
+
+- **Property name**: `title`
+- **Type:** `String`
+- **Required:** No
+- **Default:** `-`
+- **Example:** `"Board Election 2022"`
+
+Allows to override the election title, if set to some string.
+
+#### `configure_pdf`: `first_description_paragraph`
+
+- **Property name**: `first_description_paragraph`
+- **Type:** `String`
+- **Required:** No
+- **Default:** `-`
+- **Example:** `"Lorem ipsum."`
+
+Allows to prepend a paragraph before showing the election description in the
+PDF results.
+
+#### `configure_pdf`: `last_description_paragraph`
+
+- **Property name**: `last_description_paragraph`
+- **Type:** `String`
+- **Required:** No
+- **Default:** `-`
+- **Example:** `"Lorem ipsum."`
+
+Allows to append a paragraph after showing the election description in the
+PDF results.
+
+#### `configure_pdf`: `languages`
+
+- **Property name**: `languages`
+- **Type:** `List<String>`
+- **Required:** No
+- **Default:** `["en"]`
+- **Example:** `["es", "en"]`
+
+Allows to change the language of the PDF election results. It establishes which
+translation to be used, referred by the ISO-639-1 short-code of the language. 
+Allowed short-codes are:
+ - `en`
+ - `es`
+
+Note that this stablishes the translation to be used with a list, because it
+uses the first language in the list as the main translation but the following 
+languages are for fallback in case a specific translation string is not found.
+
+#### `configure_pdf`: `timezone`
+
+- **Property name**: `timezone`
+- **Type:** `String`
+- **Required:** No
+- **Default:** `"UTC"`
+- **Example:** `"Europe/Madrid"`
+
+Changes the timezone of the date/times (such as Election Start/Stop Date) shown
+in the PDF election results. For a listing of valid timezone strings, please use
+the `TZ database name` of the
+[List of tz database time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) wikipedia page. 
+
+#### `configure_pdf`: `date_format`
+
+- **Property name**: `date_format`
+- **Type:** `String`
+- **Required:** No
+- **Default:** `"%Y-%m-%d %H:%M:%S %Z"`
+- **Example:** `"%Y-%m-%d %H:%M:%S %Z"`
+
+Changes the format of the date/times (such as Election Start/Stop Date) shown
+in the PDF election results. You can find a 
+[listing of available datetime format codes](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes)
+in official Python documentation.
+
 ### Other pipes
 
 There are many other pipes but we have yet to document them. The easiest way
