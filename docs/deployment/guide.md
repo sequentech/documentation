@@ -293,8 +293,8 @@ Server logs, therefore, will all be in UTC.
 Any date and time you input in your data will be in UTC timezone. You can
 configure the output timezone and date format of the election results PDFs using
 the
-[agora_results.pipes.pdf.configure_pdf](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/pdf.py)
-pipe. See [Results Config Pipes](../file-formats/election-creation-json#results-config-pipes)
+[configure_pdf pipe](../file-formats/election-creation-json#pipe-configure_pdf).
+See [Results Config Pipes](../file-formats/election-creation-json#results-config-pipes)
 for more information about how this works.
 
 ### Install and configure deployment dependencies
