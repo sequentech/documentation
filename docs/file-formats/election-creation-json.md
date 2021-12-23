@@ -770,6 +770,12 @@ vote each time. The voter can skip a specific election if
 [show_skip_question_button](#election-presentation-options-show_skip_question_button)
 is enabled.
 
+:::note
+This option will never disable the election chooser screen in the voting booth,
+because in the demo voting booth there's no voter credentials to see which
+elections should be assigned to the specific voter.
+:::
+
 ### Election Presentation Options: `disable__public_home`
 
 - **Property name**: `disable__public_home`
