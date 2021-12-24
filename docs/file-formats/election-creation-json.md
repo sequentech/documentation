@@ -732,6 +732,18 @@ currently used to modify the voting booth presentation behaviour. It is used
 [here](#election-presentation-extra_options) and it can have the following 
 properties:
 
+### Election Presentation Options: `allow_voting_end_graceful_period`
+
+- **Property name**: `allow_voting_end_graceful_period`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `true`
+
+If set, the voters that are in the voting booth and whose voting session has
+not expired and thus their credentials have not expired will be able to cast a
+vote even if the voting period has ended.
+
 ### Election Presentation Options: `start_screen__skip`
 
 - **Property name**: `start_screen__skip`
@@ -753,6 +765,18 @@ start screen of the voting booth will not be shown.
 
 If set to `true` (default is `false`), this optional property will disable the
 demo voting booth.
+
+### Election Presentation Options: `booth_log_out__disable`
+
+- **Property name**: `booth_log_out__disable`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true` (default is `false`), then:
+1. Log out button won't show in the voting booth at the top.
+2. After the voting session ends, the voter is NOT redirected to the login page.
 
 ### Election Presentation Options: `disable__election_chooser_screen`
 
