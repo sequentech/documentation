@@ -36,9 +36,9 @@ Default value: `10` (minutes).
 
 Login session cookies expiration in minutes. During login, the voter session
 cookies are set with this expiration time. After the cookies expires, the
-browser automatically erases these cookies from memory. This means that if after
-login the voter tries to cast a vote, it won't succeed because the browser has
-lost access to a valid authentication credential for voting.
+browser automatically erases these cookies from memory. Also, the voter is
+redirected to the login page or to the 
+[`success_screen__redirect__url`](../file-formats/election-creation-json#election-presentation-options-success_screen__redirect__url) if set.
     
 If this setting is set to `false` to be unlimited. This setting does not apply
 to `agora-gui-admin` cookies (which use the value from
@@ -52,12 +52,6 @@ configures the backend and `cookies_expires` configures the frontend, but if
 they are not in sync it doesn't make much sense. That's why the default is
 `600` seconds (10 minutes) for `auth_token_expiration_seconds` and 10 minutes
 for `cookies_expires`.
-:::
-
-:::note
-Currently, there's no alerting to the user about the session being ended or
-expired, and there's not even button to logout and remove the cookies for the
-voter. This planned to be resolved soon in version 6.0.0.
 :::
 
 ##  Admin users session lifetime

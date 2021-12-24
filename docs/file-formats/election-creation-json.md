@@ -754,6 +754,18 @@ start screen of the voting booth will not be shown.
 If set to `true` (default is `false`), this optional property will disable the
 demo voting booth.
 
+### Election Presentation Options: `booth_log_out__disable`
+
+- **Property name**: `booth_log_out__disable`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true` (default is `false`), then:
+1. Log out button won't show in the voting booth at the top.
+2. After the voting session ends, the voter is NOT redirected to the login page.
+
 ### Election Presentation Options: `disable__election_chooser_screen`
 
 - **Property name**: `disable__election_chooser_screen`
