@@ -30,6 +30,15 @@ voter-related authenticated actions. The backend verifies the creation time of
 the voter-authentication token, and if it's larger than the value set in this
 setting, then it's an expired token.
 
+
+:::note
+If [`allow_voting_end_graceful_period`](../file-formats/election-creation-json#election-presentation-options-allow_voting_end_graceful_period)
+is enabled, then voters whose authentication token has not expired will be able
+to cast a vote even if the voting period has ended. Of course, this graceful
+period is limited by the authentication token expiration. Usually, when the
+authentication token expires the voter is redirected to login.
+:::
+
 ### config.agora_gui.cookies_expires
 
 Default value: `10` (minutes).

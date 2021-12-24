@@ -732,6 +732,18 @@ currently used to modify the voting booth presentation behaviour. It is used
 [here](#election-presentation-extra_options) and it can have the following 
 properties:
 
+### Election Presentation Options: `allow_voting_end_graceful_period`
+
+- **Property name**: `allow_voting_end_graceful_period`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `true`
+
+If set, the voters that are in the voting booth and whose voting session has
+not expired and thus their credentials have not expired will be able to cast a
+vote even if the voting period has ended.
+
 ### Election Presentation Options: `start_screen__skip`
 
 - **Property name**: `start_screen__skip`
