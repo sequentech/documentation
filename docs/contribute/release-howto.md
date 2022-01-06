@@ -30,7 +30,7 @@ release. As we are creating a new release, this code needs to be updated.
 
 2. Creating a release branch
 
-For example `4.0.x` branch, so that other patch releases fork from there.
+For example `5.0.x` branch, so that other patch releases fork from there.
 This branch needs to be created locally and pushed to the public repository.
 
 3. Creating a release git tag
@@ -43,12 +43,12 @@ We can do all this in one go with the following command:
 
 ```bash
 ./release.py \
-    --version 4.0.0-beta.1 \
+    --version 5.0.0-beta.1 \
     --change-version \
     --base-branch master \
-    --create-branch 4.0.x \
+    --create-branch 5.0.x \
     --create-tag \
-    --release-title "4.0.0-beta.1 release" \
+    --release-title "5.0.0-beta.1 release" \
     --generate-release-notes \
     --prerelease \
     --create-release \
@@ -68,23 +68,22 @@ would probably be more similar to:
 
 ```bash
 ./release.py \
-    --version 4.0.0-beta.2 \
+    --version 5.0.0-beta.2 \
     --change-version \
-    --base-branch 4.0.x \
+    --base-branch 5.0.x \
     --push-current-branch \
     --create-tag \
-    --release-title "4.0.0-beta.2 release" \
-    --previous-tag-name '4.0.0-beta.1' \
+    --release-title "5.0.0-beta.2 release" \
+    --previous-tag-name '5.0.0-beta.1' \
     --generate-release-notes \
-    --prerelease \
     --create-release \
     --path ../agora-gui-elections
 ```
 
 Note that here:
-- We are not creating the `4.0.x`  branch, because it already exists. Instead,
-we are pushing current branch (4.0.x, set with `--base-branch 4.0.x`).
-- We are specifying `--previous-tag-name '4.0.0-beta.1'`, because otherwise the
+- We are not creating the `5.0.x`  branch, because it already exists. Instead,
+we are pushing current branch (5.0.x, set with `--base-branch 5.0.x`).
+- We are specifying `--previous-tag-name '5.0.0-beta.1'`, because otherwise the
 github-generated release notes would use the most recent release as a base, and
 that might not be what we want as the previous release might have been for 
 a different major version.
@@ -114,6 +113,27 @@ example, `agora-verifier` uses `agora-results`, which in turn depends on
 `agora-tally`. Please do the releasing in order. If you don't, you'll get some
 github actions failed. If this happens, just rerun the github actions after all
 the releases have been done and that should fix the problem.
+
+You can automate the release of all these repositories with a script like:
+
+```bash
+export REPOS=(agora-gui-common agora-gui-admin agora-gui-elections agora-gui-booth agora_elections agora-dev-box agora-tally agora-results agora-verifier frestq election-orchestra authapi agora-tools vfork admin-manual agora-airgap agora-release)
+
+for i in $REPOS
+do
+    ./release.py \
+        --version 5.0.4 \
+        --change-version \
+        --base-branch 5.0.x \
+        --push-current-branch \
+        --create-tag \
+        --release-title "5.0.4 release" \
+        --previous-tag-name '5.0.3' \
+        --generate-release-notes \
+        --create-release \
+        --path ../$i
+done
+```
 
 # Release Testing and version schedule
 
