@@ -277,7 +277,7 @@ SHA-256 hashing function, further defined in the
 [U.S. Federal Information Processing Standards Publication 198](https://web.archive.org/web/20201208050119/http://csrc.nist.gov/publications/fips/fips198-1/FIPS-198-1_final.pdf). 
 
 We provide two examples of how to generate the auth-token:
-- [Auth-token generation in Rust language](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=6ef6d43ee4b9508bf2b1b094b4f5d0ed)
+- [Auth-token generation in Rust language](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=e369d1d1cc685bd2f88c9f0a9098865d)
 - [Auth-token generation in Go language](https://play.golang.org/p/lp44mNTxfeu)
 
 In other programming languages it is possible to generate the HMAC in a 
@@ -535,7 +535,7 @@ https://example.com/election/<election-id>/public/login?auth-token=<auth-token>
 ```
 
 To generate the `auth-token`, we can use the 
-[Auth-token generation in Rust language](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=6ef6d43ee4b9508bf2b1b094b4f5d0ed) that we mentioned in the integration
+[Auth-token generation in Rust language](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=e369d1d1cc685bd2f88c9f0a9098865d) that we mentioned in the integration
 guide.
 
 You can just change the default data provided in that code using the appropiate 
