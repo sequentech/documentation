@@ -137,11 +137,12 @@ done
 
 # Release Testing and version schedule
 
-For any major release, first a `<major>.<minor>.<patch>-beta.1` should be created. 
-After this has been done for the whole platform, automatic unit testing
-should work. Also, manual testing (for those tests that are not yet 
-automated) should be performed, and enough time for doing the manual testing 
-[TBD] and bug fixing should be allocated.
+For any major release, first a `<major>.<minor>.<patch>-beta.1` should be
+created. After this has been done for the whole platform:
+1. All automatic unit testing should pass.
+2. All [E2E integration tests](../testing/e2e) should pass.
+3. Enough time for doing additional manual testing bug fixing should be
+   allocated.
 
 After this bugfixing, either a new beta or a final release should be created,
 with all the bugfixes being applied in the release branch which should be

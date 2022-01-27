@@ -9,7 +9,7 @@ module.exports = {
       'translation/guide'
     ],
     "Election Testing": [
-      'testing/bulk'
+      'testing/e2e'
     ],
     "Advanced Topics": [
       'advanced-elections/introduction',
