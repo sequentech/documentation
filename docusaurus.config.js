@@ -63,8 +63,8 @@ module.exports = {
               to: 'docs/translation/guide',
             },
             {
-              label: 'Election Testing',
-              to: 'docs/testing/bulk',
+              label: 'E2E Integration Testing',
+              to: 'docs/testing/e2e',
             },
             {
               label: 'Advanced Topics',
