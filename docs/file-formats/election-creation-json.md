@@ -1640,6 +1640,51 @@ in the PDF election results. You can find a
 [listing of available datetime format codes](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes)
 in official Python documentation.
 
+#### `configure_pdf`: `hide_logo`
+
+- **Property name**: `hide_logo`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `None`
+- **Example:** `true`
+
+If set to `false`, nVotes logo will not appear in the PDF election results.
+
+#### `configure_pdf`: `hide_dates`
+
+- **Property name**: `hide_dates`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `None`
+- **Example:** `true`
+
+If set to `false`, start, end and tally dates will not appear in the PDF
+election results.
+
+#### `configure_pdf`: `theme_colors`
+
+- **Property name**: `theme_colors`
+- **Type:** `Dict`
+- **Required:** No
+- **Default:** `None`
+- **Example:**
+```json
+{
+    "Background": "white",
+    "OnBackground": "black",
+    "Primary": "#b6d7a8",
+    "OnPrimary": "black",
+    "OnGrey": "black",
+    "Grey": "grey",
+    "LightGrey": "#cccccc",
+    "DarkGrey": "#efefef"
+}
+```
+
+With this configuration setting you can change and tune the theme colors used in
+the PDF election results. The example above represents the defaults. If there
+is any theme color name that you don't set, the default will be used.
+
 ### Other pipes
 
 There are many other pipes but we have yet to document them. The easiest way
