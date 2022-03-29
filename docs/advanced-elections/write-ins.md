@@ -7,7 +7,7 @@ slug: /advanced-elections/write-ins
 
 ## Introduction
 
-nVotes Platform supports elections with write-in candidates. In this kind of
+Sequent Platform supports elections with write-in candidates. In this kind of
 election the voter can not only vote to the names that appear on the ballot but
 also any person's name that the voter writes in the ballot.
 
@@ -183,7 +183,7 @@ postfix to let the user know that this specific candidate is a write-in:
 
 ### Election results: the ballot list
 
-In nVotes Administrative interface, once results are calculated, you will be
+In Sequent Administrative interface, once results are calculated, you will be
 able to see write-in candidates directly marked with a `(Write-in)` postfix 
 just like in this image:
 

@@ -27,12 +27,12 @@ get the following notification:
 ![browser-update notification with Chrome 50](/img/old-browser-error2.png "browser-update notification")
 
 You can disable this option in the `config.yml` deployment configuration file, 
-just disabling the `config.agora_gui.browser_update_config` option. If that 
+just disabling the `config.sequent_ui.browser_update_config` option. If that 
 option is set to `false`, we don't check the browser version.
 
 The minimum browser version is also configurable in a deployment. The default
-value can be modified in the `agora-gui/templates/avConfig.js` in 
-`agora-dev-box`, updating the `browserUpdate` field, but that requires a bit 
+value can be modified in the `sequent-ui/templates/SequentConfig.js` in 
+`deployment-tool`, updating the `browserUpdate` field, but that requires a bit 
 more of knowledge as you need to edit the ansible template and re-deploying.
 
 ### Mobile browsers
@@ -79,7 +79,7 @@ older than the following ones will get the notification for security reasons,
  - Chrome < 88.0.4324.150
 
 If you want to disable this feature, which we don't recommend, you should change
-the `config.agora_gui.browser_update_config` setting in the `config.yml` 
+the `config.sequent_ui.browser_update_config` setting in the `config.yml` 
 deployment configuration file, setting `insecure: false`:
 
 ```yaml title="config.yml fragment" {7}
@@ -96,11 +96,11 @@ deployment configuration file, setting `insecure: false`:
 
 ## 2. Required and allowed cookies
 
-nVotes uses the bare minimum cookies needed for the interface usability. These
+Sequent uses the bare minimum cookies needed for the interface usability. These
 cookies are the needed to login and for security reasons.
 
 There's no tracking code or external cookies, all the cookies used by the
-nVotes interface are used just as an local storage for the interface state, and
+Sequent interface are used just as an local storage for the interface state, and
 in any case these cookies are sent to any external server, they are just used
 to be able to query the API with the authentication and the corresponding
 parameters.
@@ -138,7 +138,7 @@ No special cookies are used here.
 The login session cookies expiration time can be configured instead of having 
 no expiration time.
 
-To do that, just find the line with the `config.agora_gui.cookies_expires` 
+To do that, just find the line with the `config.sequent_ui.cookies_expires` 
 configuration in the `config.yml` deployment configuration file and uncomment 
 it. The expiration time  will be set in minutes, but you can use a number 
 bigger than 60 to set hours. For example if you want to set one day you can 

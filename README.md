@@ -1,6 +1,6 @@
 # Website
 
-This is Agora Voting Administration Manual. It's built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator. 
+This is Sequent Tech Administration Manual. It's built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator. 
 
 ## Installation
 
@@ -26,4 +26,4 @@ This command generates static content into the `build` directory and can be serv
 
 ## Deployment
 
-It's configured to automatically deploy on [https://agoravoting.github.io/admin-manual](https://agoravoting.github.io/admin-manual) through Github Actions and Github Pages on push in master branch.
+It's configured to automatically deploy on [https://sequent.github.io/documentation](https://sequent.github.io/documentation) through Github Actions and Github Pages on push in master branch.

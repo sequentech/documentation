@@ -19,11 +19,11 @@
         ]
       }
     },
-    "resultsConfig": {
+    "tallyPipesConfig": {
       "version": "1.0",
       "pipes": [
         {
-          "type": "agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner",
+          "type": "tally_pipes.pipes.multipart.multipart_tally_plaintexts_append_joiner",
           "params": {
             "mappings": [
               {
@@ -53,8 +53,8 @@
             ]
           }
         },
-        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
-        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+        {"type": "tally_pipes.pipes.results.do_tallies", "params": {}},
+        {"type": "tally_pipes.pipes.sort.sort_non_iterative", "params": {}}
       ]
     },
     "questions": [
@@ -228,7 +228,7 @@
         {
           "network": "Twitter",
           "button_text": "",
-          "social_message": "I have just voted in election __URL__, you can too! #nvotes"
+          "social_message": "I have just voted in election __URL__, you can too! #sequent"
         },
         {
           "network": "Facebook",
@@ -344,7 +344,7 @@
       "config": {
         "allow_user_resend": true,
         "msg": "Vote in __URL__ with code __CODE__",
-        "subject": "Vote now with nVotes",
+        "subject": "Vote now with Sequent",
         "authentication-action": {
           "mode": "vote",
           "mode-config": {
@@ -364,11 +364,11 @@
     "id": 101,
     "title": "Students election",
     "parent_id": 100,
-    "resultsConfig": {
+    "tallyPipesConfig": {
       "version": "1.0",
       "pipes": [
-        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
-        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+        {"type": "tally_pipes.pipes.results.do_tallies", "params": {}},
+        {"type": "tally_pipes.pipes.sort.sort_non_iterative", "params": {}}
       ]
     },
     "questions": [
@@ -489,7 +489,7 @@
         {
           "network": "Twitter",
           "button_text": "",
-          "social_message": "I have just voted in election __URL__, you can too! #nvotes"
+          "social_message": "I have just voted in election __URL__, you can too! #sequent"
         },
         {
           "network": "Facebook",
@@ -586,7 +586,7 @@
       "config": {
         "allow_user_resend": true,
         "msg": "Vote in __URL__ with code __CODE__",
-        "subject": "Vote now with nVotes",
+        "subject": "Vote now with Sequent",
         "authentication-action": {
           "mode": "vote",
           "mode-config": {
@@ -606,11 +606,11 @@
     "id": 102,
     "title": "Professors election",
     "parent_id": 100,
-    "resultsConfig": {
+    "tallyPipesConfig": {
       "version": "1.0",
       "pipes": [
-        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
-        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+        {"type": "tally_pipes.pipes.results.do_tallies", "params": {}},
+        {"type": "tally_pipes.pipes.sort.sort_non_iterative", "params": {}}
       ]
     },
     "questions": [
@@ -731,7 +731,7 @@
         {
           "network": "Twitter",
           "button_text": "",
-          "social_message": "I have just voted in election __URL__, you can too! #nvotes"
+          "social_message": "I have just voted in election __URL__, you can too! #sequent"
         },
         {
           "network": "Facebook",
@@ -828,7 +828,7 @@
       "config": {
         "allow_user_resend": true,
         "msg": "Vote in __URL__ with code __CODE__",
-        "subject": "Vote now with nVotes",
+        "subject": "Vote now with Sequent",
         "authentication-action": {
           "mode": "vote",
           "mode-config": {

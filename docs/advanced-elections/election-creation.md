@@ -57,10 +57,10 @@ following steps:
 specific voter authentication configuration and census of voters.
 2. **Add the voter census**: The voter census data is added to the just 
 registered AuthEvent.
-3. **Register the Election**: The election is registed in `agora-elections`, the
+3. **Register the Election**: The election is registed in `ballot-box`, the
 ballot box API.
 
-When an election is registered in `agora-elections`, the election public keys 
+When an election is registered in `ballot-box`, the election public keys 
 and private are not yet created and no communication with the election 
 authorities has happened yet. At this stage, the election configuration can be
 modified later on.
@@ -89,9 +89,9 @@ election dashboard:
 ## Modifying elections
 
 :::caution
-Elections can only be modified in `agora-elections` if virtual elections are
+Elections can only be modified in `ballot-box` if virtual elections are
 allowed in the deployment configuration, which can be enabled with the
-`config.agora_elections.virtualElectionsAllowed` setting in the `config.yml`
+`config.ballot-box.virtualElectionsAllowed` setting in the `config.yml`
 deployment configuration file. This setting is set to `false` by default 
 because for security reasons virtual elections should not be enabled in 
 multi-tenant deployments.

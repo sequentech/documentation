@@ -9,8 +9,8 @@ This document describes how to create and manage elections with more advanced
 characteristics.
 
 Simple electoral processes can be configured and created using the intuitive 
-graphical interface of the administration backoffice of the Agora Voting
-project. More advanced elections can also be created with Agora Voting, by at 
+graphical interface of the administration backoffice of the Sequent Tech
+project. More advanced elections can also be created with Sequent Tech, by at 
 this moment there's no user interface that allows to configure some of the more 
 advanced characteristics of an electoral process.
 

@@ -12,10 +12,10 @@ know more about when to do what type of release.
 # Setup
 
 Releases are managed using the 
-[agora-release project](https://github.com/agoravoting/agora-release). Each 
+[release-tool project](https://github.com/sequentech/release-tool). Each 
 repository can be released independently.
 
-Please install and setup agora-release as described in the repository's
+Please install and setup release-tool as described in the repository's
 README file.
 
 # Release commands
@@ -52,11 +52,11 @@ We can do all this in one go with the following command:
     --generate-release-notes \
     --prerelease \
     --create-release \
-    --path ../agora-gui-elections
+    --path ../election-portal
 ```
 
 Also note that the `release.py` script in this configuration will:
-- Stash your current changes in the `agora-gui-elections` repository
+- Stash your current changes in the `election-portal` repository
 - Remove all untracked files and directories (except those ignored by `.gitignore`)
 - Create a branch from origin/master, commit the changes and force push it to
 the origin
@@ -77,7 +77,7 @@ would probably be more similar to:
     --previous-tag-name '5.0.0-beta.1' \
     --generate-release-notes \
     --create-release \
-    --path ../agora-gui-elections
+    --path ../election-portal
 ```
 
 Note that here:
@@ -90,34 +90,34 @@ a different major version.
 
 To do a full plataform release, these are all the projects that need to be 
 released using the previous command:
-- agora-gui-common
-- agora-gui-admin
-- agora-gui-elections
-- agora-gui-booth
-- agora_elections
-- agora-dev-box
-- agora-tally
-- agora-results
-- agora-verifier
+- common-ui
+- admin-console
+- election-portal
+- voting-booth
+- ballot-box
+- deployment-tool
+- tally-methods
+- tally-pipes
+- election-verifier
 - frestq
 - election-orchestra
-- authapi
-- agora-tools
-- vfork
-- admin-manual
-- agora-airgap
-- agora-release
+- iam
+- misc-tools
+- mixnet
+- documentation
+- ballot-verifier
+- release-tool
 
 Note that the order listed above is important for automatic unit tests. For
-example, `agora-verifier` uses `agora-results`, which in turn depends on
-`agora-tally`. Please do the releasing in order. If you don't, you'll get some
+example, `election-verifier` uses `tally-pipes`, which in turn depends on
+`tally-methods`. Please do the releasing in order. If you don't, you'll get some
 github actions failed. If this happens, just rerun the github actions after all
 the releases have been done and that should fix the problem.
 
 You can automate the release of all these repositories with a script like:
 
 ```bash
-export REPOS=(agora-gui-common agora-gui-admin agora-gui-elections agora-gui-booth agora_elections agora-dev-box agora-tally agora-results agora-verifier frestq election-orchestra authapi agora-tools vfork admin-manual agora-airgap agora-release)
+export REPOS=(common-ui admin-console election-portal voting-booth ballot-box deployment-tool tally-methods tally-pipes election-verifier frestq election-orchestra iam misc-tools mixnet documentation ballot-verifier release-tool)
 
 for i in $REPOS
 do
@@ -163,5 +163,5 @@ handle this.
 Some tools we might take a look at to do so:
 - https://github.com/marketplace/actions/automatic-releases
 
-Also we should automate the releases for the admin-manual itself, allowing
+Also we should automate the releases for the documentation itself, allowing
 having multiple version of the documentation, to match with the releases.

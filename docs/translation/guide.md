@@ -5,34 +5,34 @@ sidebar_label: Translation Guide
 slug: /translation/guide
 ---
 
-This document describes how to translate the Agora Voting project to a new 
+This document describes how to translate the Sequent Tech project to a new 
 language.
 
 ## Introduction
 
-The Agora Voting project user interface is written in javascript using Angular 1
+The Sequent Tech project user interface is written in javascript using Angular 1
 and uses [i18next](https://www.i18next.com/) and 
 [ng-i18next](https://www.npmjs.com/package/ng-i18next) for internationalization 
 (i18n for short).
 
 The user interface is divided in 4 different repositories:
-- **agora-gui-common**: A common library used by the other three.
-- **agora-gui-admin**: The election administrator interface.
-- **agora-gui-elections**: The public election interface.
-- **agora-gui-booth**: The voting booth interface.
+- **common-ui**: A common library used by the other three.
+- **admin-console**: The election administrator interface.
+- **election-portal**: The public election interface.
+- **voting-booth**: The voting booth interface.
 
 Each repository has its own set of translation files. The format of these files
 is in JSON and is [roughly defined here (JSON v1 i18next format)](https://www.i18next.com/misc/json-format#i-18-next-json-v1).
 
-There's also translation files in **agora-results**, currently just for 
+There's also translation files in **tally-pipes**, currently just for 
 generating PDF results in the chosen language. These work with `gettext` `.po`
 and `.pot` files. 
 
 This guide is grouped in two sections:
-1. How to translate `agora-gui-*`.
-2. How to translate `agora-results`.
+1. How to translate `sequent-ui-*`.
+2. How to translate `tally-pipes`.
 
-## How to translate `agora-gui`
+## How to translate `sequent-ui`
 
 ### Step 1. Writing the translations
 
@@ -42,10 +42,10 @@ your translation we recommend to base it on the English JSON file for each
 repository. This English base translation is located in the `locales/en.json` 
 in each repository:
 
-- [agora-gui-common/locales/en.json](https://github.com/agoravoting/agora-gui-common/blob/master/locales/en.json)
-- [agora-gui-admin/locales/en.json](https://github.com/agoravoting/agora-gui-admin/blob/master/locales/en.json)
-- [agora-gui-elections/locales/en.json](https://github.com/agoravoting/agora-gui-elections/blob/master/locales/en.json)
-- [agora-gui-booth/locales/en.json](https://github.com/agoravoting/agora-gui-booth/blob/master/locales/en.json)
+- [common-ui/locales/en.json](https://github.com/sequentech/common-ui/blob/master/locales/en.json)
+- [admin-console/locales/en.json](https://github.com/sequentech/admin-console/blob/master/locales/en.json)
+- [election-portal/locales/en.json](https://github.com/sequentech/election-portal/blob/master/locales/en.json)
+- [voting-booth/locales/en.json](https://github.com/sequentech/voting-booth/blob/master/locales/en.json)
 
 To create a translation, just copy each of those files into the same `locales/`
 directory as a new file with a name following the pattern 
@@ -53,7 +53,7 @@ directory as a new file with a name following the pattern
 ISO 639-1 and a [table of codes can be found in Wikipedia](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes). For example, the language code for Spanish is `es`
 and for German is `de`.
 
-Currently the Agora Voting Project contains translations for the following 
+Currently the Sequent Tech Project contains translations for the following 
 languages:
 - Catalan (ca)
 - English (en)
@@ -68,17 +68,17 @@ Once we have written the translation files and put them in the corresponding
 `locales/` directories with the proper file names, we are not finished yet. We 
 have to modify the building system to incorporate these files.
 
-The `agora-gui-*` repositories use the [GruntJS](https://gruntjs.com/) task 
+The `sequent-ui-*` repositories use the [GruntJS](https://gruntjs.com/) task 
 runner  for building and bundling the javascript code. In each of the 
-`agora-gui-*` repositories you will find a top level file called `Gruntfile.js` 
+`sequent-ui-*` repositories you will find a top level file called `Gruntfile.js` 
 that we will need to modify.
 
 The required modifications are pretty simple. Just search for the string 
 `locales/` inside the file `Gruntfile.js` and you will find usually one or two 
-places where i18n files are processed. For example, in [agora-gui-common/Gruntfile.js](https://github.com/agoravoting/agora-gui-common/blob/master/Gruntfile.js#L207) around line 207 you will find 
+places where i18n files are processed. For example, in [common-ui/Gruntfile.js](https://github.com/sequentech/common-ui/blob/master/Gruntfile.js#L207) around line 207 you will find 
 something like:
 
-```js title="agora-gui-common/Gruntfile.js fragment"
+```js title="common-ui/Gruntfile.js fragment"
     "merge-json": {
       main: {
         files: {
@@ -96,14 +96,14 @@ something like:
 If you are adding a translation for Icelandic (`is` language code), you should 
 add the following line in between:
 
-```js title="agora-gui-common/Gruntfile.js fragment"
+```js title="common-ui/Gruntfile.js fragment"
             "dist/locales/is.json": ["locales/is.json", "plugins/**/locales/is.json"],
 ```
 
 Ending up with the `merge-json` task inside the file `Gruntfile.js` being as
 follows:
 
-```js title="agora-gui-common/Gruntfile.js fragment" {7}
+```js title="common-ui/Gruntfile.js fragment" {7}
     "merge-json": {
       main: {
         files: {
@@ -123,9 +123,9 @@ This `merge-json` task joins the translation files for each language from the
 `locales/` directory and from the `plugins` directory. 
 
 You'll notice that the  string `locales/` appears in another section inside the 
-file `Gruntfile.js`, in the `uglify` section around [line 226](https://github.com/agoravoting/agora-gui-common/blob/master/Gruntfile.js#L226):
+file `Gruntfile.js`, in the `uglify` section around [line 226](https://github.com/sequentech/common-ui/blob/master/Gruntfile.js#L226):
 
-```js title="agora-gui-common/Gruntfile.js fragment" {15-17}
+```js title="common-ui/Gruntfile.js fragment" {15-17}
     uglify: {
       main: {
         options:{
@@ -151,8 +151,8 @@ used for internationalization of times and dates. You can add a new line there
 also for loading the moment internationalization file for your language if there
 is one.
 
-We have done this for the `agora-gui-common` project. We would have to repeat
-the process for the other three `agora-gui-*` projects for which we are adding
+We have done this for the `common-ui` project. We would have to repeat
+the process for the other three `sequent-ui-*` projects for which we are adding
 translation support for a new language.
 
 ### Step 3. Translation deployment and configuration
@@ -162,12 +162,12 @@ translations in the building process. The next step is to configure our
 deployment to include and use the new language translation.
 
 :::info
-To deploy the Agora Voting project, please follow the 
+To deploy the Sequent Tech project, please follow the 
 [Deployment Guide](../deployment/guide).
 :::
 
 The configuration is fairly simple. In the `config.yml` file inside the 
-`agora_gui` section you can find the following configurations keys:
+`sequent_ui` section you can find the following configurations keys:
 
 ```yaml title="config.yml fragment"
     # Default language of the application
@@ -188,7 +188,7 @@ The configuration is fairly simple. In the `config.yml` file inside the
 ```
 
 For example if you want to specify that the default language is going to be 
-Polish  (`po` language code), you would change the `agora_gui.language` key to 
+Polish  (`po` language code), you would change the `sequent_ui.language` key to 
 `po` and add `po` to the `languagesWhitelist`:
 
 ```yaml title="config.yml fragment" {2,16}
@@ -231,7 +231,7 @@ from the whitelist so that the user won't be able to choose any other language:
 Or maybe you might want to support a secondary language (English for example)
 but force the default language to be Polish. By default, the user interface will
 try to detect the preferred language of the web browser, but this behaviour can 
-be overridden using the `agora_gui.forceLanguage` setting:
+be overridden using the `sequent_ui.forceLanguage` setting:
 
 ```yaml title="config.yml fragment" {5,13}
     # Default language of the application
@@ -249,13 +249,13 @@ be overridden using the `agora_gui.forceLanguage` setting:
       - en
 ```
 
-You might have integrated the Agora Voting project deployment with some other 
-platform. If voters access to the Agora Voting interface from some third-party
+You might have integrated the Sequent Tech project deployment with some other 
+platform. If voters access to the Sequent Tech interface from some third-party
 interface, this first interface might have some specific language configuration
-for each user. When accessing to an Agora Voting deployment link from some other 
+for each user. When accessing to an Sequent Tech deployment link from some other 
 web site, you can modify the access link to force a specific default language 
 adding a query string such as `?lang=pl`. The name of this URL query string 
-paramenter is specified with the `agora_gui.detectLanguageQueryString` 
+paramenter is specified with the `sequent_ui.detectLanguageQueryString` 
 configuration  parameter.
 
 ### Step 4. Send the Pull Request
@@ -266,11 +266,11 @@ existing translation. Please ensure you read and follow the step in the
 [Contribution Guide](../contribute/guide) to do so.
 
 
-## How to translate `agora-results`
+## How to translate `tally-pipes`
 
 ### Step 1. Writing the translations
 
-`agora-results` is written in Python and executes in the backend. It uses the
+`tally-pipes` is written in Python and executes in the backend. It uses the
 standard [gettext](https://docs.python.org/3/library/gettext.html) library for 
 internationalization in Python projects. We use 
 [Babel](http://babel.pocoo.org/en/latest/) for extracting i18n strings
@@ -278,19 +278,19 @@ and for compiling them and loosely followed
 [this guide](https://www.mattlayman.com/blog/2015/i18n/).
 
 The i18n strings inside the code are directly in English language and located
-currently only the [`agora_results/pipes/pdf.py`](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/pdf.py) file. The translation template is located in 
-[`agora_results/pipes/locale/pipes.pot`](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/locale/pipes.pot) and the translation for each language are
+currently only the [`tally_pipes/pipes/pdf.py`](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/pdf.py) file. The translation template is located in 
+[`tally_pipes/pipes/locale/pipes.pot`](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/locale/pipes.pot) and the translation for each language are
 to be located in a path following the pattern 
-`agora_results/pipes/locale/<lang-code>/LC_MESSAGES/pipes.po`.
+`tally_pipes/pipes/locale/<lang-code>/LC_MESSAGES/pipes.po`.
 
-To create a translation, just copy `agora_results/pipes/locale/pipes.pot`
+To create a translation, just copy `tally_pipes/pipes/locale/pipes.pot`
 into a new file following the previously mentioned pattern 
-`agora_results/pipes/locale/<lang-code>/LC_MESSAGES/pipes.po`. The language code
+`tally_pipes/pipes/locale/<lang-code>/LC_MESSAGES/pipes.po`. The language code
 for each language is defined in 
 ISO 639-1 and a [table of codes can be found in Wikipedia](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes). For example, the language code for Spanish is `es`
 and for German is `de`.
 
-Currently `agora-results` contains translations for the following languages:
+Currently `tally-pipes` contains translations for the following languages:
 - English (en, the default)
 - Spanish (es)
 
@@ -298,10 +298,10 @@ Currently `agora-results` contains translations for the following languages:
 
 Each time an i18n string is changed, removed or added to the code, you should 
 run the following command to update the translation template (the 
-`agora_results/pipes/locale/pipes.pot` file):
+`tally_pipes/pipes/locale/pipes.pot` file):
 
 ```bash
-# run in the `agora-results` directory
+# run in the `tally-pipes` directory
 python setup.py extract_messages
 ``` 
 
@@ -309,18 +309,18 @@ After updating a translation or adding a new one, you should rebuild the
 translation files. Even if translations are written in plaintext (`.po` format),
 they are used in compiled format, as this is the way the venerable `gettext` 
 library (+30 years old) works. This compilation can be done with the following
-command in the `agora-results` directory:
+command in the `tally-pipes` directory:
 
 ```bash
-# run in the `agora-results` directory
+# run in the `tally-pipes` directory
 python setup.py compile_catalog
 ``` 
 
 ### Step 3. Choosing the PDF results language 
 
 By default, the election results are shown in english. Of course, this can be
-changed. The PDF election results are generated by `agora-results`. The way to
-apply any configuration to `agora-results` is through the 
+changed. The PDF election results are generated by `tally-pipes`. The way to
+apply any configuration to `tally-pipes` is through the 
 [Results config pipes](../file-formats/election-creation-json#results-config-pipes).
 
 By default, the language is English and the default election results config
@@ -331,17 +331,17 @@ pipes is the following:
   "version": "1.0",
   "pipes": [
     {
-      "type": "agora_results.pipes.pdf.configure_pdf",
+      "type": "tally_pipes.pipes.pdf.configure_pdf",
       "params": {
         "languages": ["en"] 
       }
     },
     {
-      "type": "agora_results.pipes.results.do_tallies",
+      "type": "tally_pipes.pipes.results.do_tallies",
       "params": {}
     },
     {
-      "type": "agora_results.pipes.sort.sort_non_iterative",
+      "type": "tally_pipes.pipes.sort.sort_non_iterative",
       "params": {}
     }
   ]

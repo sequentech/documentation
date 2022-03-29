@@ -18,7 +18,7 @@ each of these districts, and also a consolidated tally with all of them.
 :::info Enabling Virtual Elections
 Virtual elections are not enabled by default because for security reasons 
 virtual elections should not be enabled in multi-tenant deployments, as 
-`agora-elections` do not verify that the election creator has permissions for
+`ballot-box` do not verify that the election creator has permissions for
 accessing the sub-elections.
 :::
 
@@ -30,15 +30,15 @@ elections:
 [children elections](election-creation.md#election-children_election_info).
 
 The first kind of relation (virtual elections and virtual subelections) is 
-established in `agora-elections`, and its use is allows for electoral results
+established in `ballot-box`, and its use is allows for electoral results
 consolidation.
 
-The second kind of relation is established in `authapi` and its use is more
+The second kind of relation is established in `iam` and its use is more
 related to the authentication, authorization and presentation behaviour in the
 earlier stages of an election, for example during login.
 
 Both are closely related/coupled, because usually you want to do both or none. 
-The separation exists simply because `authapi` and `agora-elections` are
+The separation exists simply because `iam` and `ballot-box` are
 different modules that have separated databases.
 
 ## Parent and children elections
@@ -224,13 +224,13 @@ sketched the information regarding the virtual elections and
     "id": 100, // election id
     "virtual": true,
     "virtualSubelections": [101, 102],
-    "resultsConfig": {
+    "tallyPipesConfig": {
       "version": "1.0",
       "pipes": [
         {
           // We source votes from source subelection questions to the 
           // appropiate virtual election questions.
-          "type": "agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner",
+          "type": "tally_pipes.pipes.multipart.multipart_tally_plaintexts_append_joiner",
           "params": {
             "mappings": [
               {
@@ -268,30 +268,30 @@ sketched the information regarding the virtual elections and
             ]
           }
         },
-        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
-        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+        {"type": "tally_pipes.pipes.results.do_tallies", "params": {}},
+        {"type": "tally_pipes.pipes.sort.sort_non_iterative", "params": {}}
       ]
     }
     // ..other election properties for election with id=100 missing here..
   },
   {
     "id": 101,
-    "resultsConfig": {
+    "tallyPipesConfig": {
       "version": "1.0",
       "pipes": [
-        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
-        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+        {"type": "tally_pipes.pipes.results.do_tallies", "params": {}},
+        {"type": "tally_pipes.pipes.sort.sort_non_iterative", "params": {}}
       ]
     }
     // ..other election properties for election with id=101 missing here..
   },
   {
     "id": 102,
-    "resultsConfig": {
+    "tallyPipesConfig": {
       "version": "1.0",
       "pipes": [
-        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
-        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+        {"type": "tally_pipes.pipes.results.do_tallies", "params": {}},
+        {"type": "tally_pipes.pipes.sort.sort_non_iterative", "params": {}}
       ]
     }
     // ..other election properties for election with id=102 missing here..
@@ -299,12 +299,12 @@ sketched the information regarding the virtual elections and
 ]
 ```
 
-The juice of this part is in the `resultsConfig` for the virtual election 
-(`id=100`). As `agora-results` doesn't know the id of the subelections, it 
+The juice of this part is in the `tallyPipesConfig` for the virtual election 
+(`id=100`). As `tally-pipes` doesn't know the id of the subelections, it 
 references to the subelections by array index. The virtual election (with 
 `id=100`) has always array index `0`. Then the sub-elections are indexed in the  
 order of appeareance in the `virtualSubelections` property. Thus, within 
-`agora-results` the indexes of elections transform this way:
+`tally-pipes` the indexes of elections transform this way:
 
 - Electoral Process #100 => Election Index 0
 - Students Election #101 => Election Index 1
@@ -338,7 +338,7 @@ The configuration file sketch would be:
     "id": 100,
     "virtual": true,
     "virtualSubelections": [101, 102],
-    "resultsConfig": {
+    "tallyPipesConfig": {
       "version": "1.0",
       "pipes": [
         {
@@ -346,7 +346,7 @@ The configuration file sketch would be:
           // #100) into question indexes 1 and 2 for students and professors, 
           // with empty ballots as votes will be sourced later with the 
           // multipart_tally_plaintexts_append_joiner pipe.
-          "type": "agora_results.pipes.duplicate_questions.duplicate_questions",
+          "type": "tally_pipes.pipes.duplicate_questions.duplicate_questions",
           "params": {
             "duplications": [
               {
@@ -360,7 +360,7 @@ The configuration file sketch would be:
         },
 
         {
-          "type": "agora_results.pipes.modifications.apply_modifications",
+          "type": "tally_pipes.pipes.modifications.apply_modifications",
           "params": {
             "modifications": [
               {
@@ -384,7 +384,7 @@ The configuration file sketch would be:
         {
           // We source votes from source subelection questions to the
           // appropiate virtual election questions.
-          "type": "agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner",
+          "type": "tally_pipes.pipes.multipart.multipart_tally_plaintexts_append_joiner",
           "params": {
             "mappings": [
               {
@@ -438,30 +438,30 @@ The configuration file sketch would be:
             ]
           }
         },
-        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
-        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+        {"type": "tally_pipes.pipes.results.do_tallies", "params": {}},
+        {"type": "tally_pipes.pipes.sort.sort_non_iterative", "params": {}}
       ]
     // ..other election properties for election with id=100 missing here..
     }
   },
   {
     "id": 101,
-    "resultsConfig": {
+    "tallyPipesConfig": {
       "version": "1.0",
       "pipes": [
-        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
-        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+        {"type": "tally_pipes.pipes.results.do_tallies", "params": {}},
+        {"type": "tally_pipes.pipes.sort.sort_non_iterative", "params": {}}
       ]
     }
     // ..other election properties for election with id=101 missing here..
   },
   {
     "id": 102,
-    "resultsConfig": {
+    "tallyPipesConfig": {
       "version": "1.0",
       "pipes": [
-        {"type": "agora_results.pipes.results.do_tallies", "params": {}},
-        {"type": "agora_results.pipes.sort.sort_non_iterative", "params": {}}
+        {"type": "tally_pipes.pipes.results.do_tallies", "params": {}},
+        {"type": "tally_pipes.pipes.sort.sort_non_iterative", "params": {}}
       ]
     }
     // ..other election properties for election with id=102 missing here..
@@ -470,11 +470,11 @@ The configuration file sketch would be:
 ```
 
 :::note
-In a powerful system such as the Agora Voting project, sometimes there are 
+In a powerful system such as the Sequent Tech project, sometimes there are 
 multiple ways to do the same thing. That is the case with this last results 
 pipes configuration for election with id=1 in this last example. It is more 
 complicated than needed in this case. This is done just for demonstration 
-purposes, to demonstrate you what kind of things you can do with the agora 
+purposes, to demonstrate you what kind of things you can do with the sequent 
 results pipe system and to demonstrate that the questions shown in the 
 election results don't need to be the same as the original election question 
 list.
