@@ -153,7 +153,7 @@ auth1, auth2..).
 
 ### Machine provisioning
 
-As mentioned earlier, you should provision each VM with Ubuntu 16.04 LTS,
+As mentioned earlier, you should provision each VM with Ubuntu 20.04 LTS,
 4GB of RAM and usually around 30GB HD. The machine requirements might 
 vary depending on the size and number of the elections that these machines will
 be used for.
@@ -356,7 +356,7 @@ cp /home/ubuntu/config.yml config.yml
 # it needs to be using the same passwords as the master.
 DATE=$(date); cp config.yml "config_base_$DATE.yml"; python3 helper-tools/manage_config_pwd.py -c "config_base_$DATE.yml" -l 40 -o config.yml
 
-pip install ansible==2.9.18
+pip install ansible==2.9.22
 ```
 
 After this, one should edit the config.yml file and edit the appropiate values,
