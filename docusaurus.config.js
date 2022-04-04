@@ -37,7 +37,7 @@ module.exports = {
           position: 'right'
         },
         {
-          href: 'https://github.com/sequent/',
+          href: 'https://github.com/sequentech/',
           label: 'GitHub',
           position: 'right',
         },

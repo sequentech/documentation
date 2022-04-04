@@ -19,7 +19,7 @@ version number.
 
 ### Version numbers for each project
 
-[Multiple projects](https://github.com/sequent/) compromise Sequent platform 
+[Multiple projects](https://github.com/sequentech/) compromise Sequent platform 
 architecture: voting-booth, ballot-box, election-orchestra, etc.
 
 Patch releases for bugfixes or security updates are published 
