@@ -1,5 +1,5 @@
 {
-  "name": "admin-manual",
+  "name": "documentation",
   "version" : "master",
   "private": true,
   "scripts": {

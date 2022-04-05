@@ -73,7 +73,7 @@ election title in the public election site and in the voting booth start screen.
 - **Type:** `Long String`
 - **Required:** Yes
 - **Default:** -
-- **Example:** `"This is the description of the election. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs."`
+- **Example:** `"This is the description of the election. You can add simple html like <strong>bold</strong> or <a href=\"https://sequentech.io\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs."`
 
 Election's description. It will appear below the title in the public election 
 site and in the voting booth start screen. As shown in the example it allows 
@@ -90,12 +90,12 @@ for some basic HTML.
 :::info Enabling Virtual Elections
 Virtual elections are not enabled by default because for security reasons 
 virtual elections should not be enabled in multi-tenant deployments, as 
-`agora-elections` do not verify that the election creator has permissions for
+`ballot-box` do not verify that the election creator has permissions for
 accessing the sub-elections.
 
 To allow virtual election you have to enable it in the 
 [deployment configuration](../deployment/guide), which can be done by setting
-the `config.agora_elections.virtualElectionsAllowed` setting in the `config.yml` 
+the `config.ballot-box.virtualElectionsAllowed` setting in the `config.yml` 
 deployment configuration file to `true`. 
 :::
 
@@ -108,21 +108,21 @@ elections:
 [children elections](#election-children_election_info).
 
 The first kind of relation (virtual elections and virtual subelections) is 
-established in `agora-elections`, and its use is allows for electoral results
+established in `ballot-box`, and its use is allows for electoral results
 consolidation.
 
-The second kind of relation is established in `authapi` and its use is more
+The second kind of relation is established in `iam` and its use is more
 related to the authentication, authorization and presentation behaviour in the
 earlier stages of an election, for example during login.
 
 Both are closely related/coupled, because usually you want to do both or none. 
-The separation exists simply because `authapi` and `agora-elections` are
+The separation exists simply because `iam` and `ballot-box` are
 different modules that have separated databases.
 :::
 
 If set to `true`, this is a virtual election, meaning it can have subelections
-in `agora-elections`. This allows the election results to be calculated when
-calling [agora-results](#results-config-pipes) with the votes of all the 
+in `ballot-box`. This allows the election results to be calculated when
+calling [tally-pipes](#results-config-pipes) with the votes of all the 
 subelections, and thus allows you to do electoral results consolidation. Set the 
 [virtualSubelections setting](#election-virtualSubelections) to specify which
 are those subelections.
@@ -154,7 +154,7 @@ See the information in [virtual setting](#election-virtual) for more details.
 - **Example:** `66341`
 
 Identification number of the parent election, or more specifically `AuthEvent`,
-because this is an attribute set in `authapi`. `parent_id` is set in children
+because this is an attribute set in `iam`. `parent_id` is set in children
 elections. It can only be set to refer to a parent `AuthEvent`'s that exist, so
 you will have to create the parent election first. If you are creating multiple
 elections in a single `Edit JSON elections`, then also place the parent first.
@@ -294,14 +294,14 @@ installed in the backend server
       },
       {
         "category": "",
-        "details": "An option can contain a description. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>. You can also set an image url below, but be sure it's HTTPS or else it won't load.\n\n<br><br>You need to use two br element for new paragraphs.",
+        "details": "An option can contain a description. You can add simple html like <strong>bold</strong> or <a href=\"https://sequentech.io\">links to websites</a>. You can also set an image url below, but be sure it's HTTPS or else it won't load.\n\n<br><br>You need to use two br element for new paragraphs.",
         "id": 1,
         "sort_order": 1,
         "text": "Example option 2",
         "urls": [
           {
             "title": "URL",
-            "url": "https://nvotes.com"
+            "url": "https://sequentech.io"
           },
           {
             "title": "Image URL",
@@ -327,7 +327,7 @@ installed in the backend server
         ]
       }
     ],
-    "description": "This is the description of this question. You can have multiple questions. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs.",
+    "description": "This is the description of this question. You can have multiple questions. You can add simple html like <strong>bold</strong> or <a href=\"https://sequentech.io\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs.",
     "layout": "accordion",
     "max": 1,
     "min": 1,
@@ -362,7 +362,7 @@ details.
         {
           "network": "Twitter",
           "button_text": "",
-          "social_message": "I have just voted in election __URL__, you can too! #nvotes"
+          "social_message": "I have just voted in election __URL__, you can too! #sequent"
         },
         {
           "network": "Facebook",
@@ -399,7 +399,7 @@ must always be set to `"simple"`.
 
 Specifies the number of votes that can be cast, because *successful logins* is
 a generic and fancy way to call 'votes cast' in a generic way within AuthApi.
-If set to zero, no specific limitation in `authapi` will happen regarding the 
+If set to zero, no specific limitation in `iam` will happen regarding the 
 authentication process. If set to a number higher than zero, for example 1 or 3,
 that will be the limit in the number of votes that can be cast.
 
@@ -408,16 +408,16 @@ cast a vote.
 
 :::note
 There might be other limitations on the number of votes that a voter can cast.
-For example `agora-elections` has a deployment level configuration setting
+For example `ballot-box` has a deployment level configuration setting
 that limits the number of votes that can be cast (this setting's path is 
-`config.agora_elections.max_revotes` in the `config.yml` ansible configuration).
-This `agora-elections` configuration setting will be applied independently of
+`config.ballot-box.max_revotes` in the `config.yml` ansible configuration).
+This `ballot-box` configuration setting will be applied independently of
 `num_successful_logins_allowed`.
 :::
 
-### Election: `resultsConfig`
+### Election: `tallyPipesConfig`
 
-- **Property name**: `resultsConfig`
+- **Property name**: `tallyPipesConfig`
 - **Type:** Object
 - **Required:** No
 - **Default:** -
@@ -427,13 +427,13 @@ This `agora-elections` configuration setting will be applied independently of
   "version": "1.0",
   "pipes": [
     {
-      "type": "agora_results.pipes.results.do_tallies",
+      "type": "tally_pipes.pipes.results.do_tallies",
       "params": {
         "ignore_invalid_votes": true
       }
     },
     {
-      "type": "agora_results.pipes.sort.sort_non_iterative",
+      "type": "tally_pipes.pipes.sort.sort_non_iterative",
       "params": {
         "question_indexes": [0]
       }
@@ -467,27 +467,27 @@ object property.
 
 The way election results are calculated when there are ballot boxes is through
 multiple steps:
-1. When a tally sheet is uploaded (to `authapi`), `authapi` sends a callback to
-   `agora-elections` (the API call is to 
+1. When a tally sheet is uploaded (to `iam`), `iam` sends a callback to
+   `ballot-box` (the API call is to 
    `/api/election/:id/update-ballot-boxes-config`) with the updated list of 
    tally sheets related to that election.
 2. That API call to `/api/election/:id/update-ballot-boxes-config` of
-   `agora-elections` executes multiple steps:
+   `ballot-box` executes multiple steps:
     1. It sets the `ballotBoxesResultsConfig` in the appropiate election and 
        saves it in the database.
-    2. It uses the [resultsConfig setting](#election-resultsconfig) as a 
+    2. It uses the [tallyPipesConfig setting](#election-resultsconfig) as a 
        template replacing any ocurrence of the text 
        `__ballotBoxesResultsConfig__` with the content of
        `ballotBoxesResultsConfig` which is the updated list of tally sheets. If
        ballotBoxesResultsConfig is not set, then `__ballotBoxesResultsConfig__` 
        will be always replaced by `[]` (empty list).
-    3. It re-calculates the election results running `agora-results` with the
-       calculated [resultsConfig setting](#election-resultsconfig) in the previous
+    3. It re-calculates the election results running `tally-pipes` with the
+       calculated [tallyPipesConfig setting](#election-resultsconfig) in the previous
        step.
 
 As a result, if you want the tally sheets to be reflected somehow in the 
 election results, you will need to use the appropiate 
-[Results Config Pipes](#results-config-pipes), for example [agora_results.pipes.ballot_boxes.count_tally_sheets](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/ballot_boxes.py#L278). See also [Election results can have different questions](#election-results-can-have-different-questions) section.
+[Results Config Pipes](#results-config-pipes), for example [tally_pipes.pipes.ballot_boxes.count_tally_sheets](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/ballot_boxes.py#L278). See also [Election results can have different questions](#election-results-can-have-different-questions) section.
 
 ### Election: `ballot_boxes`
 
@@ -518,7 +518,7 @@ list of ballot boxes to be created.
   "config": {
     "allow_user_resend": true,
     "msg": "Vote in __URL__ with code __CODE__",
-    "subject": "Vote now with nVotes",
+    "subject": "Vote now with Sequent",
     "authentication-action": {
       "mode": "vote",
       "mode-config": {
@@ -610,7 +610,7 @@ properties:
 - **Example:** `"default"`
 
 Theme that will be used in the public election website and in the voting booth
-of this election. Existing themes exist in the [themes directory](https://github.com/agoravoting/agora-gui-common/tree/master/themes) of the agora-gui-common repository. You can write
+of this election. Existing themes exist in the [themes directory](https://github.com/sequentech/common-ui/tree/master/themes) of the common-ui repository. You can write
 your own if need be, by following the same directory and file structure as any
 of those. The `default` theme uses simple colors and not very specific, with 
 the idea of being able to be used in most cases. It is also the most widely used
@@ -628,7 +628,7 @@ and thus battle-tested.
   {
     "network": "Twitter",
     "button_text": "",
-    "social_message": "I have just voted in election __URL__, you can too! #nvotes"
+    "social_message": "I have just voted in election __URL__, you can too! #sequent"
   },
   {
     "network": "Facebook",
@@ -717,7 +717,7 @@ string as the network icon is usually set.
 - **Type:** `String`
 - **Required:** Yes
 - **Default:** -
-- **Example:** `"I have just voted in election __URL__, you can too! #nvotes"`
+- **Example:** `"I have just voted in election __URL__, you can too! #sequent"`
 
 When users click on the share link, it will try automatically default to share
 in Twitter/Facebook this message. It is a template string, where `__URL__` will
@@ -883,7 +883,7 @@ success screen.
 
 By default, if this optional property is not set, then the  election's
 `logo_url` property is tried to be used as the logo, and if not, the 
-`config.agora_gui.organization.big_logo_url` property in the deployment YAML 
+`config.sequent_ui.organization.big_logo_url` property in the deployment YAML 
 is used to load the logo, or otherwise no logo is shown in the ballot ticket 
 PDF.
 
@@ -893,7 +893,7 @@ PDF.
 - **Type:** `String`
 - **Required:** No
 - **Default:** -
-- **Example:** `"nVotes"`
+- **Example:** `"Sequent"`
 - **Related:**
   - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
   - [`success_screen__ballot_ticket__logo_url`](#election-presentation-options-success_screen__ballot_ticket__logo_url)
@@ -906,7 +906,7 @@ to the header logo in the PDF ballot ticket that the voter can download from
 the voting booth success screen.
 
 By default, if this optional property is not set, then the 
-`config.agora_gui.organization.name` property in the deployment YAML appears 
+`config.sequent_ui.organization.name` property in the deployment YAML appears 
 in the same position in the ballot ticket PDF.
 
 ### Election Presentation Options: `success_screen__ballot_ticket__logo_subheader`
@@ -928,7 +928,7 @@ to the header logo in the PDF ballot ticket that the voter can download from the
 voting booth success screen.
 
 By default, if this optional property is not set, then the 
-`config.agora_gui.organization.subtitle` property in the deployment YAML appears 
+`config.sequent_ui.organization.subtitle` property in the deployment YAML appears 
 in the same position in the ballot ticket PDF.
 
 ### Election Presentation Options: `success_screen__ballot_ticket__h3`
@@ -1083,7 +1083,7 @@ A results config pipe is used to specify how election results will be calculated
 Results configuration is set of pipes to be applied, together with each pipe 
 configuration, that will be used during the  calculation of election results. It
 is configured at the election level with the 
-[resultsConfig setting](#election-resultsconfig).
+[tallyPipesConfig setting](#election-resultsconfig).
 
 Each pipe is a list of pipe objects with two items:
 1. The pipe import path (the `"type"` key)
@@ -1093,14 +1093,14 @@ For example, a config object could be:
 
 ```json
 {
-  "type": "agora_results.pipes.sort.sort_non_iterative",
+  "type": "tally_pipes.pipes.sort.sort_non_iterative",
   "params": {
     "question_indexes": [0]
   }
 }
 ```
 
-And multiple pipes can be included in the top-level `resultsConfig` setting
+And multiple pipes can be included in the top-level `tallyPipesConfig` setting
 with:
 
 ```json
@@ -1108,11 +1108,11 @@ with:
   "version": "1.0",
   "pipes": [
     {
-      "type": "agora_results.pipes.results.do_tallies",
+      "type": "tally_pipes.pipes.results.do_tallies",
       "params": {}
     },
     {
-      "type": "agora_results.pipes.sort.sort_non_iterative",
+      "type": "tally_pipes.pipes.sort.sort_non_iterative",
       "params": {
         "question_indexes": [0]
       }
@@ -1122,22 +1122,22 @@ with:
 ```
 
 The pipes are interpreted and applied by 
-[agora-results](https://github.com/agoravoting/agora-results), which in turn is
-called by `agora-elections`. There are multiple available pipes and we will 
+[tally-pipes](https://github.com/sequentech/tally-pipes), which in turn is
+called by `ballot-box`. There are multiple available pipes and we will 
 document in this section most of them, what they do, what you can use them for 
 and what are their configuration  options.
 
 :::note
 There's a deployment level configuration setting that specifies a whitelist of
 pipes that can be used. This setting's path is 
-`config.agora_results.pipes_whitelist` in the `config.yml` ansible 
+`config.tally_pipes.pipes_whitelist` in the `config.yml` ansible 
 configuration). If you need to use a specific pipe, please ensure you
 have whitelisted it in the deployment configuration.
 :::
 
 ### Election results input
 
-`agora-results` is called with multiple input data:
+`tally-pipes` is called with multiple input data:
 - The path to the list of votes to be decrypted.
 - The path to the election results configuration with all the pipes to be run.
 - The path to the election tally tarball. This tarball is generated by election
@@ -1148,33 +1148,33 @@ should be written in different files.
 - The election id.
 - The path to a file containing the whitelisted pipes.
 
-`agora-results` works by loading the election questions configuration, and 
+`tally-pipes` works by loading the election questions configuration, and 
 passing it from pipe to pipe as the first argument of each pipe, called 
 `data_list`. It also untars the election tally tarball in a temporal directory, 
 which some pipes might use to output some temporal files too.
 
-In virtual elections, `agora-results` not only receives as an input the tarball
+In virtual elections, `tally-pipes` not only receives as an input the tarball
 of the [virtual election](#election-virtual), but also the tarball of all the 
 [virtual subelections](#election-virtualSubelections). 
 
-In that case, `agora-results` will also load that election's question 
+In that case, `tally-pipes` will also load that election's question 
 configuration in the `data_list` pipes argument and extract each tally tarball
 in a different temporal directory. This is what allows us to do
 results consolidation from multiple elections into a single one. In virtual
 elections, the first element in `data_list` is the configuration of the virtual
 election and then follows in order the list of virtual subelections as per the
-configuration of the election in `agora-elections`. Within each element in
+configuration of the election in `ballot-box`. Within each element in
 `data_list` there's an additional key `extract_dir` that pipes can use to 
 access the details of the tally tarball of a specific subelection.
 
 ### Election results output
 
-The output of `agora-results` is usually directly to stdout in a specific 
-format. This is read by `agora-elections` and stored in the database as the 
+The output of `tally-pipes` is usually directly to stdout in a specific 
+format. This is read by `ballot-box` and stored in the database as the 
 electoral results. But it also outputs the same electoral results in different
 formats in the election `output directory`: `csv`, `json`, `pretty` (plain
 text) and `pdf`. It will also save the ballots in JSON format in the 
-`output directory`. The `output directory` is served with `agora-elections` as
+`output directory`. The `output directory` is served with `ballot-box` as
 a private directory where results can be accessed when the election results are
 not public, and then as a public directory where anyone can access the election
 results when the election status is set to `publish results`. The results in the
@@ -1186,7 +1186,7 @@ results when the election status is set to `publish results`. The results in the
  - `ballots.csv`
  - `ballots.json`
 
-`agora-results` works so that the pipes execute sequentially and communicate 
+`tally-pipes` works so that the pipes execute sequentially and communicate 
 with one another mainly through passing information via the mutable `data_list` 
 argument and also writting information in the temporal tarball extraction 
 directories. The final output is the results configuration (which is in 
@@ -1217,11 +1217,11 @@ order:
 
 ### Pipe: `do_tallies`
 
-- **Pipe path**: [`agora_results.pipes.results.do_tallies`](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/results.py#L24)
+- **Pipe path**: [`tally_pipes.pipes.results.do_tallies`](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/results.py#L24)
 - **Example usage**:
 ```json
 {
-  "type": "agora_results.pipes.results.do_tallies",
+  "type": "tally_pipes.pipes.results.do_tallies",
   "params": {
     "question_indexes": [0]
   }
@@ -1231,12 +1231,12 @@ order:
 This pipe is used to run the `tally` algorithm of the election questions. It
 will calculate the results using that `tally` algorithm and set them in the 
 `results` key in the appropiate element inside `data_list`, among other things. 
-`results` is used later by `agora-results` to output the electoral results in 
+`results` is used later by `tally-pipes` to output the electoral results in 
 the appropiate format. It also sets the `log` key in the appropiate element 
 inside `data_list` if the tally algorithm generated any log output.
 
-This pipe calls uses the [agora-tally](https://github.com/agoravoting/agora-tally) 
-library and calls to `agora_tally.tally.do_tally` to do the results calculation
+This pipe calls uses the [tally-methods](https://github.com/sequentech/tally-methods) 
+library and calls to `tally_methods.tally.do_tally` to do the results calculation
 of any question to be tallied.
 
 Candidates marked as withdrawn (you can do that with the 
@@ -1255,7 +1255,7 @@ The following configuration options can be set in the pipe configuration object:
 
 If this option is set to `true` as it is by default, having invalid votes will 
 not make the tally fail. If it is set to `false`, then the call to 
-`agora_tally.tally.do_tally` will raise an exception and the `agora-results`
+`tally_methods.tally.do_tally` will raise an exception and the `tally-pipes`
 execution will fail. 
 
 If you are not expecting any invalid votes, setting `ignore_invalid_votes` to 
@@ -1271,7 +1271,7 @@ If you are not expecting any invalid votes, setting `ignore_invalid_votes` to
 
 If this option is set to `false` as it is by default, it will output to stdout
 the ballots as they are read in CSV format. This option is currently unused most
-of the time as the `agora-results` already outputs the ballots in CSV and JSON 
+of the time as the `tally-pipes` already outputs the ballots in CSV and JSON 
 formats (the `ballots.csv` and `ballots.json` files). By the way, those ballot 
 files are generated by this pipe and using the same code as this setting uses.
 
@@ -1286,7 +1286,7 @@ files are generated by this pipe and using the same code as this setting uses.
 List of indexes in `data_list` to tally or None if all of them should be 
 tallied which is the default. Note that this is a filtering list. It will not
 error if any index of this list is out of bounds. If this a virtual election
-and `agora-results` received 2 tallies as input, if `tallies_indexes` is
+and `tally-pipes` received 2 tallies as input, if `tallies_indexes` is
 `[0,1,2,3]` it will actually only tally the first two.
 
 #### `do_tallies`: `question_indexes`
@@ -1316,7 +1316,7 @@ configuration multiple calls to the `do_tallies` with different settings. See
 - **Example:** `true`
 
 As mentioned before, this pipe heavy lifting is actually done by calling to
-`agora_tally.tally.do_tally`. This function call receives the question 
+`tally_methods.tally.do_tally`. This function call receives the question 
 configuration as an object using the `question_json` parameter. Usually this 
 configuration is obtained by reading the question json file within the tally 
 tarball temporal extraction directory. However, if `reuse_results` is set to 
@@ -1326,7 +1326,7 @@ the given  element inside `data_list`:
 
 This can be useful in different circumstances. For example if for some reason 
 like the one mentioned in [question_indexes](#do_tallies-question_indexes), you
-need to execute multiple runs of this pipe within the same `agora-results` 
+need to execute multiple runs of this pipe within the same `tally-pipes` 
 execution.
 
 #### `do_tallies`: `allow_empty_tally`
@@ -1355,11 +1355,11 @@ format which does not allow for comments.
 
 ### Pipe: `sort_non_iterative`
 
-- **Pipe path**: [`agora_results.pipes.sort.sort_non_iterative`](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/sort.py#L35)
+- **Pipe path**: [`tally_pipes.pipes.sort.sort_non_iterative`](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/sort.py#L35)
 - **Example usage**:
 ```json
 {
-  "type": "agora_results.pipes.sort.sort_non_iterative",
+  "type": "tally_pipes.pipes.sort.sort_non_iterative",
   "params": {
     "question_indexes": [0, 1]
   }
@@ -1439,7 +1439,7 @@ The following configuration options can be set in the pipe configuration object:
 List of indexes in `data_list` to which this pipe will be applied or None if 
 this pipe should be run for all the elections. Note that this is a filtering 
 list. It will not give any error if any index of this list is out of bounds. 
-If this a virtual election and `agora-results` received 2 elections as input, 
+If this a virtual election and `tally-pipes` received 2 elections as input, 
 if `tallies_indexes` is `[0,1,2,3]` this pipe will just run for the first two.
 
 #### `sort_non_iterative`: `question_indexes`
@@ -1546,11 +1546,11 @@ format which does not allow for comments.
 
 - **Pipe path**: 
 ### Pipe: `configure_pdf`
-- [agora_results.pipes.pdf.configure_pdf](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/pdf.py#L40)
+- [tally_pipes.pipes.pdf.configure_pdf](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/pdf.py#L40)
 - **Example usage**:
 ```json
 {
-  "type": "agora_results.pipes.pdf.configure_pdf",
+  "type": "tally_pipes.pipes.pdf.configure_pdf",
   "params": {
     "languages": ["es"],
     "timezone": "Europe/Madrid"
@@ -1648,7 +1648,7 @@ in official Python documentation.
 - **Default:** `None`
 - **Example:** `true`
 
-If set to `false`, nVotes logo will not appear in the PDF election results.
+If set to `false`, Sequent logo will not appear in the PDF election results.
 
 #### `configure_pdf`: `hide_dates`
 
@@ -1690,34 +1690,34 @@ is any theme color name that you don't set, the default will be used.
 There are many other pipes but we have yet to document them. The easiest way
 right now to understand how they work is to just look at the code:
 
-- [agora_results.pipes.duplicate_questions.duplicate_questions](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/duplicate_questions.py#L24)
-- [agora_results.pipes.modifications.apply_modifications](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/modifications.py)
-- [agora_results.pipes.multipart.make_multipart](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/multipart.py)
-- [agora_results.pipes.multipart.election_max_size_corrections](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/multipart.py)
-- [agora_results.pipes.multipart.question_totals_with_corrections](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/multipart.py)
-- [agora_results.pipes.multipart.reduce_answers_with_corrections](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/multipart.py)
-- [agora_results.pipes.multipart.multipart_tally_plaintexts_append_joiner](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/multipart.py)
-- [agora_results.pipes.multipart.data_list_reverse](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/multipart.py)
-- [agora_results.pipes.multipart.multipart_tally_plaintexts_joiner](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/multipart.py)
-- [agora_results.pipes.multipart.append_ballots](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/multipart.py)
-- [agora_results.pipes.parity.proportion_rounded](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/parity.py)
-- [agora_results.pipes.parity.parity_zip_non_iterative](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/parity.py)
-- [agora_results.pipes.parity.reorder_winners](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/parity.py)
-- [agora_results.pipes.parity.podemos_parity_loreg_zip_non_iterative](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/parity.py)
-- [agora_results.pipes.parity.podemos_parity2_loreg_zip_non_iterative](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/parity.py)
-- [agora_results.pipes.podemos.podemos_proportion_rounded_and_duplicates](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/podemos.py)
-- [agora_results.pipes.desborda4.podemos_desborda4](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/desborda4.py)
-- [agora_results.pipes.desborda3.podemos_desborda3](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/desborda3.py)
-- [agora_results.pipes.desborda2.podemos_desborda2](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/desborda2.py)
-- [agora_results.pipes.desborda.podemos_desborda](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/desborda.py)
-- [agora_results.pipes.pretty_print.pretty_print_stv_winners](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/pretty_print.py)
-- [agora_results.pipes.pretty_print.pretty_print_not_iterative](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/pretty_print.py)
-- [agora_results.pipes.results.to_files](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/results.py)
-- [agora_results.pipes.results.apply_removals](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/results.py)
-- [agora_results.pipes.stv_tiebreak.stv_first_round_tiebreak](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/stv_tiebreak.py)
-- [agora_results.pipes.pdf.configure_pdf](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/pdf.py)
-- [agora_results.pipes.withdraw_candidates.withdraw_candidates](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/withdraw_candidates.py)
-- [agora_results.pipes.ballot_boxes.count_tally_sheets](https://github.com/agoravoting/agora-results/blob/master/agora_results/pipes/ballot_boxes.py#L278)
+- [tally_pipes.pipes.duplicate_questions.duplicate_questions](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/duplicate_questions.py#L24)
+- [tally_pipes.pipes.modifications.apply_modifications](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/modifications.py)
+- [tally_pipes.pipes.multipart.make_multipart](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/multipart.py)
+- [tally_pipes.pipes.multipart.election_max_size_corrections](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/multipart.py)
+- [tally_pipes.pipes.multipart.question_totals_with_corrections](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/multipart.py)
+- [tally_pipes.pipes.multipart.reduce_answers_with_corrections](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/multipart.py)
+- [tally_pipes.pipes.multipart.multipart_tally_plaintexts_append_joiner](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/multipart.py)
+- [tally_pipes.pipes.multipart.data_list_reverse](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/multipart.py)
+- [tally_pipes.pipes.multipart.multipart_tally_plaintexts_joiner](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/multipart.py)
+- [tally_pipes.pipes.multipart.append_ballots](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/multipart.py)
+- [tally_pipes.pipes.parity.proportion_rounded](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/parity.py)
+- [tally_pipes.pipes.parity.parity_zip_non_iterative](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/parity.py)
+- [tally_pipes.pipes.parity.reorder_winners](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/parity.py)
+- [tally_pipes.pipes.parity.podemos_parity_loreg_zip_non_iterative](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/parity.py)
+- [tally_pipes.pipes.parity.podemos_parity2_loreg_zip_non_iterative](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/parity.py)
+- [tally_pipes.pipes.podemos.podemos_proportion_rounded_and_duplicates](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/podemos.py)
+- [tally_pipes.pipes.desborda4.podemos_desborda4](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/desborda4.py)
+- [tally_pipes.pipes.desborda3.podemos_desborda3](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/desborda3.py)
+- [tally_pipes.pipes.desborda2.podemos_desborda2](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/desborda2.py)
+- [tally_pipes.pipes.desborda.podemos_desborda](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/desborda.py)
+- [tally_pipes.pipes.pretty_print.pretty_print_stv_winners](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/pretty_print.py)
+- [tally_pipes.pipes.pretty_print.pretty_print_not_iterative](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/pretty_print.py)
+- [tally_pipes.pipes.results.to_files](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/results.py)
+- [tally_pipes.pipes.results.apply_removals](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/results.py)
+- [tally_pipes.pipes.stv_tiebreak.stv_first_round_tiebreak](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/stv_tiebreak.py)
+- [tally_pipes.pipes.pdf.configure_pdf](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/pdf.py)
+- [tally_pipes.pipes.withdraw_candidates.withdraw_candidates](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/withdraw_candidates.py)
+- [tally_pipes.pipes.ballot_boxes.count_tally_sheets](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/ballot_boxes.py#L278)
 ## Census object
 
 This JSON object type describes census configuration related to the election. 
@@ -1755,7 +1755,7 @@ depends on the [authentication method](#census-auth_method) used and the
 
 If the census size if big, it's not advisable to import it using this field 
 because it's currently not very fast. In that case it's best to use the 
-`authapi`'s `bulk_insert_voters` management command through the command line 
+`iam`'s `bulk_insert_voters` management command through the command line 
 which can easily load 4,000 voters/second instead of maybe 6-10 voters/second 
 here.
 
@@ -1769,7 +1769,7 @@ for example the `email` field if using the `email-otp` authentication method.
 If you re-upload a census, the voters that already exist (matching their unique 
 id) won't be modified. 
 
-However if you use `authapi`'s `bulk_insert_voters` management command, this
+However if you use `iam`'s `bulk_insert_voters` management command, this
 kind of detection won't be applied. If you need to update the census, it's best
 to first remove all the census with the `bulk_delete_voters` command before 
 executing `bulk_insert_voters`.
@@ -1859,8 +1859,8 @@ this is currently for the administrative `AuthEvent` (usually with id `0`) used
 to authenticate in the administrative interface, and whose list of users is 
 directly set within the `config.yml` 
 [ansible deployment configuration](../deployment/guide.md) using the 
-`config.authapi.upsert_file` and the superadmin user 
-(`config.authapi.admin_user`). If used, an [extra_field](#census-extra_fields) 
+`config.iam.upsert_file` and the superadmin user 
+(`config.iam.admin_user`). If used, an [extra_field](#census-extra_fields) 
 of type `password` and named `password` is required.
 
 - **smart-link**: The voters will authenticate using a smart link that includes
@@ -1963,7 +1963,7 @@ Object that details the different options related to the election and required
 to be filled by election administrators for every election. What admin fields 
 need to be filled is configured in the `config.yml` 
 [ansible deployment configuration](../deployment/guide.md) with the key 
-`config.agora_gui.admin_fields`. 
+`config.sequent_ui.admin_fields`. 
 
 See [Admin Field](#admin-field-object) for more details.
 
@@ -1978,7 +1978,7 @@ See [Admin Field](#admin-field-object) for more details.
 {
   "allow_user_resend": true,
   "msg": "Vote in __URL__ with code __CODE__",
-  "subject": "Vote now with nVotes",
+  "subject": "Vote now with Sequent",
   "authentication-action": {
     "mode": "vote",
     "mode-config": {
@@ -2222,7 +2222,7 @@ allowed value.
 - **Default:** `false`
 - **Example:** `true`
 
-When user is is activated by calling to `authapi`'s 
+When user is is activated by calling to `iam`'s 
 `/api/auth-event/%d/census/activate/`, this field will be copied from the admin
 user to the activated user. This is useful for example if an admin user has an
 extra field specifying the precint assigned to it and we would like to set that
@@ -2240,7 +2240,7 @@ Object that details the different options related to the election and required
 to be filled by election administrators for every election. What admin fields 
 need to be filled is configured in the `config.yml` 
 [ansible deployment configuration](../deployment/guide.md) with the key 
-`config.agora_gui.admin_fields`. 
+`config.sequent_ui.admin_fields`. 
 
 It is used by the Census' [admin_fields property](#census-admin_fields) and
 set by the election administrator during creator in the sidebar item 
@@ -2313,10 +2313,10 @@ The maximum length of the message text depends on the authentication method. By
 default the email text body can have up to `5,000` characters, and SMS text
 body can only have `200`. To change this, you would need to change the code
 in the respective authentication method code. 
-[This is the relevant code](https://github.com/agoravoting/authapi/blob/master/authapi/authmethods/m_email.py#L94) 
+[This is the relevant code](https://github.com/sequentech/iam/blob/master/iam/authmethods/m_email.py#L94) 
 in the `email` authentication method:
 
-```python title="authapi/authmethods/m_email.py" {20}
+```python title="iam/authmethods/m_email.py" {20}
     CONFIG_CONTRACT = [
       {
         'check': 'isinstance',
@@ -2348,7 +2348,7 @@ in the `email` authentication method:
 - **Type:** `String`
 - **Required:** In applicable authentication methods
 - **Default:** -
-- **Example:** `"Vote now with nVotes"`
+- **Example:** `"Vote now with Sequent"`
 
 This is the email subject template used for sending the authentication codes to 
 voters. It's only applicable to authentication methods that send authentication
@@ -2398,7 +2398,7 @@ results.
 - **Example:** 
 
 ```
-"This is the description of the question. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs."
+"This is the description of the question. You can add simple html like <strong>bold</strong> or <a href=\"https://sequentech.io\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs."
 ```
 
 Question description. It will appear below the title in the voting booth. 

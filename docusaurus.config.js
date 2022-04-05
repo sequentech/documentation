@@ -1,13 +1,13 @@
 module.exports = {
-  title: 'admin-manual',
-  tagline: 'Agora Voting Project Admin Manual by nVotes',
+  title: 'documentation',
+  tagline: 'Sequent Tech Project Admin Manual by Sequent',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/documentation/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'agoravoting', // Usually your GitHub org/user name.
-  projectName: 'admin-manual', // Usually your repo name.
+  organizationName: 'sequent', // Usually your GitHub org/user name.
+  projectName: 'documentation', // Usually your repo name.
   themeConfig: {
     colorMode: {
       disableSwitch: true
@@ -15,8 +15,8 @@ module.exports = {
     navbar: {
       title: 'Admin Manual',
       logo: {
-        alt: 'nVotes',
-        src: 'img/nvotes_logo.png',
+        alt: 'Sequent',
+        src: 'img/sequent_logo.png',
       },
       items: [
         {
@@ -32,18 +32,18 @@ module.exports = {
           label: 'File Formats',
         },
         {
-          href: 'https://nvotes.com/blog/',
+          href: 'https://sequentech.io/blog/',
           label: 'Blog', 
           position: 'right'
         },
         {
-          href: 'https://github.com/agoravoting/',
+          href: 'https://github.com/sequentech/',
           label: 'GitHub',
           position: 'right',
         },
         {
-          href: 'https://nvotes.com/',
-          label: 'Powered By nVotes',
+          href: 'https://sequentech.io/',
+          label: 'Powered By Sequent',
           position: 'right',
         },
       ],
@@ -81,7 +81,7 @@ module.exports = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/agoravoting',
+              href: 'https://github.com/sequent',
 	    },
             {
               label: 'Discord',
@@ -89,7 +89,7 @@ module.exports = {
             },
             {
               label: 'Twitter',
-              href: 'https://twitter.com/nvotes_com',
+              href: 'https://twitter.com/sequent_com',
             },
           ],
         },
@@ -98,16 +98,16 @@ module.exports = {
           items: [
             {
               label: 'Blog',
-              to: 'https://nvotes.com/blog/',
+              to: 'https://sequentech.io/blog/',
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/agoravoting/admin-manual',
+              href: 'https://github.com/sequentech/documentation',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} nVotes`,
+      copyright: `Copyright © ${new Date().getFullYear()} Sequent`,
     },
   },
   presets: [
@@ -117,13 +117,13 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/agoravoting/admin-manual/edit/master/',
+            'https://github.com/sequentech/documentation/edit/master/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://gitlab.com/nvotes/nvotes-com',
+            'https://gitlab.com/sequent/sequent-com',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

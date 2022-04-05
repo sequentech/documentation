@@ -5,7 +5,7 @@ sidebar_label: Deployment Guide
 slug: /deployment/guide
 ---
 
-This document describes the complete deployment of an Agora Voting project
+This document describes the complete deployment of an Sequent Tech project
 with two Authorities for a production environment in virtual machines.
 
 ## Requirements
@@ -148,12 +148,12 @@ exit with `:wq`.
 ## For each machine
 
 Refer to this section for the configuration steps you need to take into account
-and execute for each of the machines in the deployment (agora master, slave,
+and execute for each of the machines in the deployment (sequent master, slave,
 auth1, auth2..).
 
 ### Machine provisioning
 
-As mentioned earlier, you should provision each VM with Ubuntu 16.04 LTS,
+As mentioned earlier, you should provision each VM with Ubuntu 20.04 LTS,
 4GB of RAM and usually around 30GB HD. The machine requirements might 
 vary depending on the size and number of the elections that these machines will
 be used for.
@@ -251,19 +251,19 @@ typically done within the Ubuntu machine as the root user. You can skip this
 step.
 
 To configure non-root permissions in the VM, first create the deployment user  
-if it hasn't been created yet. We'll use **agora** for that:
+if it hasn't been created yet. We'll use **sequent** for that:
 
 ```
-root@prod-s1 # adduser agora agora --gecos "FullName,RoomNumber,WorkPhone,HomePhone" --disabled-password
+root@prod-s1 # adduser sequent sequent --gecos "FullName,RoomNumber,WorkPhone,HomePhone" --disabled-password
 ```
 
-Afterwards, you should add the permissions that the agora user requires for
+Afterwards, you should add the permissions that the sequent user requires for
 administration and deployment.
 
 This is how you do it in the two servers that will be used as authorities:
 
 ```
-root@prod-s1 # wget https://raw.githubusercontent.com/agoravoting/agora-dev-box/next/doc/production/auth.sudoers
+root@prod-s1 # wget https://raw.githubusercontent.com/sequentech/deployment-tool/next/doc/production/auth.sudoers
 root@prod-s1 # cat auth.sudoers >> /etc/sudoers
 ```
 
@@ -271,8 +271,8 @@ And this is how you do it for the two other servers that will be used as master
 and slave machines:
 
 ```
-root@prod-s1 # wget https://raw.githubusercontent.com/agoravoting/agora-dev-box/next/doc/production/agora.sudoers
-root@prod-s1 # cat agora.sudoers >> /etc/sudoers
+root@prod-s1 # wget https://raw.githubusercontent.com/sequentech/deployment-tool/next/doc/production/sequent.sudoers
+root@prod-s1 # cat sequent.sudoers >> /etc/sudoers
 ```
 
 ### Timezones details
@@ -340,14 +340,14 @@ workon ansible
 # should return Python 3.8.5:
 python --version 
 cd /root
-git clone https://github.com/agoravoting/agora-dev-box.git $NAME
+git clone https://github.com/sequentech/deployment-tool.git $NAME
 cd $NAME
 git checkout master
 
 # needed for ansible. If you are deploying an election authority use
 # doc/production/playbook.auth.yml instead
 echo "localhost ansible_connection=local" > inventory 
-cp doc/production/playbook.agora.yml playbook.yml
+cp doc/production/playbook.sequent.yml playbook.yml
 
 # copy the config file to /root/$NAME/root.yml
 cp /home/ubuntu/config.yml config.yml
@@ -356,7 +356,7 @@ cp /home/ubuntu/config.yml config.yml
 # it needs to be using the same passwords as the master.
 DATE=$(date); cp config.yml "config_base_$DATE.yml"; python3 helper-tools/manage_config_pwd.py -c "config_base_$DATE.yml" -l 40 -o config.yml
 
-pip install ansible==2.9.18
+pip install ansible==2.9.22
 ```
 
 After this, one should edit the config.yml file and edit the appropiate values,
@@ -368,7 +368,7 @@ script.
 
 Even for the election authorities' machines, it's easiest to just copy the
 `config.yml` file from `prod-s1` and use it as a base. However, we provide 
-sample production config files for both agora and auth machines in the 
+sample production config files for both sequent and auth machines in the 
 `doc/production` directory.
 
 ## Web servers master & slave deployment
@@ -387,7 +387,7 @@ Please read the comments and instructions inside the configuration file
 and accordingly. Both machines for deploy purposes should have the
 **config.load_balancing.is_master** set to **true** and The
 **config.load_balancing.master.slave_postgres_ssh_keys** and
-**config.load_balancing.master.slave_agoraelections_ssh_keys** set to **[]**
+**config.load_balancing.master.slave_ballotbox_ssh_keys** set to **[]**
 (which means empty list) at this stage of deployment.
 
 If your machine is behind a proxy, you need to specify that in the
@@ -402,10 +402,10 @@ date; time ansible-playbook -i inventory playbook.yml; date
 ```
 Once this is done, the initial as-master deployment has been successful.
 
-If you have assigned a FQDN to for example 'agora.example.com' to the machine
+If you have assigned a FQDN to for example 'sequent.example.com' to the machine
 and the name resolution is set up correctly in your personal machine via DNS or
-by adding 'agora.example.com ipaddr' to your '/etc/hosts', you should be able to login
-as an administrator entering in 'https://agora.example.com/admin/login' using
+by adding 'sequent.example.com ipaddr' to your '/etc/hosts', you should be able to login
+as an administrator entering in 'https://sequent.example.com/admin/login' using
 the credentials you specified in the config.yml file.
 
 We recommend to use the /etc/hosts file to change the ip address of the
@@ -414,17 +414,17 @@ webserver from prod-s1 to prod-s2 ip easily for testing purposes.
 ### Configure the slave
 
 To configure prod-s2 as a slave, we need to import the ssh keys from the
-agoraelections and postgres users in *`prod-s1`* to add them in *`prod-s2`.
+ballotbox and postgres users in *`prod-s1`* to add them in *`prod-s2`.
 
 To get the keys execute these commands in *`prod-s2`*:
 
 ```bash
-sudo -u agoraelections cat /home/agoraelections/.ssh/id_rsa.pub
+sudo -u ballotbox cat /home/ballotbox/.ssh/id_rsa.pub
 sudo -u postgres cat /var/lib/postgresql/.ssh/id_rsa.pub
 ```
 
 Copy those keys and set them in the `prod-s1` **config.yml** file in
-the variables **config.load_balancing.master.slave_agoraelections_ssh_keys**
+the variables **config.load_balancing.master.slave_ballotbox_ssh_keys**
 and **config.load_balancing.master.slave_postgres_ssh_keys**.
 
 Then, execute again ansible in *`prod-s1`* to apply the changes:
@@ -443,7 +443,7 @@ If your machine is behind a proxy, you need to specify that in the
 
 Then you can run again ansible in `prod-s2` to apply the changes, using the
 slave specific playbook, which can only work after having executed
-**playbook.agora.yml**:
+**playbook.sequent.yml**:
 
 ```bash
 root@prod-s2:/root/prod-s2/ $ cp doc/production/playbook.slave.yml playbook.yml
@@ -570,16 +570,16 @@ Create **prod-a1.pkg** and **prod-a2.pkg** files with the configuration of both
 authorities. Then install them:
 
 ```bash
-root@prod-s1:/root/prod-s1/ $ eopeers --install prod-a1.pkg --keystore /home/agoraelections/keystore.jks
+root@prod-s1:/root/prod-s1/ $ eopeers --install prod-a1.pkg --keystore /home/ballotbox/keystore.jks
 root@prod-s1:/root/prod-s1/ $ eopeers --install prod-a2.pkg
 root@prod-s1:/root/prod-s1/ $ service nginx restart
-root@prod-s1:/root/prod-s1/ $ supervisorctl restart agora-elections
+root@prod-s1:/root/prod-s1/ $ supervisorctl restart ballot-box
 ```
 
 Please note that there's a difference between the first two eopeers commands.
-The first one is configured to be executed to add the key to agora-elections
+The first one is configured to be executed to add the key to ballot-box
 keystore for the director authority `prod-a1`. Afterwards, we need to restart
-not only `nginx` but also `agora-elections` precisely because this service needs
+not only `nginx` but also `ballot-box` precisely because this service needs
 to reload the ``prod-a1` TLS certificate keys.
 
 Before completion, the installation of the certificate of the `prod-s1` and
@@ -600,29 +600,29 @@ the following to create some votes. Change '2' in the following commands with
 your election number:
 
 ```bash
-root@prod-s1:/root/prod-s1/ $ su - agoraelections
-agoraelections@prod-s1:~ $ source ~/env/bin/activate
-agoraelections@prod-s1:~ $ cd ~/agora-elections/admin
-agoraelections@prod-s1:~ $ export ELECTION_ID=2
-agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py dump_pks $ELECTION_ID
-agoraelections@prod-s1:~/agora-elections/admin/ $ echo '[1,0]' > votes.json
-agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py encrypt $ELECTION_ID
+root@prod-s1:/root/prod-s1/ $ su - ballotbox
+ballotbox@prod-s1:~ $ source ~/env/bin/activate
+ballotbox@prod-s1:~ $ cd ~/ballot-box/admin
+ballotbox@prod-s1:~ $ export ELECTION_ID=2
+ballotbox@prod-s1:~/ballot-box/admin/ $ ./admin.py dump_pks $ELECTION_ID
+ballotbox@prod-s1:~/ballot-box/admin/ $ echo '[1,0]' > votes.json
+ballotbox@prod-s1:~/ballot-box/admin/ $ ./admin.py encrypt $ELECTION_ID
 ```
 
 start the election, cast the votes, stop it and tally it:
 
 ```bash
-agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py start $ELECTION_ID
-agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py cast_votes $ELECTION_ID
-agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py count_votes $ELECTION_ID 
+ballotbox@prod-s1:~/ballot-box/admin/ $ ./admin.py start $ELECTION_ID
+ballotbox@prod-s1:~/ballot-box/admin/ $ ./admin.py cast_votes $ELECTION_ID
+ballotbox@prod-s1:~/ballot-box/admin/ $ ./admin.py count_votes $ELECTION_ID 
 # it will output: "2 (2)" which means 2 votes cast, 2 unique voters
-agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py stop $ELECTION_ID
-agoraelections@prod-s1:~/agora-elections/admin/ $ ./admin.py tally $ELECTION_ID
+ballotbox@prod-s1:~/ballot-box/admin/ $ ./admin.py stop $ELECTION_ID
+ballotbox@prod-s1:~/ballot-box/admin/ $ ./admin.py tally $ELECTION_ID
 ```
 
 ## High availability and load balancing (HA/LB)
 
-nVotes platform can be configured to support both load balancing and high
+Sequent platform can be configured to support both load balancing and high
 availability, using a master-slaves configuration.
 
 High availability means that the slaves contain a replica of the master, so in
@@ -632,28 +632,28 @@ manually following the steps in the
 [Promoting a slave to be master](#promoting-a-slave-to-be-master) section.
 
 Load balancing allows to partially scale horizontally, allowing to serve more
-http requests per second. nVotes platform allows to perform load balancing only
+http requests per second. Sequent platform allows to perform load balancing only
 in the web servers (`prod-s1`, `prod-s2`, etc) but not in the election authority
 servers (`prod-a1`, `prod-a2`, etc). For scaling election authorities, currently
 the only way to do it is either subdividing an electoral process in multiple
 elections with different election authority servers, or scaling vertically the
 election authorities by adding more CPU/RAM/Disk resources to these machines.
 
-The way nVotes deploys the master and the slave means that the master
+The way Sequent deploys the master and the slave means that the master
 (`prod-s1` in this guide) has the readwrite instance of the PostgreSQL database
 and the slaves (`prod-s2`) have only a read-only database replica.
 
 However, other than that, all the backend services are replicated in both master
-and slaves machines (`authapi`, `authapi_celery`, `agora-elections` and `nginx`).
-`agora-elections` uses `memcached` to cache queries and improve performance, and
+and slaves machines (`iam`, `iam_celery`, `ballot-box` and `nginx`).
+`ballot-box` uses `memcached` to cache queries and improve performance, and
 all slaves connect directly to the `memcached` instance of the master machine.
 
 On the other hand, there are currently some limitations on the load balancing:
-`authapi`, `authapi_celery` and `agora-elections` connect directly to the master
+`iam`, `iam_celery` and `ballot-box` connect directly to the master
 PostgreSQL instance, and no load balancing is performed in the database level,
 only at the application level.
 
-Finally, `authapi_celery` uses `RabbitMQ` as its broker to manage messages and 
+Finally, `iam_celery` uses `RabbitMQ` as its broker to manage messages and 
 queues. Each server, independing of it being a master or a slave, currently
 runs its own `RabbitMQ` queue. That means that a task to send an SMS message
 scheduled by `prod-s1` will only be run by `prod-s1`, and same for any other
@@ -672,19 +672,19 @@ The master/slave configuration in this configuration basically means that:
 One simple way to test that the slave machines work is simply using a load
 balancer. You can deregister the master from the load balancer, and then only
 the slave machines will receive requests. You can check that this is true
-by watching the logs of `nginx`, `agora-elections`, or `authapi` in both
+by watching the logs of `nginx`, `ballot-box`, or `iam` in both
 machines, and checking that only the slave is receiving requests with the 
 following commands:
 
 ```bash
-supervisorctl tail -f agora-elections
-supervisorctl tail -f authapi
+supervisorctl tail -f ballot-box
+supervisorctl tail -f iam
 tail -F /var/log/nginx/access.log
 ```
 
 Note that you can configure the load balancer to establish a health check to
-the PATH `/admin-api/authapi/api/auth-event/1/`. This should return a HTTP
-status 200 through TLS and port 443, when authapi is running.
+the PATH `/admin-api/iam/api/auth-event/1/`. This should return a HTTP
+status 200 through TLS and port 443, when iam is running.
 
 #### Checking database replication
 
@@ -706,7 +706,7 @@ can verify that any change in the database in `prod-s1` is reflected in
 they should appear in both machines:
 
 ```bash
-sudo -u postgres psql agora_elections -tAc "select id,state from election;"
+sudo -u postgres psql ballot-box -tAc "select id,state from election;"
 5001|registered
 5002|registered
 5003|registered
@@ -719,8 +719,8 @@ If you list the files inside the datastore and the server certificate in
 both `prod-s1` and `prod-s2`, it should list the same files:
 
 ```bash
-root@prod-s1:/root/prod-s1/ $ sudo -u agoraelections find /home/agoraelections/datastore/ -type f | xargs md5sum
-05b76ec89dd7a32b76427d389a5778c1  /home/agoraelections/datastore/public/2/pks
+root@prod-s1:/root/prod-s1/ $ sudo -u ballotbox find /home/ballotbox/datastore/ -type f | xargs md5sum
+05b76ec89dd7a32b76427d389a5778c1  /home/ballotbox/datastore/public/2/pks
 
 root@prod-s1:/root/prod-s1/ $ find /srv/certs/selfsigned/ -type f | xargs md5sum
 d811c3e92162ade25f21f1d782f32c6e  /srv/certs/selfsigned/calist
@@ -730,9 +730,9 @@ a9bf327511b67100c096aebed5b46c94  /srv/certs/selfsigned/cert.pem
 
 #### Checking memcached configuration
 
-Memcached is a service used by `agora-elections` to cache data to avoid hitting
+Memcached is a service used by `ballot-box` to cache data to avoid hitting
 the database and improve performance. Only master's memcached instance is used.
-The `agora-elections` process in the slave machines will connect to it.
+The `ballot-box` process in the slave machines will connect to it.
 
 You can review the following:
 
@@ -816,13 +816,13 @@ AVERAGE:                0.0%    0.0%            0.0ms           0.0     0       
 TOTAL:          0B/     0B                      0.0ms           0.0     0       0
 ```
 
-**4. Check the correct configuration of `agora-elections` in both master and slaves**
+**4. Check the correct configuration of `ballot-box` in both master and slaves**
 
-You can check that memcached is being properly configured in `agora-elections``
+You can check that memcached is being properly configured in `ballot-box``
 in both the master:
 
 ```bash
-grep memcache /home/agoraelections/agora-elections/conf/application.local.conf -C 1
+grep memcache /home/ballotbox/ballot-box/conf/application.local.conf -C 1
 
 # memcached
 ehcacheplugin=disabled
@@ -833,7 +833,7 @@ logger.memcached=WARN
 And within the slave:
 
 ```bash
-grep memcache /home/agoraelections/agora-elections/conf/application.local.conf -C 1
+grep memcache /home/ballotbox/ballot-box/conf/application.local.conf -C 1
 
 # memcached
 ehcacheplugin=disabled
@@ -866,7 +866,7 @@ public IP of the server `prod-s1` to `prod-s2`, or something along the lines.
 
 Afterwards, to promote `prod-s2` to be the master, change set to `true` the
 `config.yml` config variable `config.load_balancing.is_master`, and then execute
-ansible for `prod-s2` with the `playbook.agora.yml` playbook:
+ansible for `prod-s2` with the `playbook.sequent.yml` playbook:
 
 ```bash
 date; time ansible-playbook -i inventory playbook.yml; date
@@ -884,7 +884,7 @@ prod-s1 as the director election authority. This can be done by:
 1. removing the prod-s1 eopeer package:
 
 ```bash
-agora@prod-a1:~ $ sudo eopeers --remove prod-s1
+sequent@prod-a1:~ $ sudo eopeers --remove prod-s1
 ```
 
 2. adding an alias to /etc/hosts in `prod-a1` config.yml variable **config.hosts**,

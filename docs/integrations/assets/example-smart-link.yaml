@@ -1,7 +1,7 @@
 [
   {
     "title": "New election",
-    "description": "This is the description of the election. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs.",
+    "description": "This is the description of the election. You can add simple html like <strong>bold</strong> or <a href=\"https://sequentech.io\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs.",
     "authorities": [
       "focal-a2"
     ],
@@ -12,7 +12,7 @@
         {
           "network": "Twitter",
           "button_text": "",
-          "social_message": "I have just voted in election __URL__, you can too! #nvotes",
+          "social_message": "I have just voted in election __URL__, you can too! #sequent",
           "active": true
         },
         {
@@ -28,15 +28,15 @@
     },
     "layout": "simple",
     "num_successful_logins_allowed": 0,
-    "resultsConfig": {
+    "tallyPipesConfig": {
       "version": "1.0",
       "pipes": [
         {
-          "type": "agora_results.pipes.results.do_tallies",
+          "type": "tally_pipes.pipes.results.do_tallies",
           "params": {}
         },
         {
-          "type": "agora_results.pipes.sort.sort_non_iterative",
+          "type": "tally_pipes.pipes.sort.sort_non_iterative",
           "params": {}
         }
       ]
@@ -96,14 +96,14 @@
           },
           {
             "category": "",
-            "details": "An option can contain a description. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>. You can also set an image url below, but be sure it's HTTPS or else it won't load.\n\n<br><br>You need to use two br element for new paragraphs.",
+            "details": "An option can contain a description. You can add simple html like <strong>bold</strong> or <a href=\"https://sequentech.io\">links to websites</a>. You can also set an image url below, but be sure it's HTTPS or else it won't load.\n\n<br><br>You need to use two br element for new paragraphs.",
             "id": 1,
             "sort_order": 1,
             "text": "Example option 2",
             "urls": [
               {
                 "title": "URL",
-                "url": "https://nvotes.com"
+                "url": "https://sequentech.io"
               },
               {
                 "title": "Image URL",
@@ -129,7 +129,7 @@
             ]
           }
         ],
-        "description": "This is the description of this question. You can have multiple questions. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs.",
+        "description": "This is the description of this question. You can have multiple questions. You can add simple html like <strong>bold</strong> or <a href=\"https://sequentech.io\">links to websites</a>.\n\n<br><br>You need to use two br element for new paragraphs.",
         "layout": "accordion",
         "max": 1,
         "min": 1,

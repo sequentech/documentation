@@ -8,7 +8,7 @@ slug: /file-formats/ballot-encoding
 ## Introduction
 
 Ballots information needs to be encoded into a big integer, because that's how
-encryption in Agora Voting works. At the same time, this number needs not to be
+encryption in Sequent Tech works. At the same time, this number needs not to be
 too big specifically it needs to be smaller than the `q` value of the ElGamal
 encryption public key of the election. Otherwise the ballot would require 
 multiple ciphertexts and that would make things more complex and slow.

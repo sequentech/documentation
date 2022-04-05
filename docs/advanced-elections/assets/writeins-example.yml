@@ -1,7 +1,7 @@
 [
   {
     "title": "New election",
-    "description": "This is the description of the election. You can add simple html like <strong>bold</strong> or <a href=\"https://nvotes.com\" rel=\"nofollow\">links to websites</a>.\n\n<br /><br />You need to use two br element for new paragraphs.",
+    "description": "This is the description of the election. You can add simple html like <strong>bold</strong> or <a href=\"https://sequentech.io\" rel=\"nofollow\">links to websites</a>.\n\n<br /><br />You need to use two br element for new paragraphs.",
     "authorities": [
       "focal-a2"
     ],
@@ -11,7 +11,7 @@
         {
           "network": "Twitter",
           "button_text": "",
-          "social_message": "I have just voted in election __URL__, you can too! #nvotes"
+          "social_message": "I have just voted in election __URL__, you can too! #sequent"
         },
         {
           "network": "Facebook",
@@ -25,7 +25,7 @@
     },
     "layout": "simple",
     "num_successful_logins_allowed": 0,
-    "resultsConfig": "{\"version\":\"1.0\",\"pipes\":[{\"type\":\"agora_results.pipes.results.do_tallies\",\"params\":{}},{\"type\":\"agora_results.pipes.sort.sort_non_iterative\",\"params\":{}}]}",
+    "tallyPipesConfig": "{\"version\":\"1.0\",\"pipes\":[{\"type\":\"tally_pipes.pipes.results.do_tallies\",\"params\":{}},{\"type\":\"tally_pipes.pipes.sort.sort_non_iterative\",\"params\":{}}]}",
     "census": {
       "has_ballot_boxes": false,
       "voters": [],
@@ -44,7 +44,7 @@
       ],
       "admin_fields": [],
       "config": {
-        "subject": "Vote now with nVotes",
+        "subject": "Vote now with Sequent",
         "msg": "Vote in __URL__ with code __CODE__",
         "registration-action": {
           "mode": "vote",

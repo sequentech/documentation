@@ -5,8 +5,8 @@ sidebar_label: E2E Election Testing
 slug: /testing/e2e
 ---
 
-nVotes platform contains a set of E2E (End-to-End) Integration Tests that test
-the whole nVotes deployment. You can launch this kind of tests directly from the
+Sequent platform contains a set of E2E (End-to-End) Integration Tests that test
+the whole Sequent deployment. You can launch this kind of tests directly from the
 Admin console and view the results through, using the `Actions` > 
 `Launch self-test task..` command.
 

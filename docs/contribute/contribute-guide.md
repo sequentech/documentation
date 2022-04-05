@@ -7,7 +7,7 @@ slug: /contribute/guide
 
 ## Introduction
 
-We are glad you are interested in contributing to the Agora Voting project. Our 
+We are glad you are interested in contributing to the Sequent Tech project. Our 
 aim is to make your contribution as easy as possible. To make them easy, we 
 have detailed here the guidelines that you need to follow to contribute.
 
@@ -26,21 +26,21 @@ To complete the CLA and become a contributor you need to:
 3.  Fill the details requested in the CLA.
 4.  Sign the printed CLA, marking all the pages.
 5.  Scan the CLA.
-6.  Send the signed and scanned CLA in PDF form to [legal@nvotes.com](mailto:legal@nvotes.com)
+6.  Send the signed and scanned CLA in PDF form to [legal@sequentech.io](mailto:legal@sequentech.io)
 
 Once we have received the signed CLA, we'll review the request. You will only 
-need to do this once. Contact us at [legal@nvotes.com](mailto:legal@nvotes.com) 
+need to do this once. Contact us at [legal@sequentech.io](mailto:legal@sequentech.io) 
 if you have anything doubt about the procedure.
 
 ## Branches and feature branches
 
-In Agora Voting repositories we develop changes and new features in a new 
+In Sequent Tech repositories we develop changes and new features in a new 
 **feature branches**. The a pull request is used to merge them into the 
 **master** branch.
 
-Agora Voting repositories accept bugfix pull requests (PRs) from your bug fix 
-branch or fork to the **master** branch of the Agora Voting git repository. 
-Agora Voting repositorites also accept new features PRs. For a feature PR to 
+Sequent Tech repositories accept bugfix pull requests (PRs) from your bug fix 
+branch or fork to the **master** branch of the Sequent Tech git repository. 
+Sequent Tech repositorites also accept new features PRs. For a feature PR to 
 be accepted, design discussions needs to happen. Design discussion can take 
 one of two forms:
 1. A feature request in the github issue tracker has been marked as approved. 
@@ -72,12 +72,12 @@ behaviour (if any), and how -reproduce the new behaviour.
  - Tests should include reasonable permutations of the target fix/change.
  - The unit tests code coverage cannot decrease with the PR.
 
-Submissions that have met these requirements will be assigned to a nVotes 
+Submissions that have met these requirements will be assigned to a Sequent 
 company team member for additional testing. Submissions must meet functional 
 and performance expectations. This means you may be asked to fix and resubmit
 your pull request against a new open test case if it fails one of these tests.
 
-The Agora Voting project is an organically grown codebase. Follow the general
+The Sequent Tech project is an organically grown codebase. Follow the general
 coding conventions adhered to in the code surrounding your changes. Pull
 requests that reformat the code will usually not be accepted.
 

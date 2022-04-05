@@ -15,7 +15,7 @@
 
 User_Alias     SEQUENT_USER = sequent
 Runas_Alias    SEQUENT_OP = root
-Runas_Alias    SEQUENT_USERS = eorchestra, postgres
+Runas_Alias    SEQUENT_USERS = ballotbox, ui_user, verifier_user, iam, repmgr, sentry, postgres
 Cmnd_Alias     SEQUENT_COMMANDS = /usr/bin/apt-get, /usr/bin/apt-add-repository, /usr/bin/ansible-playbook, /usr/sbin/service, /usr/bin/supervisorctl, /usr/bin/eopeers, /usr/bin/eolog, /usr/bin/eotest, /sbin/shutdown
 
 # dependencies
@@ -25,5 +25,5 @@ SEQUENT_USER ALL=(SEQUENT_OP) NOPASSWD: SEQUENT_COMMANDS
 SEQUENT_USER ALL=(root) NOPASSWD: /usr/bin/less /var/log/[a-z]*/[A-Za-z_-]*.log
 SEQUENT_USER ALL=(root) NOPASSWD: /usr/bin/tail -n [0-9]* -F /var/log/[a-z]*/[A-Za-z_-]*.log
 
-# gestionar election-orchestra
+# manage sequent
 SEQUENT_USER ALL=(SEQUENT_USERS) NOPASSWD: ALL
