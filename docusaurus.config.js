@@ -1,19 +1,22 @@
+// If you are using dotenv (https://www.npmjs.com/package/dotenv)
+require('dotenv').config();
+
 module.exports = {
-  title: 'documentation',
-  tagline: 'Sequent Tech Project Admin Manual by Sequent',
-  url: 'https://your-docusaurus-test-site.com',
+  title: 'Documentation',
+  tagline: 'Sequent Tech project is an Open Source, End-to-End Verifiable Online Voting Platform For Elections.',
+  url: process.env.URL || 'https://sequentech.github.io',
   baseUrl: '/documentation/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'sequent', // Usually your GitHub org/user name.
+  organizationName: 'sequentech', // Usually your GitHub org/user name.
   projectName: 'documentation', // Usually your repo name.
   themeConfig: {
     colorMode: {
       disableSwitch: true
     },
     navbar: {
-      title: 'Admin Manual',
+      title: 'Start',
       logo: {
         alt: 'Sequent',
         src: 'img/sequent_logo.png',
@@ -30,11 +33,6 @@ module.exports = {
           position: 'left',
           docId: 'file-formats/introduction',
           label: 'File Formats',
-        },
-        {
-          href: 'https://sequentech.io/blog/',
-          label: 'Blog', 
-          position: 'right'
         },
         {
           href: 'https://github.com/sequentech/',
@@ -80,16 +78,12 @@ module.exports = {
           title: 'Community',
           items: [
             {
-              label: 'GitHub',
-              href: 'https://github.com/sequent',
-	    },
+              label: '@sequentech GitHub',
+              href: 'https://github.com/sequentech',
+	          },
             {
-              label: 'Discord',
-              href: 'https://discord.gg/BSqF8Cbr',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/sequent_com',
+              label: '@sequentTech Twitter',
+              href: 'https://twitter.com/sequentech',
             },
           ],
         },
@@ -97,11 +91,7 @@ module.exports = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: 'https://sequentech.io/blog/',
-            },
-            {
-              label: 'GitHub',
+              label: 'GitHub Repository',
               href: 'https://github.com/sequentech/documentation',
             },
           ],
@@ -118,12 +108,6 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
             'https://github.com/sequentech/documentation/edit/master/',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://gitlab.com/sequent/sequent-com',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

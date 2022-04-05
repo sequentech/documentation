@@ -64,17 +64,36 @@ function Home() {
       description="Description will go into a meta tag in <head />">
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
-          <h1 className="hero__title">{siteConfig.title}</h1>
-          <p className="hero__subtitle">{siteConfig.tagline}</p>
-          <div className={styles.buttons}>
-            <Link
-              className={clsx(
-                'button button--outline button--secondary button--lg',
-                styles.getStarted,
-              )}
-              to={useBaseUrl('docs/deployment/guide')}>
-              Get Started
-            </Link>
+          <div class="row">
+            <div class="col col--offset-1 col--5">
+              <h1 className="hero__title">
+                Open Source, End-to-End Verifiable Online Voting Platform For
+                Elections
+              </h1>
+              <p className="hero__subtitle">
+                Sequent is a pioneer and leader in developing open source online
+                voting technology that delivers trust and legitimacy in 
+                national, local and private elections.
+              </p>
+            </div>
+            <div class="col col--5">
+              <img
+                className="hero__image"
+                src="img/laptop_image.png"
+                alt="Laptop with Sequent"
+              />
+          
+              <div className={styles.buttons}>
+                <Link
+                  className={clsx(
+                    'button button--outline button--secondary button--lg',
+                    styles.getStarted,
+                  )}
+                  to={useBaseUrl('docs/deployment/guide')}>
+                  Get Started
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </header>
