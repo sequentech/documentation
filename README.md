@@ -1,6 +1,6 @@
 # Website
 
-This is Sequent Tech Administration Manual. It's built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator. 
+This is Sequent Tech documentation site. It's built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator. 
 
 ## Installation
 
