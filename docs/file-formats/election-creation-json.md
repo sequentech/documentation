@@ -2092,6 +2092,17 @@ if there's any field that you want to appear in the census to be able to search
 for it or review that kind of user data in the administrative interface, but 
 should not be used for anything else.
 
+### Extra Field: `css_classes`
+
+- **Property name**: `css_classes`
+- **Type:** `String`
+- **Required:** No
+- **Default:** `None`
+- **Example:** `"user-id"`
+
+Defines the css class(es) to assign to the extra-field in the ui form. This can
+be used in combination with [Election Presentation theme_css](#election-presentation-theme_css) to change how an extra fields looks using CSS.
+
 ### Extra Field: `unique`
 
 - **Property name**: `unique`
