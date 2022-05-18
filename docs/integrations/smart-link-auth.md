@@ -40,7 +40,17 @@ platform (the `external application`).
 redirects them to a SmartLink in Sequent Platform.
 3. The Sequent platform loads the SmartLink, performing authentication and 
 authorization and automatically redirecting to the voting booth when 
-authentication and authorization succeed.
+authentication and authorization succeed. 
+
+:::note Automatic redirection to voting booth
+
+There is the possibility of adding an additional step before the redirection to
+voting booth happens, by configuring some extra fields that need to be validated
+before the authentication is complete. This allows to effectively doubly
+authenticate the user by both the `external application` and Sequent Platform.
+
+Read more about that in [JSON Configuration](#json-configuration) section.
+:::
 
 A more detailed sequence diagram of the steps involved is shown below:
 
@@ -56,7 +66,7 @@ series of events that ends up loading Sequent User Interface (UI) with an
 internal authentication token. 
 
 After the final step shown in the sequence diagram (number 10), Sequent UI will
-automatically load the voting booth and the voter's will be vote correctly 
+automatically load the voting booth and the voter's vote will be correctly 
 authenticated when cast.
 
 ### `auth-token` overview
@@ -369,9 +379,14 @@ don't want the voter to close the external application tab.
 - Load the URL changing the current `window.location.href` if the external 
 application is a website and you don't mind closing the external application
 website.
+- Load the URL in an iframe inside the external application, something like:
 
-Note that currently you **cannot** load the SmartLink in an iframe, as it would
-interfere with other integration methods and would not work.
+```html
+<iframe
+  src="SMART-LINK"
+  style="border: 0; width: 100%; height: 100%;"
+></iframe>
+```
 
 ## Example: How to use smart-link auth
 
@@ -440,7 +455,12 @@ You could add more extra fields if you wanted. For example you could add an
 extra field that has the 
 [private property](/docs/file-formats/election-creation-json#extra-field-private) 
 set to `true`. This would allow to have some voter related data in the
-census that is only visible to election administrators.
+census that is only visible to election administrators. 
+
+You can also add some authentication fields, for example request the voter's
+id card number and validate it before authentication succeeds. You can even
+use a `otp-code` extra-field, which will send a One Time Password to the voter's
+email and/or telephone number to be verified before authentication succeeds.
 
 ### Shared Secret configuration
 
