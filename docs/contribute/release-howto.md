@@ -122,18 +122,25 @@ export REPOS=(common-ui admin-console election-portal voting-booth ballot-box de
 for i in $REPOS
 do
     ./release.py \
-        --version 5.0.4 \
+        --version 6.1.0 \
         --change-version \
-        --base-branch 5.0.x \
+        --base-branch '6.1.x' '6.0.x' \
         --push-current-branch \
         --create-tag \
-        --release-title "5.0.4 release" \
-        --previous-tag-name '5.0.3' \
+        --release-title "6.1.0 release" \
+        --previous-tag-name '6.0.3' \
         --generate-release-notes \
         --create-release \
         --path ../$i
 done
 ```
+
+Note that we specified multiple branch names with `--base-branch`. This is 
+because in some of the repositories, there might not be any new commits or they
+might be in the previous `6.0.x` branch. The first name of the base-branch will
+always indicate the final branch to push, and it will use that branch as a base
+if it does exist. If it's not yet created, the release script will try to use
+the other given branch names as a base, in order.
 
 # Release Testing and version schedule
 
