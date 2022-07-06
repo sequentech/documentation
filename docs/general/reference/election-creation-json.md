@@ -1060,6 +1060,10 @@ when the success screen is going to redirect to the login screen, it will
 redirect to this URL instead. This means that if there's an automatic 
 redirect to login or a redirect to login button (using [success_screen__redirect_to_login](#election-presentation-options-success_screen__redirect_to_login)), all this
 redirect links will go to this url instead.
+
+This also is the URL to which the voting booth will redirect if the voter logs
+out.
+
 ### Election Presentation Options: `success_screen__redirect_to_login`
 
 - **Property name**: `success_screen__redirect_to_login`
@@ -2108,6 +2112,7 @@ are the following available extra field types that you can use:
 - `"dni"`
 - `"dict"`
 - `"date"`
+- `"otp-code"`
 
 ### Extra Field: `required_on_authentication`
 
@@ -2346,10 +2351,13 @@ the [census object](#census-object) and can have the following properties:
 - **Default:** `false`
 - **Example:** `true`
 
-If set to true, allows the voter to request the authentication code to be 
-resent. This makes sense only for authentication methods that use authentication
-codes such as `email`, `email-otp`, `sms` or `sms-otp`, but not for others such
-as `email-and-password`, `user-and-password` or `openid-connect`.
+If set to true, allows the voter to request the authentication code to be
+resent. Usually, this makes sense only for authentication methods that use
+authentication codes such as `email`, `email-otp`, `sms` or `sms-otp`, but not
+for others such as `email-and-password`, `user-and-password` or
+`openid-connect`. However, it makes sense to enable it if you are using an
+[extra_field](#census-extra_fields) of `otp-code` type in combination with any
+authentication method.
 
 ### Census Config: `msg`
 
