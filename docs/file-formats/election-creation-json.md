@@ -549,6 +549,35 @@ you have setup some other(s) [census extra_field](#census-extra_fields) with the
 [required_on_authentication attribute](#extra-field-required_on_authentication) 
 set to `true`, as it would be used to look up the voter in the database.
 
+### Election: `publicCandidates`
+
+- **Property name**: `publicCandidates`
+- **Type:** `Boolean`
+- **Required:** Yes
+- **Default:** `true`
+- **Example:** `false`
+
+Specifies if the candidates (i.e. list of answers in a question) are public or
+not. When candidates are private, only properly authenticated and authorized
+calls to the API (usually the endpoint is
+`/elections/api/election/<election-id>`) will be able to retrieve the candidate
+list, and all other request will return an empty list of answers for each 
+question in the election.
+
+:::info
+Some important considerations:
+- When `publicCandidates` is `false`, the demo voting booth will not work since
+  the demo voting booth always perform unauthenticated requests to retrieve the
+  election configuration. The demo voting-booth UI will notice and show an error
+  if someone tries to enter in an election with private candidates.
+- When `publicCandidates` is `false`, the election portal will not show the
+  candidates list, since it always performs unauthenticated requests to retrieve
+  the election configuration.
+- When `publicCandidates` is `false`, you won't be able to publish the election
+  results since that would publish the candidate names, so that action will be
+  disabled in the admin console and the ballot-box will not allow it.
+:::
+
 ### Election: `allow_public_census_query`
 
 - **Property name**: `allow_public_census_query`
@@ -766,6 +795,16 @@ start screen of the voting booth will not be shown.
 If set to `true` (default is `false`), this optional property will disable the
 demo voting booth.
 
+:::caution
+Disabling the demo voting booth does only disable the functionality,
+but does not disable the public availability of the election information (such
+as candidate names) through the API.
+
+If the reason you want to disable the demo voting booth is to disable publishing
+the candidates names, then you should use
+[publicCandidates: false](#election-publiccandidates) instead.
+:::
+
 ### Election Presentation Options: `booth_log_out__disable`
 
 - **Property name**: `booth_log_out__disable`
@@ -810,6 +849,17 @@ elections should be assigned to the specific voter.
 
 If set to `true` (default is `false`), this optional property will disable the
 public home page for the election.
+
+:::caution
+Disabling the public home page for the election does only disable the interface
+but does not disable the public availability of the election information (such
+as candidate names) through the API.
+
+If the reason you want to disable the public home page for the election is to 
+disable publishing the candidates names, then you should use
+[publicCandidates: false](#election-publiccandidates) instead.
+:::
+
 
 ### Election Presentation Options: `public_title`
 
