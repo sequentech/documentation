@@ -568,11 +568,11 @@ question in the election.
 Some important considerations:
 - When `publicCandidates` is `false`, the demo voting booth will not work since
   the demo voting booth always perform unauthenticated requests to retrieve the
-  election configuration. The demo voting-booth UI will notice and show an error
-  if someone tries to enter in an election with private candidates.
-- When `publicCandidates` is `false`, the election portal will not show the
-  candidates list, since it always performs unauthenticated requests to retrieve
-  the election configuration.
+  election configuration. The demo voting-booth UI will just show an empty list
+  of candidates.
+- When `publicCandidates` is `false`, the election portal will show an empty
+  list of candidates , since it always performs unauthenticated requests to
+  retrieve the election configuration.
 - When `publicCandidates` is `false`, you won't be able to publish the election
   results since that would publish the candidate names, so that action will be
   disabled in the admin console and the ballot-box will not allow it.
