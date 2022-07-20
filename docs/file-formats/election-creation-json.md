@@ -671,6 +671,27 @@ Describes a series of social network or other kind of links to be shown at the
 top of the election public website and at the success screen of the voting 
 booth. See [Share Text](#share-text) for more details. It can be an empty list.
 
+### Election Presentation: `i18n_override`
+
+- **Property name**: `i18n_override`
+- **Type:** `Map<String, Map<String, String>>`
+- **Required:** No
+- **Default:** `undefined`
+- **Example:**
+```json
+{
+  "en": {
+    "avRegistration.forgotPassword": "Did you forget your password, sir?",
+    "avBooth.castTheBallot": "Cast thy ballot"
+  }
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language
+code. The provided translation will override the corresponding translation for
+that language in the `election-portal` and in the `voting-booth` for this
+specific election.
+
 ### Election Presentation: `urls`
 
 - **Property name**: `urls`
