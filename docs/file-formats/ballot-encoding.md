@@ -7,24 +7,19 @@ slug: /file-formats/ballot-encoding
 
 ## Introduction
 
-Ballots information needs to be encoded into a big integer, because that's how
-encryption in Sequent Tech works. At the same time, this number needs not to be
-too big specifically it needs to be smaller than the `q` value of the ElGamal
-encryption public key of the election. Otherwise the ballot would require 
+When encrypting ballots using ElGamal over multiplicative groups, ballot information must converted to an integer. This integer `m`, needs to fall
+in the range `1 <= m <= q` where `q` is the order of the subgroup used in the election parameters. Otherwise the ballot would require 
 multiple ciphertexts and that would make things more complex and slow.
 
 Thus we have devised a specific procedure that is reasonably efficient to encode
 the ballots. It is a two steps process:
-1. First a json ballot needs to be encoded into a list of numbers and a list of
- bases.
-2. We use [Mixed radix] encoding to encode the list of numbers with their bases. 
+1. First a json ballot needs to be encoded into a [mixed-radix](https://en.wikipedia.org/wiki/Mixed_radix) representation, which is equivalent to a list of bases and  an equally sized list of digits.
+2. Then we obtain the integer corresponding to the mixed-radix representation, following a generalization of [horner's method](https://en.wikipedia.org/wiki/Horner%27s_method) as applied to positional number systems.
+ 
+So the first step we apply is to encode the ballot as a list of bases and a
+list of digits, which consitutute the mixed-radix representation of the ballot. Then we convert this mixed-radix representation to its equivalent integer, to be encrypted with ElGamal.
 
-So the first step we apply is to convert the ballot to a list of bases and a 
-list of numbers for each base, and then apply a mixed radix encoding to arrive 
-to the final number to be encrypted with ElGamal. 
-
-As a minor detail, one should also note that the number 0 is not encryptable in
-ElGamal so during encryption we always sum +1 before performing the encryption.
+Note that the required bases present in a mixed-radix representation are determined on a per-contest basis, according to the range of ballot values that contest needs to encode. These bases are therefore common to all ballots for the contest. Conversely, the list of values that a particular ballot encodes is naturally specific to that ballot.
 
 ## Basics
 
@@ -247,5 +242,3 @@ choices = [0, 1, 0, 0, 0  0, 0,   0  ]
 
 encodedChoices = 1*(2**1) = 2
 ```
-
-[Mixed radix]: https://en.wikipedia.org/wiki/Mixed_radix
