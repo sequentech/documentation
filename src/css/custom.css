@@ -78,6 +78,6 @@
   font-weight: 300;
 }
 
-p a, li a {
+p a, article li a {
   text-decoration: underline;
 }
