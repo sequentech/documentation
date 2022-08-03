@@ -24,8 +24,13 @@
   --ifm-code-font-size: 95%;
 }
 
+.navbar--fixed-top a[target="_blank"] svg {
+  display: none;
+}
+
 .navbar__link, .navbar__title {
   --ifm-navbar-link-color: var(--ifm-color-primary);
+  --ifm-navbar-link-hover-color: var(--ifm-color-secondary);
 }
 
 .footer--dark {
