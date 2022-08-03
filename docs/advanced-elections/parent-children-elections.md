@@ -1,7 +1,7 @@
 ---
 id: parent-and-children-elections
-title: Parent and Children Elections
-sidebar_label: Parent & Children Elections
+title: Parent and Children Elections Guide
+sidebar_label: Parent & Children Elections Guide
 slug: /advanced-elections/parent-and-children-elections
 ---
 

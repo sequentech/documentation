@@ -1,37 +1,28 @@
 module.exports = {
-  docsSidebar: {
-    Deployment: [
-      'deployment/guide',
-      'deployment/troubleshooting',
-      'deployment/browsers-and-cookies'
-    ],
-    Translation: [
-      'translation/guide'
-    ],
-    "Election Testing": [
-      'testing/e2e'
-    ],
-    "Advanced Topics": [
-      'advanced-elections/introduction',
-      'advanced-elections/election-creation',
-      'advanced-elections/parent-and-children-elections',
-      'advanced-elections/write-ins',
-      'advanced-elections/authentication-timeouts'
-    ],
-    Integrations: [
-      'integrations/smart-link-auth'
-    ],
-    Contribute: [
-      'contribute/guide',
-      'contribute/release-lifecycle',
-      'contribute/release-howto'
-    ]
-  },
-  fileFormatsSidebar: {
-    'File Formats': [
-      'file-formats/introduction',
-      'file-formats/ballot-encoding',
-      'file-formats/election-creation-json',
-    ]
-  }
+  sidebar: [
+    'overview',
+    {
+      Guides: [
+        'deployment/guide',
+        'translation/guide',
+        'advanced-elections/election-creation',
+        'advanced-elections/parent-and-children-elections',
+        'advanced-elections/write-ins',
+        'integrations/smart-link-auth',
+      ],
+      Concepts: [
+        'deployment/browsers-and-cookies'
+      ],
+      Reference: [
+        'file-formats/election-creation-json',
+        'file-formats/ballot-encoding',
+        'testing/e2e',
+      ],
+      Contribute: [
+        'contribute/guide',
+        'contribute/release-lifecycle',
+        'contribute/release-howto',
+      ]
+    }
+  ]
 };

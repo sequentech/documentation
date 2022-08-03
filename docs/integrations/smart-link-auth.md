@@ -1,7 +1,7 @@
 ---
 id: smart-link-auth
-title: SmartLink Authentication
-sidebar_label: SmartLink Authentication
+title: SmartLink Authentication Guide
+sidebar_label: SmartLink Auth Guide
 slug: /integrations/smart-link-auth
 ---
 

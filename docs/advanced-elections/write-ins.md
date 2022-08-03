@@ -1,7 +1,7 @@
 ---
 id: write-ins
-title: Write-ins
-sidebar_label: Write-ins
+title: Write-ins Guide
+sidebar_label: Write-ins Guide
 slug: /advanced-elections/write-ins
 ---
 
