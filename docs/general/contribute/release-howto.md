@@ -1,12 +1,10 @@
 ---
-id: release-howto
-title: Release Howto
-sidebar_label: Release Howto
-slug: /contribute/release-howto
+sidebar_position: 2
+title: Release How-to
 ---
 
 In this howto we will explain how can a new release be published step by step.
-Please refer to the [Release Lifecycle](../contribute/release-lifecycle) document to
+Please refer to the [Release Lifecycle](release-lifecycle.md) document to
 know more about when to do what type of release.
 
 # Setup
@@ -147,7 +145,7 @@ the other given branch names as a base, in order.
 For any major release, first a `<major>.<minor>.<patch>-beta.1` should be
 created. After this has been done for the whole platform:
 1. All automatic unit testing should pass.
-2. All [E2E integration tests](../testing/e2e) should pass.
+2. All [E2E integration tests](../reference/testing/) should pass.
 3. Enough time for doing additional manual testing bug fixing should be
    allocated.
 

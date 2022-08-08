@@ -1,8 +1,6 @@
 ---
-id: release-lifecycle
+sidebar_position: 1
 title: Release lifecycle and cadence
-sidebar_label: Release lifecycle and cadence
-slug: /contribute/release-lifecycle
 ---
 
 New releases of Sequent Platform are published on a regular cadence. Support for

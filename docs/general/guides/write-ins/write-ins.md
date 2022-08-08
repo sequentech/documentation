@@ -1,8 +1,6 @@
 ---
-id: write-ins
+sidebar_position: 4
 title: Write-ins Guide
-sidebar_label: Write-ins Guide
-slug: /advanced-elections/write-ins
 ---
 
 ## Introduction
@@ -16,14 +14,14 @@ also any person's name that the voter writes in the ballot.
 ### Election creation JSON
 
 The write-ins support is specified in the 
-[Election creation JSON configuration](/docs/file-formats/election-creation-json)
+[Election creation JSON configuration](../../reference/election-creation-json)
 and it's configured per question. During the creation of the election, there's 
 no native support in the Admin interface to mark a candidate as a write-in, so 
 the only way to do it is using the JSON configuration.
 
 To create an election with write-ins in a specific question, you first need
 to configure the question to support write-ins. This is done by setting the
-[`question.extra_options.allow_writeins`](/docs/file-formats/election-creation-json#question-extra-allow_writeins) 
+[`question.extra_options.allow_writeins`](../../reference/election-creation-json#question-extra-allow_writeins) 
 setting to `true`:
 
 ```json title="writeins-election.json fragment" {7}
@@ -77,7 +75,7 @@ JSON configuration would be similar to:
 ```
 
 Currently the only 
-[question layout](/docs/file-formats/election-creation-json#question-layout) 
+[question layout](../../reference/election-creation-json#question-layout) 
 in the voting booth that supports write-ins is `simultaneous-questions`.
 
 ### Voting booth: behaviour and considerations
@@ -117,7 +115,7 @@ wrote the same candidate twice.
 
 Please note that you can enforce that this and other kinds of invalid vote 
 warnings are either not shown or enforced to be fixed by using the 
-[`question.extra_options.invalid_vote_policy`](/docs/file-formats/election-creation-json#question-extra-invalid_vote_policy) 
+[`question.extra_options.invalid_vote_policy`](../../reference/election-creation-json#question-extra-invalid_vote_policy) 
 configuration setting.
 
 #### Write-ins bytes-left notification
@@ -140,10 +138,10 @@ byte but other characters might use more in UTF-8.
 
 The maximum number of bytes that can be used is related to the encoding and to
 the `q` value of the public key. Read 
-[more information about the encoding of write-ins in the ballot encoding section](/docs/file-formats/ballot-encoding#write-ins).
+[more information about the encoding of write-ins in the ballot encoding section](../../reference/ballot-encoding#write-ins).
 
 As explained in the 
-[ballot encoding section](/docs/file-formats/ballot-encoding#write-ins), in a 
+[ballot encoding section](../../reference/ballot-encoding#write-ins), in a 
 ballot the answers are encoded (and encrypted) independently for each question. 
 For that reason, the bytes that can be used for write-ins are shared among all 
 the write-ins. Thus, we show the same <i>number of bytes used / number of bytes 
@@ -164,7 +162,7 @@ telling the user that this requires fixing is shown:
 ![Write-ins booth overflow indication](./assets/writeins-overflow-indication.png)
 
 Even if invalid votes are 
-[configured to be allowed](/docs/file-formats/election-creation-json#question-extra-invalid_vote_policy), 
+[configured to be allowed](../../reference/election-creation-json#question-extra-invalid_vote_policy), 
 this requires fixing by the voter (introducing shorter write-in names) because 
 the ballot simply cannot be encoded as it overflows the maximum number of bytes
 that can be encoded.

@@ -1,8 +1,6 @@
 ---
-id: smart-link-auth
-title: SmartLink Authentication Guide
-sidebar_label: SmartLink Auth Guide
-slug: /integrations/smart-link-auth
+sidebar_position: 5
+title: SmartLink Auth Guide
 ---
 
 ## Introduction
@@ -22,7 +20,7 @@ Platform. It is a secure and simple way to implement Single sign-on.
 
 :::note Other Single sign-one methods
 Sequent Platform also supports the 
-[OpenID Connect authentication method](/docs/file-formats/election-creation-json#census-auth_method) 
+[OpenID Connect authentication method](../../reference/election-creation-json#census-auth_method) 
 to implement Single sign-on.
 :::
 
@@ -151,7 +149,7 @@ election is not within the voting period, the authentication will fail and the
 voter will be redirected to the election public page.
 
 In Sequent platform voters can in some cases vote multiple times, depending on the 
-[election configuration](/docs/file-formats/election-creation-json##election-num_successful_logins_allowed). In any case, only the last vote cast by each voter will be counted. This is 
+[election configuration](../../reference/election-creation-json##election-num_successful_logins_allowed). In any case, only the last vote cast by each voter will be counted. This is 
 therefore not a security breach, but on the contrary a typical security measure 
 in secure electronic voting systems to mitigate coercion, and we comment on it 
 because it implies that in the cases where vote changing is allowed, the access
@@ -453,7 +451,7 @@ In particular, you will see that the authentication method has been set to
 
 You could add more extra fields if you wanted. For example you could add an 
 extra field that has the 
-[private property](/docs/file-formats/election-creation-json#extra-field-private) 
+[private property](../../reference/election-creation-json#extra-field-private) 
 set to `true`. This would allow to have some voter related data in the
 census that is only visible to election administrators. 
 
@@ -512,7 +510,7 @@ json configuration or through the admin user interface during election creation.
 Adding the voters to the census is required. The external application does the
 authentication, but Sequent systems will be in charge of authorization. Also,
 if you want to use 
-[parent-children elections](/docs/advanced-elections/parent-and-children-elections/), 
+[parent-children elections](../parent-and-children-elections/), 
  you can do it. It works like explained there. You can just the 
 `smart-link` authentication, and it will work as expected: each voter in the
 parent election will be able to vote only in the children elections assigned

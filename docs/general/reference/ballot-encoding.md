@@ -1,8 +1,6 @@
 ---
-id: ballot-encoding
+sidebar_position: 1
 title: Ballot Encoding
-sidebar_label: Ballot Encoding
-slug: /file-formats/ballot-encoding
 ---
 
 ## Introduction

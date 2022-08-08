@@ -1,8 +1,6 @@
 ---
-id: browsers-and-cookies
-title: Supported Browsers and Cookies used
+title: Supported Browsers and Cookies
 sidebar_label: Browsers and Cookies
-slug: /deployment/browsers-and-cookies
 ---
 
 ## 1. Supported browsers
@@ -24,7 +22,7 @@ We use https://browser-update.org to check the web browser used by the user
 and notify the user if it's unsupported. If the browser is too old the user 
 get the following notification:
 
-![browser-update notification with Chrome 50](/img/old-browser-error2.png "browser-update notification")
+![browser-update notification with Chrome 50](./assets/old-browser-error2.png "browser-update notification")
 
 You can disable this option in the `config.yml` deployment configuration file, 
 just disabling the `config.sequent_ui.browser_update_config` option. If that 
@@ -40,7 +38,7 @@ more of knowledge as you need to edit the ansible template and re-deploying.
 The voting interface is responsive, that means that it adapts to the browser
 size and this makes the application usable on mobile phones:
 
-![Voting on smart phones](/img/mobile.png "Voting on smart phones")
+![Voting on smart phones](./assets/mobile.png "Voting on smart phones")
 
 ### Javascript and old browsers
 
@@ -54,7 +52,7 @@ Internet Explorer 11, so this browser is not supported.
 In some old browsers, it's possible that the interface works but the encryption
 fails with an error like this:
 
-![Ballot encoding error](/img/old-browser-error1.png "Ballot encoding error")
+![Ballot encoding error](./assets/old-browser-error1.png "Ballot encoding error")
 
 In any case, this kind of errors only occurs in the unsupported browsers, and
 the `browser-update` library will show a warning about the usage of an old
