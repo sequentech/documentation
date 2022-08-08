@@ -19,7 +19,7 @@ module.exports = {
       //title: 'Start',
       logo: {
         alt: 'Sequent',
-        src: 'img/sequent_logo.png',
+        src: 'img/sequent_docs_logo.png',
       },
       items: [
         {
