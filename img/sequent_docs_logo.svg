@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 340.00001 46.98"
+   version="1.1"
+   id="svg170"
+   sodipodi:docname="sequent_docs_logo.svg"
+   width="340"
+   height="46.98"
+   inkscape:version="1.2 (dc2aeda, 2022-05-15)"
+   inkscape:export-filename="../proyectos/sequent/documentation/static/img/sequent_logo.png"
+   inkscape:export-xdpi="282.73206"
+   inkscape:export-ydpi="282.73206"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs174">
+    <rect
+       x="251.21133"
+       y="3.8018012"
+       width="66.3853"
+       height="40.065136"
+       id="rect284" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview172"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="6.8388634"
+     inkscape:cx="271.68257"
+     inkscape:cy="64.996181"
+     inkscape:window-width="1440"
+     inkscape:window-height="847"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_2" />
+  <g
+     id="Layer_2"
+     data-name="Layer 2">
+    <g
+       id="Logo">
+      <path
+         d="m 88.4,28.11 c 0,-10.8 -20.21,-2.64 -20.21,-16.32 0,-4.89 4,-9.6 11.67,-9.6 7.67,0 11.61,4.8 11.76,11 H 88.21 C 88.07,8.53 85,5.36 79.9,5.36 c -5.1,0 -8.2,2.5 -8.2,6.29 0,9.94 20.3,2.49 20.3,16.22 0,5.91 -5.13,9.8 -12.77,9.8 -8.78,0 -12.48,-5.14 -12.72,-11 h 3.46 c 0.38,5.14 4,7.83 9.36,7.83 5.52,0 9.07,-2.21 9.07,-6.39 z"
+         fill="#0f054c"
+         id="path144" />
+      <path
+         d="m 100.21,25.76 c 0.33,4.95 3.55,8.74 8.69,8.74 a 7.91,7.91 0 0 0 7.68,-5.14 h 3.55 a 11.41,11.41 0 0 1 -11.28,8.21 c -7.73,0 -12,-5.95 -12,-12.82 0,-6.87 4.61,-12.75 11.95,-12.75 7.34,0 11.76,5.57 11.76,12.49 0,0.52 0,1.29 0,1.29 z M 100.3,23 h 16.85 c -0.43,-4.71 -3.55,-7.92 -8.35,-7.92 -4.8,0 -7.92,3.38 -8.5,7.92 z"
+         fill="#0f054c"
+         id="path146" />
+      <path
+         d="m 136.3,37.57 c -7.48,0 -11.52,-6.05 -11.52,-12.77 0,-6.72 4.04,-12.8 11.52,-12.8 4.47,0 7.59,2 9.27,5.09 v -4.53 h 3.26 V 47 h -3.41 V 32.58 c -1.63,2.97 -4.65,4.99 -9.12,4.99 z M 137,15.06 c -5.48,0 -8.74,4.32 -8.74,9.74 0,5.42 3.26,9.75 8.74,9.75 5.48,0 8.59,-4.37 8.59,-9.75 0,-5.38 -3.14,-9.74 -8.59,-9.74 z"
+         fill="#0f054c"
+         id="path148" />
+      <path
+         d="M 156.51,27.73 V 12.56 h 3.41 v 14.93 c 0,4.42 2.35,7.1 6.72,7.1 4.37,0 6.72,-2.68 6.72,-7.1 V 12.56 h 3.41 v 15.17 c 0,5.42 -3.22,9.84 -10.13,9.84 -6.91,0 -10.13,-4.42 -10.13,-9.84 z"
+         fill="#0f054c"
+         id="path150" />
+      <path
+         d="m 186,25.76 c 0.34,4.95 3.55,8.74 8.69,8.74 a 7.9,7.9 0 0 0 7.68,-5.14 h 3.55 a 11.41,11.41 0 0 1 -11.28,8.21 c -7.73,0 -12.05,-5.95 -12.05,-12.82 0,-6.87 4.64,-12.75 11.98,-12.75 7.34,0 11.77,5.57 11.77,12.49 0,0.52 -0.05,1.29 -0.05,1.29 z m 0.1,-2.78 h 16.85 c -0.43,-4.71 -3.56,-7.92 -8.36,-7.92 -4.8,0 -7.94,3.4 -8.51,7.94 z"
+         fill="#0f054c"
+         id="path152" />
+      <path
+         d="m 215.65,16.3 a 8.87,8.87 0 0 1 8.06,-4.3 c 6,0 9.26,4 9.26,9.41 V 37 h -3.4 V 22.07 c 0,-4.42 -2.07,-7.11 -6.44,-7.11 -4.12,0 -7.34,2.59 -7.34,7.49 V 37 h -3.41 V 12.56 h 3.27 z"
+         fill="#0f054c"
+         id="path154" />
+      <path
+         d="m 245,37 h -3.41 V 15.44 H 237 v -2.88 h 4.65 v -7 H 245 v 7 h 5 v 2.88 h -5 z"
+         fill="#0f054c"
+         id="path156" />
+      <circle
+         cx="49.779999"
+         cy="8.1999998"
+         r="8.1999998"
+         fill="#0f054c"
+         id="circle158" />
+      <circle
+         cx="8.1999998"
+         cy="8.1999998"
+         r="8.1999998"
+         fill="#0f054c"
+         id="circle160" />
+      <circle
+         cx="8.1999998"
+         cy="28.049999"
+         r="8.1999998"
+         fill="#0f054c"
+         id="circle162" />
+      <circle
+         cx="28.99"
+         cy="28.049999"
+         r="8.1999998"
+         fill="#0f054c"
+         id="circle164" />
+      <circle
+         cx="28.99"
+         cy="8.1999998"
+         r="8.1999998"
+         fill="#43e3a1"
+         id="circle166" />
+    </g>
+    <text
+       xml:space="preserve"
+       id="text282"
+       style="white-space:pre;shape-inside:url(#rect284);display:inline;fill:#43e3a1;fill-opacity:1"
+       transform="matrix(3.1642417,0,0,3.1642417,-536.36992,-9.6536021)"><tspan
+         x="251.21094"
+         y="14.750698"
+         id="tspan976"><tspan
+           style="font-size:12px;font-family:'Grantha Sangam MN';-inkscape-font-specification:'Grantha Sangam MN, Normal'"
+           id="tspan974">Docs</tspan></tspan></text>
+  </g>
+</svg>
