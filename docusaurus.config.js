@@ -16,87 +16,37 @@ module.exports = {
       disableSwitch: true
     },
     navbar: {
-      title: 'Start',
+      //title: 'Start',
       logo: {
         alt: 'Sequent',
         src: 'img/sequent_logo.png',
       },
       items: [
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'deployment/guide',
-          label: 'Docs',
+          href: 'https://sequentech.io/',
+          label: 'Website',
+          position: 'right',
         },
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'file-formats/introduction',
-          label: 'File Formats',
+          href: 'https://github.com/sequentech/roadmap/discussions',
+          label: 'Discussions',
+          position: 'right',
+        },
+        {
+          label: 'Slack',
+          href: 'https://join.slack.com/t/sequentech/shared_invite/zt-1bve9z0px-IF4Je04NJM8AEkCAcdBVWg',
+          position: 'right',
         },
         {
           href: 'https://github.com/sequentech/',
           label: 'GitHub',
           position: 'right',
         },
-        {
-          href: 'https://sequentech.io/',
-          label: 'Powered By Sequent',
-          position: 'right',
-        },
       ],
     },
     footer: {
       style: 'dark',
-      links: [
-        {
-          title: 'Docs',
-          items: [
-            {
-              label: 'Deployment',
-              to: 'docs/deployment/guide',
-            },
-            {
-              label: 'Translation',
-              to: 'docs/translation/guide',
-            },
-            {
-              label: 'E2E Integration Testing',
-              to: 'docs/testing/e2e',
-            },
-            {
-              label: 'Advanced Topics',
-              to: 'docs/advanced-elections/introduction',
-            },
-            {
-              label: 'Contribute',
-              to: 'docs/contribute/guide',
-            },
-          ],
-        },
-        {
-          title: 'Community',
-          items: [
-            {
-              label: '@sequentech GitHub',
-              href: 'https://github.com/sequentech',
-	          },
-            {
-              label: '@sequentTech Twitter',
-              href: 'https://twitter.com/sequentech',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {
-              label: 'GitHub Repository',
-              href: 'https://github.com/sequentech/documentation',
-            },
-          ],
-        },
-      ],
+      links: [],
       copyright: `Copyright © ${new Date().getFullYear()} Sequent`,
     },
   },

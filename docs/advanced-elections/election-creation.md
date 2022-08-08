@@ -1,7 +1,7 @@
 ---
 id: election-creation
-title: Election Creation
-sidebar_label: Election Creation
+title: Election Creation Guide
+sidebar_label: Election Creation Guide
 slug: /advanced-elections/election-creation
 ---
 
