@@ -11,3 +11,5 @@ Available reference documentation:
 - [Election Creation JSON](election-creation-json.md)
 - [Ballot encoding](ballot-encoding.md)
 - [E2E Election Testing](./testing/)
+- [Architecture Overview](./arch-overview/assets/2022-04-10-arch-1.pdf)
+- [Cryptographic Protocol Overview](./crypto-protocol/assets/2021-03-19-proto-1.pdf)

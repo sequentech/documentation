@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 title: Translation Guide
 ---
 
@@ -161,7 +161,7 @@ deployment to include and use the new language translation.
 
 :::info
 To deploy the Sequent Tech project, please follow the 
-[Deployment Guide](../deployment).
+[Deployment Guide](../../guides/deployment).
 :::
 
 The configuration is fairly simple. In the `config.yml` file inside the 
