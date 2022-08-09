@@ -1,8 +1,6 @@
 ---
-id: election-creation-json
+sidebar_position: 0
 title: Election Creation JSON
-sidebar_label: Election Creation JSON
-slug: /file-formats/election-creation-json
 ---
 
 ## Election JSON settings
@@ -94,7 +92,7 @@ virtual elections should not be enabled in multi-tenant deployments, as
 accessing the sub-elections.
 
 To allow virtual election you have to enable it in the 
-[deployment configuration](../deployment/guide), which can be done by setting
+[deployment configuration](../guides/deployment/), which can be done by setting
 the `config.ballot-box.virtualElectionsAllowed` setting in the `config.yml` 
 deployment configuration file to `true`. 
 :::
@@ -249,7 +247,7 @@ the default value, if this is not a parent election. See
 
 The name of the election authority that will act as the director for this 
 election. Its eopackage needs to be installed in the backend server 
-([see details](../deployment/guide#connecting-web-servers-with-authorities)).
+([see details](../guides/deployment/#connecting-web-servers-with-authorities)).
 
 ### Election: `authorities`
 
@@ -262,7 +260,7 @@ election. Its eopackage needs to be installed in the backend server
 List of names of all the election authorities that should be included in this 
 election, excluding the director authority name. Its eopackages needs to be 
 installed in the backend server 
-([see details](../deployment/guide#connecting-web-servers-with-authorities)).
+([see details](../guides/deployment/#connecting-web-servers-with-authorities)).
 ### Election: `questions`
 
 - **Property name**: `questions`
@@ -1226,7 +1224,7 @@ which some pipes might use to output some temporal files too.
 
 In virtual elections, `tally-pipes` not only receives as an input the tarball
 of the [virtual election](#election-virtual), but also the tarball of all the 
-[virtual subelections](#election-virtualSubelections). 
+[virtual subelections](#election-virtualsubelections). 
 
 In that case, `tally-pipes` will also load that election's question 
 configuration in the `data_list` pipes argument and extract each tally tarball
@@ -1615,9 +1613,7 @@ format which does not allow for comments.
 
 ### Pipe: `configure_pdf`
 
-- **Pipe path**: 
-### Pipe: `configure_pdf`
-- [tally_pipes.pipes.pdf.configure_pdf](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/pdf.py#L40)
+- **Pipe path**: [`tally_pipes.pipes.pdf.configure_pdf`](https://github.com/sequentech/tally-pipes/blob/master/tally_pipes/pipes/pdf.py#L40)
 - **Example usage**:
 ```json
 {
@@ -1918,7 +1914,7 @@ If used, an [extra_field](#census-extra_fields) of type `tlf` and named
 
 - **openid-connect**: The authentication will happen through a third-party 
 openid provider. This provider shall be configured in the `config.yml` 
-[ansible deployment configuration](../deployment/guide.md). If used, an 
+[ansible deployment configuration](../guides/deployment/). If used, an 
 [extra_field](#census-extra_fields) of type `sub` and named `text` is 
 required.
 
@@ -1929,7 +1925,7 @@ username so it's difficult for them to know their username. The only usecase for
 this is currently for the administrative `AuthEvent` (usually with id `0`) used
 to authenticate in the administrative interface, and whose list of users is 
 directly set within the `config.yml` 
-[ansible deployment configuration](../deployment/guide.md) using the 
+[ansible deployment configuration](../guides/deployment/) using the 
 `config.iam.upsert_file` and the superadmin user 
 (`config.iam.admin_user`). If used, an [extra_field](#census-extra_fields) 
 of type `password` and named `password` is required.
@@ -1939,7 +1935,7 @@ a secure authentication token using a keyed
 [HMAC](https://en.wikipedia.org/wiki/HMAC). It's a straightforward way to
 implement Single sign-on (SSO) and integrate with a third-party site or 
 plataform. Read about how to use it in the
-[Smart Link Authentication Guide](../integrations/smart-link-auth).
+[SmartLink Auth Guide](../guides/smart-link-auth).
 
 - **dnie**: The voters will authenticate using a TLS client authentication
 certificate. This authentication method requires some updates to be usable in 
@@ -2033,7 +2029,7 @@ See [Extra Field](#extra-field-object) for more details about extra fields.
 Object that details the different options related to the election and required
 to be filled by election administrators for every election. What admin fields 
 need to be filled is configured in the `config.yml` 
-[ansible deployment configuration](../deployment/guide.md) with the key 
+[ansible deployment configuration](../guides/deployment/) with the key 
 `config.sequent_ui.admin_fields`. 
 
 See [Admin Field](#admin-field-object) for more details.
@@ -2321,7 +2317,7 @@ authenticate-pipeline
 Object that details the different options related to the election and required
 to be filled by election administrators for every election. What admin fields 
 need to be filled is configured in the `config.yml` 
-[ansible deployment configuration](../deployment/guide.md) with the key 
+[ansible deployment configuration](../guides/deployment/) with the key 
 `config.sequent_ui.admin_fields`. 
 
 It is used by the Census' [admin_fields property](#census-admin_fields) and
@@ -2733,7 +2729,7 @@ Defaults to `false`.
 - **Example:** `true`
 
 Indicate whether this question can include any write-ins. Needed to set to
-`true` if you are using [write-ins](/docs/advanced-elections/write-ins) in the 
+`true` if you are using [write-ins](../guides/write-ins/) in the 
 question. Defaults to `false`.
 
 ### Question Extra: `answer_group_columns_size`

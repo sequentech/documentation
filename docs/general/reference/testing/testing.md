@@ -1,8 +1,6 @@
 ---
-id: e2e
+sidebar_position: 2
 title: E2E Election Testing
-sidebar_label: E2E Election Testing
-slug: /testing/e2e
 ---
 
 Sequent platform contains a set of E2E (End-to-End) Integration Tests that test
@@ -32,4 +30,4 @@ A self-test executes multiple end-to-end tests. Among them:
 
 There are other ways to test specific parts of the process. For example if you
 only want to test the process in relation with the election authorities, you can
-use the eocommand as explained in the [corresponding Deployment Guide section](../deployment/guide#test-the-connection-between-the-authorities).
+use the eocommand as explained in the [corresponding Deployment Guide section](../../guides/deployment#test-the-connection-between-the-authorities).

@@ -1,8 +1,6 @@
 ---
-id: parent-and-children-elections
+sidebar_position: 3
 title: Parent and Children Elections Guide
-sidebar_label: Parent & Children Elections Guide
-slug: /advanced-elections/parent-and-children-elections
 ---
 
 In this document we will review how to create parent and children elections 
@@ -24,10 +22,10 @@ accessing the sub-elections.
 
 There are two different possible types of relations between 
 elections:
-1. A [virtual election](election-creation.md#election-virtual) and its respective 
-[virtual subelections](election-creation.md#election-virtualSubelections).
-2. A [parent election](election-creation.md#election-parent_id) and its respective 
-[children elections](election-creation.md#election-children_election_info).
+1. A [virtual election](../../reference/election-creation-json#election-virtual) and its respective 
+[virtual subelections](../../reference/election-creation-json#election-virtualsubelections).
+2. A [parent election](../../reference/election-creation-json#election-parent_id) and its respective 
+[children elections](../../reference/election-creation-json#election-children_election_info).
 
 The first kind of relation (virtual elections and virtual subelections) is 
 established in `ballot-box`, and its use is allows for electoral results
@@ -60,7 +58,7 @@ voter voted.
 choose which children election results to visualize.
 5. In the voting booth, after authentication the voter will vote without having
 to authenticate again in  the assigned children election in their 
-[natural order](election-creation.md#child-election-natural_order) sequentially. 
+[natural order](../../reference/election-creation-json#child-election-natural_order) sequentially. 
 If a voter does  not vote to all the children elections assigned to this voter, 
 then he will be able to authenticate again and vote in the next unvoted 
 children election.
@@ -72,7 +70,7 @@ The full configuration file for this example can be accesed in
 
 Apart from the brief description above, we recommend you delve in to the details
 of election creation reading the 
-[election creation documentation](election-creation.md) for reference 
+[election creation documentation](../../reference/election-creation-json) for reference 
 documentation. 
 
 In this tutorial we are going to create an university electoral process 
@@ -94,8 +92,8 @@ In the graphic above the question indexes within each election is indicated
 between brackets like `[0]`.
 
 To do so, we will create the elections as described in 
-[Election Creation Guide](election-creation.md). The
-[Election JSON settings](election-creation.md#election-json-settings) will be
+[Election Creation Guide](../../reference/election-creation-json). The
+[Election JSON settings](../../reference/election-creation-json#election-json-settings) will be
 similar to the following sketch:
 
 ```json
@@ -192,7 +190,7 @@ similar to the following sketch:
 :::note
 There are many missing properties in the configuration above. The sketched  
 document is just part of the complete JSON document and if you try to create the
-[Election Creation Guide](election-creation.md#creating-elections) it will fail.
+[Election Creation Guide](../../reference/election-creation-json#creating-elections) it will fail.
 In the document above we are just showing the parts of the JSON document that 
 we want to explain at this moment. You can access the 
 [final document, complete and with some modifications here](./assets/university_example.yaml).
@@ -203,20 +201,20 @@ the elections.
 
 The sketched JSON document above is the configuration regarding the questions 
 and the  parent-children relations. See 
-[children_election_info](election-creation.md#election-children_election_info)
+[children_election_info](../../reference/election-creation-json#election-children_election_info)
 for details.
 
 The questions set in the parent election (with `id=100`) are not used for much 
 because voters will only vote in the children elections. For results 
 consolidation in the parent election we could just use the appropiate
-[Results Config Pipes](election-creation.md#results-config-pipes) to clone the 
+[Results Config Pipes](../../reference/election-creation-json#results-config-pipes) to clone the 
 election from the subelections. We will do something similar later on. However, 
 note that it's required for all elections to be created with at least one 
 question - parent election included.
 
 What follows is the same JSON configuration as before, but this time we only 
 sketched the information regarding the virtual elections and 
-[results config pipes](election-creation.md#results-config-pipes):
+[results config pipes](../../reference/election-creation-json#results-config-pipes):
 
 ```json
 [
@@ -495,7 +493,7 @@ to apply those changes as an exercise.
 ### Adding census on election creation
 
 As described in 
-[the census API](election-creation.md#assigning-children-elections-in-parent-election-census)
+[the census API](../../reference/election-creation-json#assigning-children-elections-in-parent-election-census)
 you can set the census for the parent election to specify in which children 
 elections can a voter vote. 
 
@@ -555,7 +553,7 @@ can be found in the
 :::note election cannot be created?
 If you have already not only registered but created any election with ids `100`,
 `101` or `102`, you will have to modify the ids (and all its references) to use
-other election ids. [More details here](election-creation.md#modifying-elections).
+other election ids. [More details here](../../reference/election-creation-json#modifying-elections).
 
 Also, please note that you will need to modify the example to correctly name
 the election authorities in your deployment. We are using `test-a1` and 
@@ -564,7 +562,7 @@ but you might need to change that.
 :::
 
 Please read and follow the 
-[guide on how to create the elections](election-creation.md) to do so. When you
+[guide on how to create the elections](../../reference/election-creation-json) to do so. When you
 reach to the step of editing the elections JSON, after applying the content of
 the [university_example.json](./assets/university_example.yaml), you will see
 the following screen:
@@ -599,7 +597,7 @@ directly authenticate in the children election. And you should work the census
 in the parent elections only too. 
 
 When you add the census to the parent election, something you can do either 
-directly [during election creation](election-creation.md#census-config-object) 
+directly [during election creation](../../reference/election-creation-json#census-config-object) 
 or afterwards using the actions in the `Census Data` section, you will be able 
 to assign voters to children elections in which they will be able to vote. 
 

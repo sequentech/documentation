@@ -1,8 +1,6 @@
 ---
-id: guide
+sidebar_position: 0
 title: Deployment Guide
-sidebar_label: Deployment Guide
-slug: /deployment/guide
 ---
 
 This document describes the complete deployment of an Sequent Tech project
@@ -293,8 +291,8 @@ Server logs, therefore, will all be in UTC.
 Any date and time you input in your data will be in UTC timezone. You can
 configure the output timezone and date format of the election results PDFs using
 the
-[configure_pdf pipe](../file-formats/election-creation-json#pipe-configure_pdf).
-See [Results Config Pipes](../file-formats/election-creation-json#results-config-pipes)
+[configure_pdf pipe](../../reference/election-creation-json#pipe-configure_pdf).
+See [Results Config Pipes](../../reference/election-creation-json#results-config-pipes)
 for more information about how this works.
 
 ### Install and configure deployment dependencies
@@ -1139,9 +1137,9 @@ it to their new value(s).
 Here we will document what needs to be done depending on the type of machine 
 that is affected if this happens. 
 
-Please review the [Connecting Authorities section](./guide#connecting-authorities)
-of the [deployment guide](./guide) to understand the general procedures when connecting
-the authorities and the sequent servers.
+Please review the [Connecting Authorities section](#connecting-authorities) to
+understand the general procedures when connecting the authorities and the
+sequent servers.
 
 #### For an election authority
 

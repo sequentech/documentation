@@ -1,8 +1,6 @@
 ---
-id: guide
+sidebar_position: 0
 title: Contribution Guide
-sidebar_label: Contribution Guide
-slug: /contribute/guide
 ---
 
 ## Introduction

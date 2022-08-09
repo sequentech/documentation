@@ -1,8 +1,6 @@
 ---
-id: election-creation
+sidebar_position: 2
 title: Election Creation Guide
-sidebar_label: Election Creation Guide
-slug: /advanced-elections/election-creation
 ---
 
 In the Admin interface, given enough permissions you can create new
@@ -36,8 +34,8 @@ edit in JSON format the election configuration:
 ![Edit JSON Dialog](./assets/create_new_election_edit_json.png)
 
 To know the details of the Edit JSON Format, please review the 
-[Election Creation JSON](../file-formats/election-creation-json)
-documentation in the [File Formats](../file-formats/introduction) section.
+[Election Creation JSON](../../reference/election-creation-json)
+documentation in the [Reference](../../reference/) section.
 
 ## Creating elections
 
@@ -47,9 +45,8 @@ elections are usually not yet created in the backend and exists only as a JSON
 configuration in your web browser. There's an exception to that, that we will
 discuss later in this section.
 
-Election creation compromises multiple steps. As seen in
-[Election Creation JSON settings](#election-creation-json-settings)), multiple
-elections can be created at once in the `Create election` sidebar section. 
+Election creation compromises multiple steps. Also, multiple elections can be
+created at once in the `Create election` sidebar section. 
 
 For each election, the web browser will request in order to execute the 
 following steps:
