@@ -11,3 +11,4 @@ might need to know:
 - [Contribution Guide](contribute-guide.md)
 - [Release lifecycle and cadence](release-lifecycle.md)
 - [Release how-to](release-howto.md)
+- [Translation Guide](./translation/)
