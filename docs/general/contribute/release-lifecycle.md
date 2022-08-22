@@ -31,10 +31,10 @@ sure that any `voting-booth` release versioned `5.1.x` (for example  `5.1.1`
 or `5.1.11`) will work with `common-uis` version `5.1.x`.
 ## Release cadence and Enterprise Support
 
-Feature releases are published every 3 months in February, May, August and 
-November each year. Sequent offers up to 6 months of 
-[Enterprise Support](https://sequentech.io) to its partners and clients for all 
-Feature releases.
+Major releases are published every 6 months in March and September each year.
+Sequent offers  [Enterprise Support](https://sequentech.io) to its partners and
+clients for all Major releases since its publication and up to 3 months for old
+Major releases after a newer Major release has been published:
 
 ![Releases timeline](./assets/releases-timeline.svg)
 
