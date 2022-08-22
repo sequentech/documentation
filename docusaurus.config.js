@@ -29,12 +29,12 @@ module.exports = {
         },
         {
           href: 'https://github.com/sequentech/roadmap/discussions',
-          label: 'Discussions',
+          label: 'Forums',
           position: 'right',
         },
         {
-          label: 'Slack',
-          href: 'https://join.slack.com/t/sequentech/shared_invite/zt-1bve9z0px-IF4Je04NJM8AEkCAcdBVWg',
+          label: 'Chat',
+          href: 'https://discord.gg/WfvSTmcdY8',
           position: 'right',
         },
         {
