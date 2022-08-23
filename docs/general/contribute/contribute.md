@@ -12,3 +12,4 @@ might need to know:
 - [Release lifecycle and cadence](release-lifecycle.md)
 - [Release how-to](release-howto.md)
 - [Translation Guide](./translation/)
+- [Production Readiness Checklist](production-readiness.md)
