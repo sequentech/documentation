@@ -44,7 +44,7 @@ issue before the release:
 **Security Automation**
 
 - [ ] **Continuous Integration**: When commits are pushed, Github Actions are
-  triggered to perform builds, tests and other checks automatically.
+  triggered to perform builds, tests and other automatic checks.
 - [ ] **Release automation**: Release publishing is automated and triggered
   using Github Actions. This includes automation of the generation of the
   Release Notes.
@@ -68,7 +68,7 @@ issue before the release:
   (at least every week) when a dependency has a vulnerability in supported 
   branches.
 - [ ] **Security policy**: A [security policy] is configured in the repository.
-  The security policy what is a vulnerability and how to report it and what is
+  The security policy defines what is a vulnerability and how to report it and what is
   the fixing and disclusure process.
 
 **Build and development**
