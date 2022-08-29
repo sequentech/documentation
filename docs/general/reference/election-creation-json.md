@@ -2399,7 +2399,7 @@ The maximum length of the message text depends on the authentication method. By
 default the email text body can have up to `5,000` characters, and SMS text
 body can only have `200`. To change this, you would need to change the code
 in the respective authentication method code. 
-[This is the relevant code](https://github.com/sequentech/iam/blob/master/iam/authmethods/m_email.py#L94) 
+[This is the relevant code](https://github.com/sequentech/iam/blob/e9e980f8afd07e32098c487b7a8c3a9b4c5d575a/iam/authmethods/m_email.py#L140) 
 in the `email` authentication method:
 
 ```python title="iam/authmethods/m_email.py" {20}
@@ -2415,6 +2415,93 @@ in the `email` authentication method:
       {
         'check': 'index-check-list',
         'index': 'msg',
+        'check-list': [
+          {
+            'check': 'isinstance',
+            'type': str
+          },
+          {
+            'check': 'length',
+            'range': [1, 5000]
+          }
+        ]
+      },
+```
+### Census Config: `html_message`
+
+- **Property name**: `html_message`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"<strong>Vote</strong> in __URL__ with code __CODE__"`
+
+This is the HTML body template used for sending the authentication codes to 
+voters. It's only applicable to authentication methods that send authentication
+codes to voters  through email, such as `email`, or `email-otp`. In theses this
+corresponds to the HTML body of the email message. 
+
+This field is optional, and when defined, the sent email will have a content
+type `multipart/alternative`, where the first part will contain the `msg` field
+with Content-Type `text/plain` and the second part will contain the `html-message`
+with Content-Type `text/html`.
+
+As mentioned earlier, this is a template. Each voter will received a taylored
+message with the template variables substituted with their values. Variables
+are identified surrounded by two `_` characters and always in upper case. 
+For example the variable `url` would appear as `__URL__`.
+
+The allowed template variables are:
+- `__URL__`: This is the voter authentication URL specific for the voter but
+not containing the voter authentication code, which the voter will have to fill
+out manually.
+- `__URL2__`: This is the voter authentication URL containing the 
+both the email/sms of the voter and the voter authentication code. If no other
+[extra_field](#census-extra_fields) is required during authentication, entering  
+in the `__URL2__` URLs allows voters to authenticate without having to fill out 
+any web form. It's easier, but also more risky because anyone with this link 
+could use it to authenticate.
+- `__CODE__`: This is the authentication code. Each time the authentication 
+codes are sent to a voter, a new code is generated and any old codes are 
+disabled.
+- `__<extra_field>__`: Each voter has some voter related information 
+associated to it. You can use those extra fields by the 
+[sluggified](https://docs.djangoproject.com/en/3.1/ref/utils/#django.utils.text.slugify) 
+and uppercased [name](#extra-field-name) property.
+
+The maximum length of the message text depends on the authentication method. By
+default the email HTML body can have up to `5,000` characters. To change this, you 
+would need to change the code in the respective authentication method code. 
+[This is the relevant code](https://github.com/sequentech/iam/blob/e9e980f8afd07e32098c487b7a8c3a9b4c5d575a/iam/authmethods/m_email.py#L155) 
+in the `email` authentication method:
+
+```python title="iam/authmethods/m_email.py" {35}
+    CONFIG_CONTRACT = [
+      {
+        'check': 'isinstance',
+        'type': dict
+      },
+      {
+        'check': 'dict-keys-exist',
+        'keys': ['msg', 'subject', 'registration-action', 'authentication-action']
+      },
+      {
+        'check': 'index-check-list',
+        'index': 'msg',
+        'check-list': [
+          {
+            'check': 'isinstance',
+            'type': str
+          },
+          {
+            'check': 'length',
+            'range': [1, 5000]
+          }
+        ]
+      },
+      {
+        'check': 'index-check-list',
+        'index': 'html_message',
+        'optional': True,
         'check-list': [
           {
             'check': 'isinstance',
