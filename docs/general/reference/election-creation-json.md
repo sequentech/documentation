@@ -2445,6 +2445,10 @@ type `multipart/alternative`, where the first part will contain the `msg` field
 with Content-Type `text/plain` and the second part will contain the `html-message`
 with Content-Type `text/html`.
 
+Note that to enable using this feature, you need to change the configuration of
+the `deployment-tool`, by setting the `config.iam.field allow_html_emails` to 
+true in the `config.yml` file.
+
 As mentioned earlier, this is a template. Each voter will received a taylored
 message with the template variables substituted with their values. Variables
 are identified surrounded by two `_` characters and always in upper case. 
