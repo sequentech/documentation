@@ -2372,7 +2372,7 @@ voters. It's only applicable to authentication methods that send authentication
 codes to voters such as `email`, `email-otp`, `sms` or `sms-otp`. In the first
 two this corresponds to the Plain Text body of the email message.
 
-As mentioned earlier, this is a template. Each voter will received a taylored
+As mentioned earlier, this is a template. Each voter will receive a tailored
 message with the template variables substituted with their values. Variables
 are identified surrounded by two `_` characters and always in upper case. 
 For example the variable `url` would appear as `__URL__`.
@@ -2437,7 +2437,7 @@ in the `email` authentication method:
 
 This is the HTML body template used for sending the authentication codes to 
 voters. It's only applicable to authentication methods that send authentication
-codes to voters  through email, such as `email`, or `email-otp`. In theses this
+codes to voters  through email, such as `email`, or `email-otp`. In these, it
 corresponds to the HTML body of the email message. 
 
 This field is optional, and when defined, the sent email will have a content
@@ -2447,9 +2447,9 @@ with Content-Type `text/html`.
 
 Note that to enable using this feature, you need to change the configuration of
 the `deployment-tool`, by setting the `config.iam.field allow_html_emails` to 
-true in the `config.yml` file.
+`true` in the `config.yml` file.
 
-As mentioned earlier, this is a template. Each voter will received a taylored
+As mentioned earlier, this is a template. Each voter will receive a tailored
 message with the template variables substituted with their values. Variables
 are identified surrounded by two `_` characters and always in upper case. 
 For example the variable `url` would appear as `__URL__`.
