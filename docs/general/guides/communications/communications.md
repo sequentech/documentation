@@ -1,4 +1,4 @@
-# Sending messages
+# Communications
 
 You can send custom messages to voters at any time during the electoral process, from
 the election page in the admin console. It can be used to send authentication codes for
@@ -35,7 +35,7 @@ not containing the voter authentication code, which the voter will have to fill
 out manually.
 - `__URL2__`: This is the voter authentication URL containing the 
 both the email/sms of the voter and the voter authentication code. If no other
-[extra_field](#census-extra_fields) is required during authentication, entering  
+[extra_field](../../reference/election-creation-json#census-extra_fields) is required during authentication, entering  
 in the `__URL2__` URLs allows voters to authenticate without having to fill out 
 any web form. It's easier, but also more risky because anyone with this link 
 could use it to authenticate.
@@ -45,7 +45,7 @@ disabled.
 - `__<extra_field>__`: Each voter has some voter related information 
 associated to it. You can use those extra fields by the 
 [sluggified](https://docs.djangoproject.com/en/3.1/ref/utils/#django.utils.text.slugify) 
-and uppercased [name](#extra-field-name) property.
+and uppercased [name](../../reference/election-creation-json#extra-field-name) property.
 
 The maximum length of the message text depends on the authentication method. By
 default the email text body can have up to `5,000` characters, and SMS text
@@ -102,3 +102,12 @@ to send the emails.
 ![Email Modal 2](./assets/email-modal2.png)
 
  ## Sending messages to specific users
+
+Instead of sending messages in bulk, you can send them to specific voters. Go to the
+`Census Data` section. Click on the checkboxes on the left side and click on the `Actions`
+button on the top right, and then `Send auth codes to <n> selected..`. A modal will appear.
+The modal is very similar to the one previously shown.
+
+ ![Send multiple voters](./assets/send-multiple-voters.png)
+
+
