@@ -73,7 +73,8 @@ button at the bottom to review the configuration.
 
 The next screen shows a preview of the configuration you have selected, by replacing the 
 template variables, and showing the chosen filter configuration. This allows you to 
-review the configuration before sending the messages. If you want to modify the message,
+review the configuration before sending the messages. This modal also informs you of the
+number of recipients of the message you will be sending. If you want to modify the message,
 click on the `Edit`button at the right to go back to the previous screen. If everything
 is OK, click on the button at the bottom `Confirm and send the messages`. The modal will
 close and a green box will confirm the messages were successfully sent.
