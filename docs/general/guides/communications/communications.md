@@ -1,27 +1,33 @@
 # Sending messages
 
-You can send custom messages to voters at any time during the electoral process.
-Those messages will be sent through sms or email depending on the authentication method.
+You can send custom messages to voters at any time during the electoral process, from
+the election page in the admin console. It can be used to send authentication codes for
+elections that require it, or to send communications announcing the different stages
+of the election.
 
-As explained above, these messages are templates and can be used to send authentication
-messages. Each voter will receive a tailored message with the template variables
-substituted with their values. These template variables include `__URL__`, `__URL2__`,
-`__CODE__`and `__<extra_field>__`.
+Those messages will be sent through sms or email depending on the authentication 
+method. Each voter will receive a tailored message with the template variables replaced
+with their values. 
 
 You can send messages either send bulk messages to the whole census or send messages
-to specific lists of users.
+to specific lists of users. This is further explained below.
 
-## Templating
+## Template variables
 
-This is the text body template used for sending the authentication codes to 
-voters. It's only applicable to authentication methods that send authentication
-codes to voters such as `email`, `email-otp`, `sms` or `sms-otp`. In the first
-two this corresponds to the Plain Text body of the email message.
+Templates are text messages that include template variables. Each voter will receive a
+tailored message with the template variables replaced with their values. Depending on
+the authentication method, the message will be delivered as an email or as an SMS.
 
-As mentioned earlier, this is a template. Each voter will receive a tailored
-message with the template variables substituted with their values. Variables
-are identified surrounded by two `_` characters and always in upper case. 
-For example the variable `url` would appear as `__URL__`.
+For authentication methods such as `email`, `email-otp`, or `email-and-password` the
+message will be an email. In those cases, the email title and email text body are
+templates. If [html messages](../../reference/election-creation-json#census-config-html_message)
+are enabled in the deployment, the HTML message is also a template. For authentication
+methods such as `sms` or `sms-otp`, the SMS text body is a template. Furthermore, you can also use an
+[extra field](../../reference/election-creation-json#census-extra_fields) of type `otp-code`
+to send authentication messages for any authentication method.
+
+In templates, variables are identified surrounded by two `_` characters and always
+in upper case. For example the variable `url` would appear as `__URL__`.
 
 The allowed template variables are:
 - `__URL__`: This is the voter authentication URL specific for the voter but
@@ -48,31 +54,51 @@ in the respective authentication method code.
 [This is the relevant code](https://github.com/sequentech/iam/blob/e9e980f8afd07e32098c487b7a8c3a9b4c5d575a/iam/authmethods/m_email.py#L140) 
 in the `email` authentication method:
 
-**Sending bulk messages**
+## Sending bulk messages
 
-In the election Dashboard, click on the `Send auth codes` button:
+### Sending SMS
+
+You can send bulk messages to voters from the election dashboard. In the election 
+Dashboard, click on the `Send auth codes` button:
 
 ![Sms Dashboard](./assets/sms-dashboard.png)
 
-This will open a modal:
+This will open a modal. In this case the election authentication mode is `sms`, thus
+the template is the SMS message, where you can use template variables in the form of
+`__<variable>__`. You can also filter the census to send the message only to those that
+have already voted, or to those that haven't voted yet. When you're ready, click on the
+button at the bottom to review the configuration.
 
 ![Sms Modal 0](./assets/sms-modal0.png)
 
-In the first screen of the modal, you can configure the message template to be sent. In
-elections with an email authentication, you can configure the Email title, the text message
-and an alternative html message. In elections with an SMS authentication, you can configure
-the SMS message. Additionally, you can always select to filter the census by either
-selecting only those that have already voted or those haven't voted yet.
-
-The next screen shows the configuration you have selected, by replacing the template variables,
-and showing the chosen filter configuration.
+The next screen shows a preview of the configuration you have selected, by replacing the 
+template variables, and showing the chosen filter configuration. This allows you to 
+review the configuration before sending the messages. If you want to modify the message,
+click on the `Edit`button at the right to go back to the previous screen. If everything
+is OK, click on the button at the bottom `Confirm and send the messages`. The modal will
+close and a green box will confirm the messages were successfully sent.
 
 ![Sms Modal 0](./assets/sms-modal1.png)
 
-**Sending messages to specific users**
+### Sending Emails
 
-![Email Dashboard](./assets/email-dashboard.png)
+You can send bulk emails to voters on elections where the authentication method uses the email.
+Go to the election Dashboard and click on `Send auth codes`.
+
+This modal is similar to the one for SMS messages. In this case the required template fields
+are the email title and the email text body. If it's enabled, you can also configure the [HTML
+email body](../../reference/election-creation-json#census-config-html_message). You can also
+choose to send the emails only to voters that have already voted, or to those that haven't voted
+yet. Once you click on the button at the bottom you'll see a preview of the message.
 
 ![Email Modal 0](./assets/email-modal0.png)
 ![Email Modal 1](./assets/email-modal1.png)
+
+The second modal step shows a preview of the configuration you have selected, by replacing the 
+template variables, showing the chosen filter configuration, and a rendered version of the HTML
+message. Click on the `Edit` button to modify the configuration or click on `Send auth codes`
+to send the emails.
+
 ![Email Modal 2](./assets/email-modal2.png)
+
+ ## Sending messages to specific users
