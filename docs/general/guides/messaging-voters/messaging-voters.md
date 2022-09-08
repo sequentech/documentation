@@ -1,16 +1,15 @@
-# Communications
+# Messaging Voters
 
-You can send custom messages to voters at any time during the electoral process, from
-the election page in the admin console. It can be used to send authentication codes for
-elections that require it, or to send communications announcing the different stages
+You can send custom messages to voters at any time during the electoral process.  These
+messages can be sent in bulk from the Election Dashboard and to specific voters from the 
+Election's Census Data section. You can use these messages to send authentication codes
+for elections that require it, or to send communications announcing the different stages
 of the election.
 
 Those messages will be sent through sms or email depending on the authentication 
 method. Each voter will receive a tailored message with the template variables replaced
-with their values. 
-
-You can send messages either send bulk messages to the whole census or send messages
-to specific lists of users. This is further explained below.
+with their values. You can choose the message sending method (sms or email) if both are
+available for that election.
 
 ## Template variables
 
@@ -47,12 +46,17 @@ associated to it. You can use those extra fields by the
 [sluggified](https://docs.djangoproject.com/en/3.1/ref/utils/#django.utils.text.slugify) 
 and uppercased [name](../../reference/election-creation-json#extra-field-name) property.
 
+:::note
+Even if the template message does not contain __URL2__ nor __CODE__, a new code
+will be generated.
+:::
+
 The maximum length of the message text depends on the authentication method. By
 default the email text body can have up to `5,000` characters, and SMS text
 body can only have `200`. To change this, you would need to change the code
 in the respective authentication method code. 
 [This is the relevant code](https://github.com/sequentech/iam/blob/e9e980f8afd07e32098c487b7a8c3a9b4c5d575a/iam/authmethods/m_email.py#L140) 
-in the `email` authentication method:
+in the `email` authentication method.
 
 ## Sending bulk messages
 
@@ -75,7 +79,7 @@ The next screen shows a preview of the configuration you have selected, by repla
 template variables, and showing the chosen filter configuration. This allows you to 
 review the configuration before sending the messages. This modal also informs you of the
 number of recipients of the message you will be sending. If you want to modify the message,
-click on the `Edit`button at the right to go back to the previous screen. If everything
+click on the `Edit` button at the right to go back to the previous screen. If everything
 is OK, click on the button at the bottom `Confirm and send the messages`. The modal will
 close and a green box will confirm the messages were successfully sent.
 
