@@ -690,6 +690,26 @@ code. The provided translation will override the corresponding translation for
 that language in the `election-portal` and in the `voting-booth` for this
 specific election.
 
+### Election Presentation: `pdf_url`
+
+- **Property name**: `pdf_url`
+- **Type:** Object
+- **Required:** No
+- **Default:** -
+- **Example:**
+```json
+{
+  "url": "https://file-examples.com/storage/fe783a5cbb6323602a28c66/2017/10/file-sample_150kB.pdf",
+  "title": "Example PDF"
+}
+```
+
+When the election [`show_pdf`](#census-config-show_pdf) flag is set to `true`,
+this the URL of the PDF document will be shown in the voting booth to the voter
+and the title of this document, which will also appear in the `Show PDF` screen.
+Setting `pdf_url` is mandatory if [`show_pdf`](#census-config-show_pdf) setting
+is enabled in an election.
+
 ### Election Presentation: `urls`
 
 - **Property name**: `urls`
@@ -2358,6 +2378,25 @@ for others such as `email-and-password`, `user-and-password` or
 `openid-connect`. However, it makes sense to enable it if you are using an
 [extra_field](#census-extra_fields) of `otp-code` type in combination with any
 authentication method.
+
+### Census Config: `show_pdf`
+
+- **Property name**: `show_pdf`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true`, it will:
+1. Allow voters to authenticate even if they cannot vote (but they will only be
+shown the button to start voting if the voting period is open).
+2. Show the `Show PDF` screen in the voting booth, allowing to showing a PDF
+document after authentication in the voting booth.
+
+Use only together with the [`pdf_url`](#election-presentation-pdf_url)
+presentation configuration. Also please note that you can toggle the `show_pdf`
+flag in any existing election with the
+[`show_pdf` admin command](https://github.com/sequentech/iam/blob/master/iam/api/management/commands/show_pdf.py).
 
 ### Census Config: `msg`
 
