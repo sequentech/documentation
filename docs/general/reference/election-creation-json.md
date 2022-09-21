@@ -2589,6 +2589,22 @@ The template works in the same manner as the
 }
 ```
 
+### Census Config: `fixed-code`
+
+- **Property name**: `fixed-code`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true`, the authentication codes sent to users will be fixed, instead
+of generating a new code each time. When an authentication message is sent to
+an user, a new authentication code is created only if one doesn't exist yet for
+the user, reusing it if one exists already.
+
+In combination with the admin command `bulk_insert_voters`, it allows admins to
+set and fix the authentication codes to be sent to users.
+
 ## Question Object
 
 This JSON object type describes a question (or [contest](https://pages.nist.gov/ElectionGlossary/#contest) in NIST terminology) in which a voter can vote. It is used inside the [Election: `questions`](#election-questions) property of
