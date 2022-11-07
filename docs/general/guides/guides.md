@@ -10,3 +10,4 @@ The following guides are available:
 - [Write-ins Guide](./write-ins/)
 - [SmartLink Auth Guide](./smart-link-auth/)
 - [Messaging Voters Guide](./messaging-voters/)
+- [OTL Auth Guide](./otl-auth/)

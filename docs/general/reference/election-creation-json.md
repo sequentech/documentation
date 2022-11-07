@@ -387,6 +387,29 @@ Describes presentation options related to the whole election. See
 Specifies the election-wide layout. For now this settings remains unused and it
 must always be set to `"simple"`.
 
+### Election: `support_otl_enabled`
+
+- **Property name**: `support_otl_enabled`
+- **Type:** `Boolean`
+- **Required:** False
+- **Default:** `false`
+- **Example:** `true`
+
+Set to `true` to enable OTL support in this election. Please review the 
+[OTL Auth Guide](../guides/otl-auth) for more information.
+
+### Election: `inside_authenticate_otl_period`
+
+- **Property name**: `inside_authenticate_otl_period`
+- **Type:** `Boolean`
+- **Required:** False
+- **Default:** `false`
+- **Example:** `true`
+
+Set to `true` to enable OTL authentication period for voters, so that they can
+retrieve their authentication codes. Please review the
+[OTL Auth Guide](../guides/otl-auth) for more information.
+
 ### Election: `num_successful_logins_allowed`
 
 - **Property name**: `num_successful_logins_allowed`
@@ -2144,7 +2167,25 @@ are the following available extra field types that you can use:
 
 Defines if this field is required during authentication. If `true` it means 
 that during the authentication process this field needs to be provided by the 
-voter.  
+voter.
+
+### Extra Field: `match_against_census_on_otl_authentication`
+
+- **Property name**: `match_against_census_on_otl_authentication`
+- **Type:** `Boolean`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `false`
+
+Defines if this field is required during the OTL (One Time Link) authentication.
+If `true` it means that during the OTL authentication process this field needs
+to be provided by the voter. Note that OTL only works if
+[Election: `support_otl_enabled`](#election-support_otl_enabled) is set to 
+`true` and and 
+[Election: `inside_authenticate_otl_period`](#election-inside_authenticate_otl_period)
+is also set to `true`.
+
+Please review the [OTL Auth Guide](../guides/otl-auth) for more information.
 
 ### Extra Field: `required`
 
