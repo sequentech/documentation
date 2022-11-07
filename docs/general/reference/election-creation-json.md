@@ -2880,9 +2880,14 @@ is  `cummulative`. By default, if unset, its value is `1`.
 - **Default:** `false`
 - **Example:** `true`
 
-If set to `true` then an answer representing the checkable category can be 
-added, and can be flagged as such by setting an url to the answer with title 
-`type` and value `checkable-list` (string).
+If set to `true` then an answer representing the checkable category can be added
+(a `category answer`), and can be flagged as such by setting an url to the
+category answer with title `"isCategoryList"` and url set to `"true"` (string).
+
+:::note 
+Currently it is required to include a category answer for each category of the
+question when `enable_checkable_lists` is set to `true`.
+:::
 
 ### Question Extra: `show_points`
 
