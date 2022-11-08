@@ -2185,8 +2185,6 @@ to be provided by the voter. Note that OTL only works if
 [Election: `inside_authenticate_otl_period`](#election-inside_authenticate_otl_period)
 is also set to `true`.
 
-Please review the [OTL Auth Guide](../guides/otl-auth) for more information.
-
 ### Extra Field: `required`
 
 - **Property name**: `required`
