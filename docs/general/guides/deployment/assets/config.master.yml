@@ -665,7 +665,7 @@ config:
     # default configuration for calculate results on admin-console
     calculate_results_default: >-
       {
-        "version": "7.0.0",
+        "version": "master",
         "pipes": [
           {
             "type": "tally_pipes.pipes.pdf.configure_pdf",
