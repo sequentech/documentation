@@ -38,9 +38,13 @@ both the email/sms of the voter and the voter authentication code. If no other
 in the `__URL2__` URLs allows voters to authenticate without having to fill out 
 any web form. It's easier, but also more risky because anyone with this link 
 could use it to authenticate.
-- `__CODE__`: This is the authentication code. Each time the authentication 
-codes are sent to a voter, a new code is generated and any old codes are 
-disabled.
+- `__CODE__`: This is the authentication code. By default each time the
+authentication codes are sent to a voter, a new code is generated and any old
+codes are disabled. Alternatively, the code might be fixed / static if the
+[`fixed-code` is set to `true`](../reference/election-creation-json#census-config-fixed-code).
+- `__OTL__`: Includes a One Time Link (OTL). This OTL accesses to an
+authentication process that, once authenticated, shows the authentication code
+to voters.
 - `__<extra_field>__`: Each voter has some voter related information 
 associated to it. You can use those extra fields by the 
 [sluggified](https://docs.djangoproject.com/en/3.1/ref/utils/#django.utils.text.slugify) 
