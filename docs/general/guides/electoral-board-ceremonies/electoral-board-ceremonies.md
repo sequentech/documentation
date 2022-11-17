@@ -1,8 +1,6 @@
 ---
-id: electoral-board-ceremonies
+sidebar_position: 6
 title: Electoral Board Ceremonies
-sidebar_label: Electoral Board Ceremonies
-slug: /advanced-elections/electoral-board-ceremonies
 ---
 
 The Electoral Board Ceremonies allow administrators to delete the private keys of the electoral process from the trustee's servers while the election is active, as an extra security measure. The private keys are restored after the voting period is closed and before the tally is launched.
