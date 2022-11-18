@@ -68,9 +68,12 @@ tasks:
 #    - import_tasks: postgres_backups.yml
 #    - import_tasks: crontab.yml
 ```
+
 Then provision the machine as explained [here](../deployment). 
 
+```bash
     date; time ansible-playbook -i inventory playbook.yml; date
+```
 
 ## Election Creation Configuration
 
@@ -94,13 +97,35 @@ Once the election is created, the ceremonies will be available in the Dashboard 
 
 In this ceremony, each election authority will download the share of the private keys for the election and the keys will be removed from the election authority servers. Note that this action can only be launched if the election is configured with `election_board_ceremony` set to `true`, and that the election cannot be started before this ceremony is successfully completed.
 
-In order to start the ceremony, go to the election Dashboard and click on `Launch key distribution ceremony` under the `Actions` button. This will launch a modal and each election authority will need to complete the following steps:
+In order to start the ceremony, go to the election Dashboard and click on `Launch key distribution ceremony` under the `Actions` button. This will launch a modal:
+
+![Keys Distribution Ceremony Intro modal](./assets/kdc-1-intro.png)
+
+You can see at the top the number of steps required to complete the ceremony. In this ceremony each election authority will need to complete the following steps:
 
 * Login into the election authority account. The administrator of the Sequent servers must provide the user/password for the election authority.
+
+![Keys Distribution Ceremony Login](./assets/kdc-2-login.png)
+
 * Download the share of the private keys. In this screen you can download the keys as many times as you need.
+
+![Keys Distribution Ceremony Download](./assets/kdc-3-download.png)
+
 * Secure at least two copies of the private keys. Once you've copied the keys into two different USB memory sticks, check the two checkboxes and click `Next step`.
+
+![Keys Distribution Ceremony Secure](./assets/kdc-4-secure.png)
+
 * Check the contents of the keys. Drag and drop the previously downloaded file to check its content.
+
+![Keys Distribution Ceremony Check](./assets/kdc-5-check.png)
+
 * Delete the share of the private keys from the election authority's server.
+
+![Keys Distribution Ceremony Delete](./assets/kdc-6-delete.png)
+
+After these steps are completed by all authorities, you'll see a final screen showing the success of the ceremony:
+
+![Keys Distribution Ceremony Completed](./assets/kdc-7-completed.png)
 
 Note that if the modal is closed too early, it can be launched again. If the share of the private keys for some of the election authorities have already been deleted, the modal will continue from that point with the next election authority.
 
