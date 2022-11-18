@@ -133,10 +133,26 @@ Note that if the modal is closed too early, it can be launched again. If the sha
 
 In this ceremony, each election authority will upload the share of the private keys for the election and the keys will be restored to the election authority servers. Note that this action can only be launched if the election is configured with `election_board_ceremony` set to `true`, after the voting period is stopped, and that the tally cannot be started before this ceremony is successfully completed.
 
-In order to start the ceremony, go to the election Dashboard and click on `Launch opening ceremony` under the `Actions` button. This will launch a modal and each election authority will need to complete the following steps:
+In order to start the ceremony, go to the election Dashboard and click on `Launch opening ceremony` under the `Actions` button. This will launch a modal:
+
+![Opening Ceremony Intro modal](./assets/oc-1-intro.png)
+
+Each election authority will need to complete the following steps:
 
 * Login into the election authority account. The administrator of the Sequent servers must provide the user/password for the election authority.
+
+![Opening Ceremony Login](./assets/oc-2-login.png)
+
 * Check the contents of the keys. Drag and drop the previously downloaded file to check its content. You must use the file previously downloaded in the Keys Distribution Ceremony.
+
+![Opening Ceremony Upload](./assets/oc-3-upload.png)
+
 * Restore the share of the private keys to the election authority's server.
+
+![Opening Ceremony Restore](./assets/oc-4-restore.png)
+
+After these steps are completed by all authorities, you'll see a final screen showing the success of the ceremony:
+
+![Opening Ceremony Completed](./assets/oc-5-completed.png)
 
 Note that if the modal is closed too early, it can be launched again. If the share of the private keys for some of the election authorities have already been deleted, the modal will continue from that point with the next election authority.
