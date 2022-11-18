@@ -6,9 +6,14 @@ title: Electoral Board Ceremonies
 The objective of the Electoral Board Ceremonies is to ensure that the private keys of an electoral process are exclusively on the hands of their custodians while the voting is open. This is implemented in the following ceremonies:
 
 - Keys Distribution Ceremony. In this ceremony the private keys for the election are retrieved and deleted from the trustees' servers and handed over to the custodians. This ceremony takes place before the voting period has started. This ensures no one can decrypt the ballots during the voting period.
+- 
 - Opening Ceremony. In this ceremony the private keys for the election are handed over from the custodians and restored to the trustees' servers. This ceremony takes place after the voting period has ended. Restoring the private keys in the trustees' servers is a necessary step before the tally process can be started.
 
-This is an advanced feature and it has to be manually enabled while creating the election. Also, this feature does not currently support parent/children elections.
+This is an advanced feature and it has to be manually enabled while creating the election. Also, this feature does not currently support [parent/children elections](../parent-and-children-elections/).
+
+Any given election is comprised of multiple questions, and is configured to use multiple electoral authorities. Each electoral authority has their own share of the private key for each question. These private keys are files that are created and stored inside the servers of each electoral authority. These files, that hold the share of the private key for a given question in an election, are required to tally the election.
+
+A custodian is a person whose job is to custody the private keys for an election for a given authority. During the Keys Distribution Ceremony the custodians will download a file that contains the share of the private keys for their electoral authority. That file is a compressed archive (with a `.tar.gz` extension), and inside the compressed file there is a number of files, each one containing a private key for each of the questions of the election. Each custodian will download a different compressed file, as the private keys for each authority for the election are different.
 
 The next sections are a step by step guide to:
 - Election authority credentials
@@ -18,7 +23,7 @@ The next sections are a step by step guide to:
 
 ## Election Authority Credentials
 
-Note: this configuration needs to be done on the web servers. Once it's done, you don't need to do it again on next elections using Electoral Board Ceremonies.
+Note: this configuration needs to be done on the Sequent web servers. This is a one-off configuration, and it only needs to be done the first time Electoral Board Ceremonies are to be used in any election.
 
 Before we can use the Electoral Board Ceremonies feature, we need to configure the web servers to create credentials for the election authorities. Specifically, we need to configure a user/password for each of the authorities.
 
@@ -77,7 +82,7 @@ Then provision the machine as explained [here](../deployment).
 
 ## Election Creation Configuration
 
-During the election creation process, in the last step, called "Create Election". Click on the pencil as shown in this image:
+During the election creation process, in the last step, called "Create Election", click on the pencil as shown in this image:
 
 ![Create Election](./assets/create_election.png)
 
@@ -85,7 +90,7 @@ This will open a modal with a text field and the JSON configuration of the elect
 
 ![Edit JSON](./assets/edit_json.png)
 
-Finally click on the green button at the bottom `Create the elections`.
+Finally click on the green button at the bottom `Create the elections` and wait for the election to be created.
 
 ## Dashboard
 
@@ -93,9 +98,13 @@ Once the election is created, the ceremonies will be available in the Dashboard 
 
 ![Elections and Questions](./assets/ceremonies_dashboard.png)
 
+The Keys Distribution Ceremony will be available after the election is created and before the voting period has started. The Opening Ceremony will be available after the voting period has ended and before the tally process has started. After completing a ceremony, it can't be repeated. If the ceremonies aren't available when they should this means the feature was not correctly enabled for the election (please review the previous step on Election Creation Configuration).
+
 ## Keys Distribution Ceremony
 
-In this ceremony, each election authority will download the share of the private keys for the election and the keys will be removed from the election authority servers. Note that this action can only be launched if the election is configured with `election_board_ceremony` set to `true`, and that the election cannot be started before this ceremony is successfully completed.
+In this ceremony, each election authority will download the share of the private keys for the election and the keys will be removed from the election authority servers. Note that this action can only be launched if the election is configured with the Electoral Board Ceremonies feature enabled, and that the election cannot be started before this ceremony is successfully completed. 
+
+The ceremony will take place inside a modal, in a series of steps. If the modal is closed at any time, you can reopen it again and resume the ceremony. However,the ceremony can't be completed twice.
 
 In order to start the ceremony, go to the election Dashboard and click on `Launch key distribution ceremony` under the `Actions` button. This will launch a modal:
 
@@ -131,13 +140,13 @@ Note that if the modal is closed too early, it can be launched again. If the sha
 
 ## Opening Ceremony
 
-In this ceremony, each election authority will upload the share of the private keys for the election and the keys will be restored to the election authority servers. Note that this action can only be launched if the election is configured with `election_board_ceremony` set to `true`, after the voting period is stopped, and that the tally cannot be started before this ceremony is successfully completed.
+In this ceremony, each election authority will upload their share of the private keys for the election and the keys will be restored to the election authority servers. Note that this action can only be launched if the election is configured with `election_board_ceremony` set to `true`, after the voting period is stopped, and that the tally cannot be started before this ceremony is successfully completed.
 
 In order to start the ceremony, go to the election Dashboard and click on `Launch opening ceremony` under the `Actions` button. This will launch a modal:
 
 ![Opening Ceremony Intro modal](./assets/oc-1-intro.png)
 
-Each election authority will need to complete the following steps:
+At the top you can see the number of steps required to complete the ceremony. Each election authority will need to complete the following steps:
 
 * Login into the election authority account. The administrator of the Sequent servers must provide the user/password for the election authority.
 
