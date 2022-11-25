@@ -9,4 +9,5 @@ The following guides are available:
 - [Parent and Children Elections Guide](./parent-and-children-elections/)
 - [Write-ins Guide](./write-ins/)
 - [SmartLink Auth Guide](./smart-link-auth/)
+- [Deployment Guide 2](./deployment2/)
 - [Messaging Voters Guide](./messaging-voters/)

@@ -1,6 +1,6 @@
 ---
-sidebar_position: 0
-title: Deployment Guide
+sidebar_position: 5
+title: Deployment Guide 2
 ---
 
 This document describes the complete deployment of an Sequent Tech project
