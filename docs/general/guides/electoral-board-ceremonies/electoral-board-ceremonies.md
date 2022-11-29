@@ -6,7 +6,6 @@ title: Electoral Board Ceremonies
 The objective of the Electoral Board Ceremonies is to ensure that the private keys of an electoral process are exclusively on the hands of their custodians while the voting is open. This is implemented in the following ceremonies:
 
 - Keys Distribution Ceremony. In this ceremony the private keys for the election are retrieved and deleted from the trustees' servers and handed over to the custodians. This ceremony takes place before the voting period has started. This ensures no one can decrypt the ballots during the voting period.
-- 
 - Opening Ceremony. In this ceremony the private keys for the election are handed over from the custodians and restored to the trustees' servers. This ceremony takes place after the voting period has ended. Restoring the private keys in the trustees' servers is a necessary step before the tally process can be started.
 
 This is an advanced feature and it has to be manually enabled while creating the election. Also, this feature does not currently support [parent/children elections](../parent-and-children-elections/).
