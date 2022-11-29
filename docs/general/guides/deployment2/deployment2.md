@@ -862,19 +862,59 @@ Thus, if you are using a load balancer, configure it to prevent `prod-s1` from
 receiving votes. Otherwise, you could point voters to `prod-s2` reassigning the 
 public IP of the server `prod-s1` to `prod-s2`, or something along the lines.
 
+Another option is to temporarily stop the Postgres database of `prod-s1` with:
+
+```bash
+sequent@prod-s1:~ $ sudo service postgresql stop
+```
+
 Afterwards, to promote `prod-s2` to be the master, change set to `true` the
 `config.yml` config variable `config.load_balancing.is_master`, and then execute
 ansible for `prod-s2` with the `playbook.sequent.yml` playbook:
 
 ```bash
-date; time ansible-playbook -i inventory playbook.yml; date
+date; time ansible-playbook -i inventory playbook.yml -vvvv 2>&1 | tee log.txt; date
 ```
 
-#### Step 4: Continue casting votes
+This may fail while deploying the `iam` or `oneserver` playbooks with an error similar
+to `Could not load auth.User(pk=1): cannot execute UPDATE in a read-only transaction`. 
+In that case edit the `playbook.yml` file to only run the `halb` tasks and then redeploy again:
+
+
+```yaml
+---
+- hosts: all
+
+  tasks:
+    - include_vars: config.yml
+    - include_vars: repos.yml
+
+#    - import_tasks: packages.yml
+#    - import_tasks: system.yml
+#    - import_tasks: hardening/main.yml
+#    - import_tasks: sudoers/main.yml
+#    - import_tasks: misc-tools/main.yml
+#    - import_tasks: eorchestra/main.yml
+#    - import_tasks: ballot-box/main.yml
+#    - import_tasks: iam/main.yml
+#    - import_tasks: sentry/main.yml
+#    - import_tasks: sequent-ui/main.yml
+#    - import_tasks: oneserver/main.yml
+#    - import_tasks: election-verifier/main.yml
+    - import_tasks: halb/main.yml
+#    - import_tasks: postgres_backups.yml
+#    - import_tasks: crontab.yml
+```
+
+#### Step 4 (optional): demoting `prod-s1` to slave
+
+If you want to still keep using `prod-s1`, to demote it to slave, change the `config.yml` file and redeploy.
+
+#### Step 5: Continue casting votes
 
 Once step 3 is done, you can continue casting the votes normally if needed.
 
-#### Step 5: Run the tally
+#### Step 6: Run the tally
 
 To be able to receive successfully the tally, prod-s2 needs to "impersonate"
 prod-s1 as the director election authority. This can be done by:
