@@ -41,7 +41,7 @@ could use it to authenticate.
 - `__CODE__`: This is the authentication code. By default each time the
 authentication codes are sent to a voter, a new code is generated and any old
 codes are disabled. Alternatively, the code might be fixed / static if the
-[`fixed-code` is set to `true`](../reference/election-creation-json#census-config-fixed-code).
+[`fixed-code` is set to `true`](../../reference/election-creation-json#census-config-fixed-code).
 - `__OTL__`: Includes a One Time Link (OTL). This OTL accesses to an
 authentication process that, once authenticated, shows the authentication code
 to voters.
