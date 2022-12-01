@@ -2875,18 +2875,28 @@ is  `cummulative`. By default, if unset, its value is `1`.
 ### Question Extra: `enable_checkable_lists`
 
 - **Property name**: `enable_checkable_lists`
-- **Type:** `Boolean`
+- **Type:** `String`
 - **Required:** No
-- **Default:** `false`
-- **Example:** `true`
+- **Allowed values:** `["disabled", "allow-selecting-candidates-and-lists", "allow-selecting-candidates", "allow-selecting-lists"]`
+- **Default:** `"disabled"`
+- **Example:** `"allow-selecting-candidates-and-lists"`
 
-If set to `true` then an answer representing the checkable category can be added
-(a `category answer`), and can be flagged as such by setting an url to the
+This setting configures if candidate options or lists of candidates can be
+selected by a voter in the voting booth:
+- `"allow-selecting-candidates-and-lists"`: Both candidates and lists of
+  candidates can be selected by a voter.
+- `"allow-selecting-candidates"`: Only candidates can be selected by a voter.
+- `"allow-selecting-lists"`: Only lists of candidates can be selected by a
+  voter.
+
+An answer representing the checkable category can be added (a 
+`category answer`), and can be flagged as such by setting an url to the
 category answer with title `"isCategoryList"` and url set to `"true"` (string).
 
 :::note 
 Currently it is required to include a category answer for each category of the
-question when `enable_checkable_lists` is set to `true`.
+question when `enable_checkable_lists` is set to any option different from the
+default (`"disabled"`).
 :::
 
 ### Question Extra: `show_points`
