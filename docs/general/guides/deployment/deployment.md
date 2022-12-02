@@ -1,6 +1,6 @@
 ---
-sidebar_position: 0
-title: Deployment Guide
+sidebar_position: 5
+title: Deployment Guide 2
 ---
 
 This document describes the complete deployment of an Sequent Tech project
@@ -704,7 +704,7 @@ can verify that any change in the database in `prod-s1` is reflected in
 they should appear in both machines:
 
 ```bash
-sudo -u postgres psql ballot-box -tAc "select id,state from election;"
+sudo -u postgres psql ballot_box -tAc "select id,state from election;"
 5001|registered
 5002|registered
 5003|registered
@@ -862,19 +862,99 @@ Thus, if you are using a load balancer, configure it to prevent `prod-s1` from
 receiving votes. Otherwise, you could point voters to `prod-s2` reassigning the 
 public IP of the server `prod-s1` to `prod-s2`, or something along the lines.
 
-Afterwards, to promote `prod-s2` to be the master, change set to `true` the
-`config.yml` config variable `config.load_balancing.is_master`, and then execute
+Another option is to temporarily stop the Postgres database of `prod-s1` with:
+
+```bash
+sequent@prod-s1:~ $ sudo service postgresql stop
+```
+
+Afterwards, to promote `prod-s2` to be the master, set the `config.yml` config
+variable `config.load_balancing.is_master` to `true`, and then execute
 ansible for `prod-s2` with the `playbook.sequent.yml` playbook:
 
 ```bash
-date; time ansible-playbook -i inventory playbook.yml; date
+date; time ansible-playbook -i inventory playbook.yml -vvvv 2>&1 | tee log.txt; date
 ```
 
-#### Step 4: Continue casting votes
+This may fail while deploying the `iam` or `oneserver` playbooks with an error similar
+to `Could not load auth.User(pk=1): cannot execute UPDATE in a read-only transaction`. 
+In that case edit the `playbook.yml` file to only run the `halb` tasks and then redeploy again:
+
+
+```yaml
+---
+- hosts: all
+
+  tasks:
+    - include_vars: config.yml
+    - include_vars: repos.yml
+
+#    - import_tasks: packages.yml
+#    - import_tasks: system.yml
+#    - import_tasks: hardening/main.yml
+#    - import_tasks: sudoers/main.yml
+#    - import_tasks: misc-tools/main.yml
+#    - import_tasks: eorchestra/main.yml
+#    - import_tasks: ballot-box/main.yml
+#    - import_tasks: iam/main.yml
+#    - import_tasks: sentry/main.yml
+#    - import_tasks: sequent-ui/main.yml
+#    - import_tasks: oneserver/main.yml
+#    - import_tasks: election-verifier/main.yml
+    - import_tasks: halb/main.yml
+#    - import_tasks: postgres_backups.yml
+#    - import_tasks: crontab.yml
+```
+
+Then revert the `playbook.yml` file by removing the comments and redeploy it again.
+This is the `playbook.yml` file:
+
+```yaml
+---
+- hosts: all
+
+  tasks:
+    - include_vars: config.yml
+    - include_vars: repos.yml
+
+    - import_tasks: packages.yml
+    - import_tasks: system.yml
+    - import_tasks: hardening/main.yml
+    - import_tasks: sudoers/main.yml
+    - import_tasks: misc-tools/main.yml
+#    - import_tasks: eorchestra/main.yml
+    - import_tasks: ballot-box/main.yml
+    - import_tasks: iam/main.yml
+    - import_tasks: sentry/main.yml
+    - import_tasks: sequent-ui/main.yml
+    - import_tasks: oneserver/main.yml
+    - import_tasks: election-verifier/main.yml
+    - import_tasks: halb/main.yml
+    - import_tasks: postgres_backups.yml
+    - import_tasks: crontab.yml
+```
+
+This is the command to redeploy the playbook:
+
+```bash
+date; time ansible-playbook -i inventory playbook.yml -vvvv 2>&1 | tee log.txt; date
+```
+
+#### Step 4 (optional): demoting `prod-s1` to slave
+
+If you want to continue using `prod-s1`, you can demote it to slave by setting the
+`config.yml` variable `config.load_balancing.is_master` to `true`, and then execute
+ansible for `prod-s1` with the `playbook.sequent.yml` playbook:
+
+```bash
+date; time ansible-playbook -i inventory playbook.yml -vvvv 2>&1 | tee log.txt; date
+```
+
+#### Step 5: Continue casting votes
 
 Once step 3 is done, you can continue casting the votes normally if needed.
 
-#### Step 5: Run the tally
+#### Step 6: Run the tally
 
 To be able to receive successfully the tally, prod-s2 needs to "impersonate"
 prod-s1 as the director election authority. This can be done by:
@@ -1190,3 +1270,11 @@ Then, you need to remove the files `/home/ballotbox/keystore.jks` and
 in the previous section to redeploy and redistribute the certificate to the
 peers. Finally, you need to re-install the certificates of the peers in the
 sequent server again.
+
+### Issues with the master/slave configuration
+
+The sequent admin page might become unavailable after enabling the master/slave
+configuration (by setting the `config.yml` variable `load_balancing.enabled` to
+`true`) if you're not using a load balancer. In that case, set the variable
+`load_balancing.use_https` to `true` and redeploy the server with at least the `oneserver` 
+playbook.
