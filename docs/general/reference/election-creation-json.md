@@ -395,8 +395,7 @@ must always be set to `"simple"`.
 - **Default:** `false`
 - **Example:** `true`
 
-Set to `true` to enable OTL support in this election. Please review the 
-[OTL Auth Guide](../guides/otl-auth) for more information.
+Set to `true` to enable OTL support in this election.
 
 ### Election: `inside_authenticate_otl_period`
 
