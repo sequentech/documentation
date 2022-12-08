@@ -406,8 +406,7 @@ Set to `true` to enable OTL support in this election.
 - **Example:** `true`
 
 Set to `true` to enable OTL authentication period for voters, so that they can
-retrieve their authentication codes. Please review the
-[OTL Auth Guide](../guides/otl-auth) for more information.
+retrieve their authentication codes.
 
 ### Election: `num_successful_logins_allowed`
 
