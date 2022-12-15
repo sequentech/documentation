@@ -1,7 +1,0 @@
-# SPDX-FileCopyrightText: 2021 Sequent Tech Inc <legal@sequentech.io>
-#
-# SPDX-License-Identifier: AGPL-3.0-only
-- id: "NPM::node-forge"
-  curations:
-    comment: "The package is detected as GPL because it's double licensed with GPL and BSD, so we use the BSD, see https://github.com/digitalbazaar/forge/blob/cbebca3780658703d925b61b2caffb1d263a6c1d/LICENSE and https://www.npmjs.com/package/node-forge#contributing"
-    concluded_license: "BSD-3-Clause"
