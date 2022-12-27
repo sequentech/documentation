@@ -41,8 +41,8 @@ with this call:
 
 The format of the election data is the same as the 
 [Election Creation JSON](../../reference/election-creation-json), it's just
-a stringified version of that (using `JSON.stringify(data)`), as ession storage
-stores strings.
+a stringified version of that (using `JSON.stringify(data)`), as session storage
+can only store strings.
 
 The Election Creation JSON only needs to include the id of the election for
 Parent-Children elections. In the rest of the cases the JSON will not need the
