@@ -49,6 +49,35 @@ Parent-Children elections. In the rest of the cases the JSON will not need the
 election ID. In those cases, the ID of the election for the URL is assumed to
 be the default value `123456789`.
 
+## URL with query params
+
+Another way of passing the election data to the voting booth is through
+query parameters. This means the HTTP Header will include the election data.
+As different commonly used technologies limit the HTTP Header size, this is not
+the default method the system uses for the Live Preview. However we discuss
+how to get around these problems below.
+
+In this case, the URL with the query params is:
+
+    https://sequentech.io/booth/[election-id]/preview-vote?preview-election=[election-data]
+
+The election data is the [Election Creation JSON](../../reference/election-creation-json).
+In this case it's not only stringified but also URL encoded. Specifically, if the json
+is in the `json` variable, the query parameter `[election-data]` will be generated with:
+
+    encodeURIComponent(JSON.stringify(json))
+
+The system uses Nginx, and it limits the HTTP headers to 8k bytes by default.
+To increase this limit, there's a deployment configuration variable at
+`config.http.client_max_header_size`:
+
+    client_max_header_size: 256k
+
+Another technology that limits the HTTP Headers is Cloudflare. Cloudflare limits
+the HTTP Headers to 32 KB, and the URL size to 16 KB. If you need to use the
+query params method for Live Preview you probably can't use Cloudflare for the
+voting booth.
+
 ## Parent and Children Elections
 
 The Live Preview feature supports
