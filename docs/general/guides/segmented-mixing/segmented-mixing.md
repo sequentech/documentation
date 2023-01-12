@@ -26,24 +26,100 @@ then election creation and election tally will take only ~1 minute instead of
 more generic and powerful mechanism. Use Segmented mixing only when appropriate.
 :::
 
-Fast segmented mixing works by performing a single mix while allowing to
+Segmented mixing works by performing a single mix while allowing to
 group/segment the resulting anonymized ballots because they have been tagged
-before performing the tally. The encrypted ballots can be tagged by taking
-advantage of the homomorphic properties of ElGamal, by which we can multiply an
-encrypted ballot with another encrypted text of a specific number different for
-each group (the tag) and obtain a verifiably encrypted text that contains the
-result of that multiplication.
+before performing the tally. 
 
-## How does it work?
+## How does it work
 
-The way segmented mixing works is that:
-1. Each voter has an attribute in the census marking its region.
-2. Before sending the encrypted ballots to the mixnet, they are tagged with a 
-   different tag per region.
+The way segmented mixing works is like follows:
+
+1. Each voter has an attribute in the census marking its segmentation. This
+   could be the region of the voter, its category, or any other segmentation
+   variable.
+2. Before sending the encrypted ballots to the mixnet for shuffling and
+   decryption, the ballots are tagged with a different tag per region.
 3. Once the votes are shuffled and decrypted by the mixnet, the raw encoded
    ballots are decoded and converted into
    `(encoded-ballot) -> (region, original-ballot)`.
 4. The ballots are tallied grouped per region and also showing a consolidated
    result.
 
-## 
+## Technical implementation details
+
+The encrypted ballots can be tagged by taking advantage of the homomorphic
+properties of ElGamal encryption, by which we can multiply an encrypted ballot
+with another encrypted text of a specific number different for each group (the
+tag) and obtain a verifiably encrypted text that contains the result of that
+multiplication.
+
+A encoded plaintext ballot is just an integer number. For example `2` may encode
+a vote for `Yes` and `4` may be a vote for `No` in a contest. Take a look at
+[Ballot Encoding](../../reference/ballot-encoding.md) for more details of how
+we encode ballots into a positive integer within Sequent's Voting Platform.
+
+ElGamal cryptosystem receives any integer plaintext and produces a ciphertext.
+An intermediate step before applying ElGamal encryption is to encode this
+integer plaintext into a multiplicative subgroup `Gq` using the set of quadratic
+residues modulo `p`. This is required to achieve semnatic security. There is a
+post in Sequent's blog detailing this process of
+[Elgamal Plaintext encoding](https://sequentech.io/plaintext-encoding-in-elgamal/).
+
+### Encoding and decoding segmentation
+
+Segmentation is performed in the dumping of the ballot box to the mixnet. We
+take each encrypted ballot `E(ballot)` and multiply with an encrypted tag
+`E(tag)` resulting in an ciphertext `E(ballot * tag)`. This means that when
+decrypted, the decryption of such ciphertext will be `ballot * tag`.
+
+For example, if `ballot = 4` (a vote for `No`) and `tag = 11` (category
+`Madrid`), then `ballot * tag = 4 * 11 = 44`. The mixnet will receive `E(ballot*tag) = E(44)` for this ballot instead of `E(ballot) = E(4)`, and the anonymized plaintext of the
+ballot, which is part of the mixnet's output, will be `44` instead of `4`.
+
+Before the tally process can begin, we need to convert back this `44` into `4`,
+because otherwise this would be counted as an invalid ballot. At the same time,
+we need to detect which category does this ballot belong to, to count it only
+for that category.
+
+Categories are encoded as prime numbers, like `11` for `category = Madrid`.
+Thus, decoding segmentation is as simple as detecting by which category prime is
+the segmentation-encoded ballot dividable by. `44` is dividable by `11`, so we
+detect that it is inside the `Madrid` category, and decoding the
+segmentation-encoded ballot is as easy as performing `44 / 11 = 4`. We have
+obtained back our ballot plaintext.
+
+### Categories encoding
+
+As mentioned before, each ballot is encoded as a prime number. But it has some
+other constraints - it cannot be any prime number. For example, the number `3`
+is prime, but since it also encodes a valid ballot, this could create ambiguous
+situation in which someone who encoded the ballot `3` and whose category prime
+is `5`, would be instead assigned the category `3` and the decoded ballot `5`.
+
+For the reason above, the category prime needs to be always bigger than the
+highest encodable ballot. Additionally, the category prime needs to also comply
+with being an integer number of the multiplicative subgroup `Gq` to achieve
+semnatic security by ensuring the prime is a quadratic residues modulo `p` as
+mentioned earlier.
+
+When creating an election, an ordered list possible categories is set. An 
+algorithm calculates the `category primes`, in the given order, assigning a
+prime number for category encryption by simply using the next available prime
+that complies with the requirements above:
+1. The number is higher than the maximum encodable ballot.
+2. The number is not in use by other category primes.
+3. The number is prime.
+4. The number is a quadratic residues modulo `p`.
+
+## Issues and limitations
+
+This is an advanced feature and has some limitations. A malicious voter could be
+able to craft a vote in such a manner that this vote will be included in the 
+wrong segmentation. However, it's guaranteed by the way segmentation is
+implemented that in this scenario the ballot would always be deemed invalid,
+limiting the damage.
+
+Please take the previous known risk into account before using this feature.
+
+## How to use Segmented Mixing
+
