@@ -56,20 +56,20 @@ multiplication.
 A encoded plaintext ballot is just an integer number. For example `2` may encode
 a vote for `Yes` and `4` may be a vote for `No` in a contest. Take a look at
 [Ballot Encoding](../../reference/ballot-encoding.md) for more details of how
-we encode ballots into a positive integer within Sequent's Voting Platform.
+we encode a ballot into a positive integer within Sequent's Voting Platform.
 
-ElGamal cryptosystem receives any integer plaintext and produces a ciphertext.
+ElGamal cryptosystem receives any integer number and produces a ciphertext.
 An intermediate step before applying ElGamal encryption is to encode this
 integer plaintext into a multiplicative subgroup `Gq` using the set of quadratic
-residues modulo `p`. This is required to achieve semnatic security. There is a
+residues modulo `p`. This is required to achieve semantic security. There is a
 post in Sequent's blog detailing this process of
 [Elgamal Plaintext encoding](https://sequentech.io/plaintext-encoding-in-elgamal/).
 
 ### Encoding and decoding segmentation
 
 Segmentation is performed in the dumping of the ballot box to the mixnet. We
-take each encrypted ballot `E(ballot)` and multiply with an encrypted tag
-`E(tag)` resulting in an ciphertext `E(ballot * tag)`. This means that when
+take each encrypted ballot `E(ballot)` and multiply with an encrypted category
+tag `E(tag)` resulting in an ciphertext `E(ballot * tag)`. This means that when
 decrypted, the decryption of such ciphertext will be `ballot * tag`.
 
 For example, if `ballot = 4` (a vote for `No`) and `tag = 11` (category
@@ -90,36 +90,36 @@ obtained back our ballot plaintext.
 
 ### Categories encoding
 
-As mentioned before, each ballot is encoded as a prime number. But it has some
-other constraints - it cannot be any prime number. For example, the number `3`
-is prime, but since it also encodes a valid ballot, this could create ambiguous
-situation in which someone who encoded the ballot `3` and whose category prime
-is `5`, would be instead assigned the category `3` and the decoded ballot `5`.
+As mentioned before, each category tag is encoded as a prime number: the
+**category prime**. But it has some other constraints - it cannot be any prime
+number. For example, the number `3` is prime, but maybe it also could encode a
+valid ballot, and this could create ambiguous situations in which someone who
+voted by encoding the ballot `3` and whose category prime is `5`, would be
+instead assigned the category `3` and the decoded ballot `5`.
 
-For the reason above, the category prime needs to be always bigger than the
-highest encodable ballot. Additionally, the category prime needs to also comply
-with being an integer number of the multiplicative subgroup `Gq` to achieve
-semnatic security by ensuring the prime is a quadratic residues modulo `p` as
-mentioned earlier.
+For the reason above, a category prime needs to be always bigger than the
+highest encodable ballot. Additionally, the category prime needs to comply with
+being an integer number of the multiplicative subgroup `Gq` by ensuring the
+prime is a quadratic residue modulo `p`, as mentioned earlier.
 
-When creating an election, an ordered list possible categories is set. An 
-algorithm calculates the `category primes`, in the given order, assigning a
-prime number for category encryption by simply using the next available prime
-that complies with the requirements above:
+When creating an segmented election, an ordered list possible categories is set.
+An algorithm calculates the `category primes`, in the given order, assigning a
+prime number for each category tag by simply using the next available integer
+that complies with the requirements mentioned:
 1. The number is higher than the maximum encodable ballot.
-2. The number is not in use by other category primes.
+2. The number is not in use by any previously calculated category prime.
 3. The number is prime.
-4. The number is a quadratic residues modulo `p`.
+4. The number is a quadratic residue modulo `p`.
 
-## Issues and limitations
+## Risks and limitations
 
-This is an advanced feature and has some limitations. A malicious voter could be
-able to craft a vote in such a manner that this vote will be included in the 
-wrong segmentation. However, it's guaranteed by the way segmentation is
-implemented that in this scenario the ballot would always be deemed invalid,
-limiting the damage.
+Segmentation mixing is an advanced feature and has some known risks and
+limitations. Most importantly, a malicious voter could be able to craft a vote
+in such a manner that this vote will be included in the wrong segmentation
+category. However, it's guaranteed by the way segmentation is implemented that
+in this scenario the ballot would always be deemed invalid.
 
-Please take the previous known risk into account before using this feature.
+Please take the mentioned risks into account before using this feature.
 
 ## How to use Segmented Mixing
 
