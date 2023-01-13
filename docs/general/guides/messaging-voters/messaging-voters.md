@@ -1,4 +1,8 @@
-# Messaging Voters
+---
+sidebar_position: 5
+title: Messaging Voters Guide
+---
+# Messaging Voters Guide
 
 You can send custom messages to voters at any time during the electoral process.  These
 messages can be sent in bulk from the Election Dashboard and to specific voters from the 
