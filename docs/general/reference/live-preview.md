@@ -40,7 +40,7 @@ with this call:
     sessionStorage.getItem(123456789)
 
 The format of the election data is the same as the 
-[Election Creation JSON](../../reference/election-creation-json), it's just
+[Election Creation JSON](../reference/election-creation-json), it's just
 a stringified version of that (using `JSON.stringify(data)`), as session storage
 can only store strings.
 
@@ -61,7 +61,7 @@ In this case, the URL with the query params is:
 
     https://sequentech.io/booth/[election-id]/preview-vote?preview-election=[election-data]
 
-The election data is the [Election Creation JSON](../../reference/election-creation-json).
+The election data is the [Election Creation JSON](../reference/election-creation-json).
 In this case it's not only stringified but also URL encoded. Specifically, if the json
 is in the `json` variable, the query parameter `[election-data]` will be generated with:
 
