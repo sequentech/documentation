@@ -13,3 +13,4 @@ Available reference documentation:
 - [E2E Election Testing](./testing/)
 - [Architecture Overview](./arch-overview/assets/2022-04-10-arch-1.pdf)
 - [Cryptographic Protocol Overview](./crypto-protocol/assets/2021-03-19-proto-1.pdf)
+- [Live Preview](live-preview.md)
