@@ -611,4 +611,60 @@ marks in which children elections can this voter participate:
 
 ![Add person to census example](./assets/university_example_filled_census.png)
 
+## Automatic Election IDs
 
+You can rely on the system to select the election IDs by setting them to negative
+numbers in the [Election Creation JSON](../../reference/election-creation-json).
+
+Ordinary elections don't require the Election ID to be set, but Parent and Children
+elections require election IDs in the Election Creation JSon to be able to reference
+what's the parent or children election and the order in which they are shown.
+
+Note that election IDs are referenced in multiple fields on Parent and Children elections:
+
+- [`election.id`](../../reference/election-creation-json#election-id)
+- [`election.virtualSubelections`](../../reference/election-creation-json#election-virtualsubelections)
+- [`election.parent_id`](../../reference/election-creation-json#election-parent_id)
+- [`election.children_election_info.natural_order` ](../../reference/election-creation-json#election-children_election_info)
+- [`election.children_election_info.presentation.categories.events.event_id`](../../reference/election-creation-json#election-children_election_info)
+
+In order to use this feature, use negative numbers for the election IDs in all the 
+fields mentioned above in the `Edit JSON` modal. After editing, the system will replace
+the negative IDs with new Election IDs. If you open the `Edit JSON` modal again afterwards
+you will see the new Election IDs.
+
+The configuration sketch with the negative Election IDs would be something similar to this:
+
+```json
+[ {
+   "title" : "Senate",
+   "id" : -2,
+   "parent_id" : -1,
+   "layout" : "simple",
+   // ..other election properties for election with id=-2 missing here..
+  },
+  {
+   "title" : "Parent Election",
+   "id" : -1,
+   "layout" : "simple",
+   "description" : "",
+   "num_successful_logins_allowed" : 1,
+   "virtual" : true,
+   "virtualSubelections" : [ -2 ],
+   "children_election_info" : {
+      "natural_order" : [ -2 ],
+      "presentation" : {
+         "categories" : [ {
+            "id" : 1,
+            "title" : "Senate",
+            "events" : [ {
+               "event_id" : -2,
+               "title" : "Senate"
+            } ]
+         } ]
+      }
+   },
+  // ..other election properties for election with id=-1 missing here..
+  }
+]
+```
