@@ -27,14 +27,32 @@ where you can review the configuration before creating the election. At this
 point, the election is configured - with some sample configuration if you 
 didn't change anything.
 
-If in the `Create Election` sidebar section you click in the pencil icon at the 
-top, you will access the `Edit Election Json` dialog, in which you can directly
+### Edit JSON
+
+If in the `Create Election` sidebar section you click in the `Actions` button
+at the right top, and then click on `Edit JSON` from the dropdown menu, you
+will access the `Edit Election Json` dialog, in which you can directly
 edit in JSON format the election configuration:
 
 ![Edit JSON Dialog](./assets/create_new_election_edit_json.png)
 
 To know the details of the Edit JSON Format, please review the 
 [Election Creation JSON](../../reference/election-creation-json)
+documentation in the [Reference](../../reference/) section.
+
+### Live preview
+
+If in the `Create Election` sidebar section you click in the `Actions` button
+at the right top, and then click on `Live Preview` from the dropdown menu, you
+will access a live preview of the voting booth.
+
+![Live preview menu](./assets/create_new_election_live_preview.png)
+
+The live preview removes the need to create an election to see how the voting
+booth looks like, reducing the feedback loop. 
+
+To know the details of the Live Preview, please review the 
+[Live Preview](../../reference/live-preview)
 documentation in the [Reference](../../reference/) section.
 
 ## Creating elections
