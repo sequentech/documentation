@@ -13,3 +13,4 @@ might need to know:
 - [Release how-to](release-howto.md)
 - [Translation Guide](./translation/)
 - [Production Readiness Checklist](production-readiness.md)
+- [Accessibility guide](accessibility-guide.md)
