@@ -91,6 +91,8 @@ issue before the release:
 - [ ] **Benchmarks**: An automated benchmark suite should be run in the CI
   pipeline, allowing it to be the base for future load/stress testing in the
   Deployment PRC.
+- [ ] **Accessibility**: The interface is fully WCAG 2.1 compliant, according to
+  the [Accessibility Guide](accessibility-guide.md).
 
 ## Deployment PRC
 
