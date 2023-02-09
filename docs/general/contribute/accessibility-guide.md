@@ -3,9 +3,9 @@ sidebar_position: 6
 title: Accessibility Guide
 ---
 
-In this guide we explain the steps we follow to check our software follows standard
-accessibility guidelines. These steps should be followed on new releases to ensure
-that the software is [WCAG 2.1 Level AA] conformant.
+In this guide we explain the checks we perform to ensure our software complies with standard
+accessibility guidelines. These checks should be reviewed on new releases and when developing
+new features to ensure that the software is [WCAG 2.1 Level AA] conformant.
 
 # Checks
 
