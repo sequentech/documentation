@@ -2879,12 +2879,14 @@ TODO: there are many more options, not yet documented here.
 - **Allowed values:**
   - `"allowed"`
   - `"warn"`
+  - `"warn-invalid-implicit-and-explicit"`
   - `"not-allowed"`
 - **Default:** `"warn"`
 - **Example:** `"allowed"`
 
 Indicates whether an invalid vote should be allowed without warning, allowed
-but warning the voter, or not allowed.
+but warning the voter on implicitly invalid ballots, allowed but warning the
+voter on both implicitly and explicitly invalid ballots, or not allowed.
 
 ### Question Extra: `enable_panachage`
 
