@@ -627,6 +627,7 @@ Note that election IDs are referenced in multiple fields on Parent and Children 
 - [`election.parent_id`](../../reference/election-creation-json#election-parent_id)
 - [`election.children_election_info.natural_order` ](../../reference/election-creation-json#election-children_election_info)
 - [`election.children_election_info.presentation.categories.events.event_id`](../../reference/election-creation-json#election-children_election_info)
+- [`election.census.voters.metadata.children_event_id_list`](../../reference/election-creation-json##voter-object)
 
 In order to use this feature, use negative numbers for the election IDs in all the 
 fields mentioned above in the `Edit JSON` modal. After editing, the system will replace
@@ -663,6 +664,22 @@ The configuration sketch with the negative Election IDs would be something simil
             } ]
          } ]
       }
+   },
+   "census" : {
+      "census" : "close",
+      "auth_method" : "email",
+      "has_ballot_boxes" : false,
+      "admin_fields" : [ ],
+      "voters" : [
+        {
+            "metadata": {
+              "email": "john@example.com",
+              "name": "John",
+              "children_event_id_list": [-2]
+            }
+        }
+      ]
+      // other census fields missing here...
    },
   // ..other election properties for election with id=-1 missing here..
   }
