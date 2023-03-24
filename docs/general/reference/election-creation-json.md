@@ -810,6 +810,22 @@ the voting booth presentation behaviour. This property is not required, but can
 be useful. See more 
 [details about Election Presentation Extra Options here](#election-presentation-extra-options-object).
 
+### Election Presentation: `anchor_continue_btn_to_bottom`
+
+- **Property name**: `anchor_continue_btn_to_bottom`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "anchor_continue_btn_to_bottom": true
+}
+```
+
+When set to true, this forces the `Continue` button at the botting of the screens 
+in the ballot box to always be fixed to the absolute bottom of the web brower window.
+
 ## Share Text Object
 
 Object describing a series of social network links or any other type of link
