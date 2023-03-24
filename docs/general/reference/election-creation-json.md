@@ -2683,6 +2683,51 @@ The template works in the same manner as the
 }
 ```
 
+There are different modes for the authentication-action. The typical mode would
+be to set the `"mode"` to `"vote"`, which means the voter will be redirected to
+the authenticated voting booth to cast the voter's ballot.
+
+But it's also possible to use the mode `go-to-url`. This will redirect to the
+URL set in the `"mode-config"` setting. The `mode-config.url` is a string 
+parameter that can be templated with the variables mentioned below (currently 
+only one), which will be [URI encoded](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI):
+
+- `__VOTE_CHILDREN_INFO__` will return information about the children elections
+in which the voter can vote. If it's not a parent-children election, then it 
+will just be an empty list `[]`. If it's a parent-children election, it will
+be something similar to the following:
+
+```json
+[
+  {
+    "can-vote": true,
+    "auth-event-id": 33,
+    "num-successful-logins-allowed": 1,
+    "num-successful-logins": 0
+  },
+  {
+    "can-vote": true,
+    "auth-event-id": 34,
+    "num-successful-logins-allowed": 1,
+    "num-successful-logins": 1
+  }
+]
+```
+
+In this context, successful logins equal to "cast votes".
+
+An example of an authentication-action object using the `"go-to-url"` mode with
+template would be:
+
+```json
+{
+  "mode": "go-to-url",
+  "mode-config": {
+    "url": "https://example.com/path/to/somewhere/?children=__VOTE_CHILDREN_INFO__"
+  }
+}
+```
+
 ### Census Config: `fixed-code`
 
 - **Property name**: `fixed-code`
