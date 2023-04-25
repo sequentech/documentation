@@ -3,23 +3,40 @@ sidebar_position: 2
 title: Release How-to
 ---
 
-In this howto we will explain how can a new release be published step by step.
-Please refer to the [Release Lifecycle](release-lifecycle.md) document to
-know more about when to do what type of release.
+In this how-to we will explain how can a new release be published step by step.
+Please refer to the [Release Lifecycle] document to know more about when to do
+what type of release.
 
-# Setup
+## Setup
 
-Releases are managed using the 
-[release-tool project](https://github.com/sequentech/release-tool). Each 
-repository can be released independently.
+Releases are managed using the [release-tool project]. Each repository can be
+released independently.
 
 Please install and setup release-tool as described in the repository's
-README file.
+README file:
+- We typically release using the latest version of the release-tool
+which is in `master` branch.
+- The installation is also very simple, just download the repository and install
+with pip the requirements in a virtualenv.
+- The setup requires creating a github token that has permissions to perform
+the actions related to the release process.
 
-# Release commands
+## Preflight checklist: Before creating a release
 
-Publishing a release is actually compromised of multiple (and sometimes 
-optional) steps:
+1. Please review the [Production Readiness Checklist] and ensure everything is
+ready to create a release. 
+2. Also, review the [Release Lifecycle] to know when to create what kind of
+release.
+3. The release scripts rely on Pull Requests referring to any parent issue with
+a line `Parent issue: https://path/to/parent/issue/1`. If you are not sure this
+has been done for all PRs, use the `update_parent_issue.py` script to solve it.
+It will look for closed issues in the [meta repository] (where usually parent
+issues land) and add the `Parent issue: http:/...` line to all linked PRs.
+
+## Release procedure overview
+
+Publishing a release is compromised of multiple  steps, done for each of the 
+platform repositories:
 
 1. Changing the version in the code
 
@@ -29,7 +46,8 @@ release. As we are creating a new release, this code needs to be updated.
 2. Creating a release branch
 
 For example `5.0.x` branch, so that other patch releases fork from there.
-This branch needs to be created locally and pushed to the public repository.
+This branch needs to be created locally and pushed to the public repository. We
+use [Release Flow] branching methodology.
 
 3. Creating a release git tag
 
@@ -37,82 +55,21 @@ Creating the git tag and pushing it to the repository.
 
 4. Publishing a github release.
 
-We can do all this in one go with the following command:
+5. Generating the comprehensive release notes.
 
-```bash
-./release.py \
-    --version 5.0.0-beta.1 \
-    --change-version \
-    --base-branch master \
-    --create-branch 5.0.x \
-    --create-tag \
-    --release-title "5.0.0-beta.1 release" \
-    --generate-release-notes \
-    --prerelease \
-    --create-release \
-    --path ../election-portal
-```
+Each platform repository has now a release, but we want to also generate a
+comprehensive release notes that merge all the release notes from each platform
+repository without duplication.
 
-Also note that the `release.py` script in this configuration will:
-- Stash your current changes in the `election-portal` repository
-- Remove all untracked files and directories (except those ignored by `.gitignore`)
-- Create a branch from origin/master, commit the changes and force push it to
-the origin
-- Create tag from the just created commit and force push it to the origin
-- Create a release from the just created tag
+6. Removing old and stale release branches. See the [Release Lifecycle] to
+know more about release support lifecycle.
 
-If you are releasing in an existing branch for a minor release, the command
-would probably be more similar to:
+## Release commands
 
-```bash
-./release.py \
-    --version 5.0.0-beta.2 \
-    --change-version \
-    --base-branch 5.0.x \
-    --push-current-branch \
-    --create-tag \
-    --release-title "5.0.0-beta.2 release" \
-    --previous-tag-name '5.0.0-beta.1' \
-    --generate-release-notes \
-    --create-release \
-    --path ../election-portal
-```
+### 1. Create the release
 
-Note that here:
-- We are not creating the `5.0.x`  branch, because it already exists. Instead,
-we are pushing current branch (5.0.x, set with `--base-branch 5.0.x`).
-- We are specifying `--previous-tag-name '5.0.0-beta.1'`, because otherwise the
-github-generated release notes would use the most recent release as a base, and
-that might not be what we want as the previous release might have been for 
-a different major version.
-
-To do a full plataform release, these are all the projects that need to be 
-released using the previous command:
-- common-ui
-- admin-console
-- election-portal
-- voting-booth
-- ballot-box
-- deployment-tool
-- tally-methods
-- tally-pipes
-- election-verifier
-- frestq
-- election-orchestra
-- iam
-- misc-tools
-- mixnet
-- documentation
-- ballot-verifier
-- release-tool
-
-Note that the order listed above is important for automatic unit tests. For
-example, `election-verifier` uses `tally-pipes`, which in turn depends on
-`tally-methods`. Please do the releasing in order. If you don't, you'll get some
-github actions failed. If this happens, just rerun the github actions after all
-the releases have been done and that should fix the problem.
-
-You can automate the release of all these repositories with a script like:
+You can launch the release of the Sequent platform repositories with the 
+following script, executing steps 1 to 4 detailed previously:
 
 ```bash
 export REPOS=(common-ui admin-console election-portal voting-booth ballot-box deployment-tool tally-methods tally-pipes election-verifier frestq election-orchestra iam misc-tools mixnet documentation ballot-verifier release-tool)
@@ -120,44 +77,69 @@ export REPOS=(common-ui admin-console election-portal voting-booth ballot-box de
 for i in $REPOS
 do
     ./release.py \
-        --version 6.1.0 \
+        --version 7.4.0 \
         --change-version \
-        --base-branch '6.1.x' '6.0.x' \
+        --base-branch '7.4.x' '7.3.x' \
         --push-current-branch \
         --create-tag \
-        --release-title "6.1.0 release" \
-        --previous-tag-name '6.0.3' \
+        --release-title "7.4.0 release" \
+        --previous-tag-name '7.3.0' \
         --generate-release-notes \
         --create-release \
         --path ../$i
 done
 ```
 
-Note that we specified multiple branch names with `--base-branch`. This is 
+Notes:
+1. We specified multiple branch names with `--base-branch`. This is 
 because in some of the repositories, there might not be any new commits or they
-might be in the previous `6.0.x` branch. The first name of the base-branch will
+might be in the previous `7.3.x` branch. The first name of the base-branch will
 always indicate the final branch to push, and it will use that branch as a base
 if it does exist. If it's not yet created, the release script will try to use
 the other given branch names as a base, in order.
+2. We are doing a full release of the full Sequent platform. This requires
+having cloned all the related repositories locally in the appropriate path (see
+the `../$i` in the script).
+3. It's wise to try first only with one of the repositories to see that
+everything goes as expected. You can change the first line to 
+`export REPOS=(common-ui)` for example to give it a try.
+4. Note that the order of the platform repositories listed in the `export REPOS`
+line is important for automatic unit tests. For example, `election-verifier`
+uses `tally-pipes`, which in turn depends on `tally-methods`. Please do the
+releasing in order. If you don't, you'll get some github actions failed. If this
+happens, just rerun the github actions after all the releases have been done and
+that should fix the problem.
+5. You can add the `--prerelease` to tag a release as a prerelease such as a
+beta. This command also support more options, use `--help` to view them all.
 
-# Release Testing and version schedule
+The `release.py` script in this configuration will:
+- Stash your current changes in the `election-portal` repository
+- Remove all untracked files and directories (except those ignored by `.gitignore`)
+- Create a branch from origin/master, commit the changes and force push it to
+the origin
+- Create tag from the just created commit and force push it to the origin
+- Create a release from the just created tag
 
-For any major release, first a `<major>.<minor>.<patch>-beta.1` should be
-created. After this has been done for the whole platform:
-1. All automatic unit testing should pass.
-2. All [E2E integration tests](../reference/testing/) should pass.
-3. Enough time for doing additional manual testing bug fixing should be
-   allocated.
+### 2. Generating the comprehensive release notes
 
-After this bugfixing, either a new beta or a final release should be created,
-with all the bugfixes being applied in the release branch which should be
-called `<major>.<minor>.x`. This should happen after 7 or more days after the 
-initial beta. A second beta (or even a third one and so on) can happen if the
-previous beta release was not deemed to be stable enough even after some 
-bugfixes have been applied.
+Comprehensive release notes are published in the [meta repository]. This action
+can be performed executing the following command:
 
-Also, even if no bugfix is applied, a new final (with `--prerelease`) release
-should be created, named `<major>.<minor>.0`, with patch version `0`. 
+```bash
+python comprehensive_release_notes.py 7.3.0 7.4.0 --dry-run
+```
+
+The first release version is the previous release (`7.3.0` in the example) and 
+the second is the new release which we want to create. Remove the `--dry-run` to
+actually create it. This command also support more options, use `--help` to view
+them all.
+
+### 3. Removing old and stale release branches
+
+Old releases will go out of support, meaning no new bugfix patch releases are
+expected to happen. You should go to each of the platform repositories and
+remove release branches related to them for housekeeping. Right now this is not
+automated, so you will have to do this manually.
 
 # Future
 
@@ -170,3 +152,9 @@ Some tools we might take a look at to do so:
 
 Also we should automate the releases for the documentation itself, allowing
 having multiple version of the documentation, to match with the releases.
+
+[Release Lifecycle]: release-lifecycle.md
+[release-tool project]: https://github.com/sequentech/release-tool
+[Release Flow]: http://releaseflow.org/
+[Production Readiness Checklist]: production-readiness.md
+[meta repository]: https://github.com/sequentech/meta
