@@ -2093,6 +2093,83 @@ is `sms-otp`, the extra field named `tlf` and of type `tlf` is required.
 
 See [Extra Field](#extra-field-object) for more details about extra fields. 
 
+
+### Census: `alternative_auth_methods`
+
+- **Property name**: `alternative_auth_methods`
+- **Type:** List of objects
+- **Required:** No
+- **Default:** `undefined`
+- **Example:** 
+```json
+[
+    {
+        "id": "sms",
+        "auth_method_name": "sms",
+        "auth_method_config": {
+            "allow_user_resend": false,
+            "authentication-action": {
+                "mode": "vote",
+                "mode-config": null
+            },
+            "msg": "Enter in __URL__ and put this code __CODE__",
+            "registration-action": {
+                "mode": "vote",
+                "mode-config": null
+            }
+        },
+        "extra_fields": [
+            {
+              "max": 255,
+              "min": 4,
+              "name": "email",
+              "type": "email",
+              "unique": true,
+              "required": true,
+              "required_on_authentication": false
+            },
+            {
+              "max": 255,
+              "min": 4,
+              "name": "tlf",
+              "type": "tlf",
+              "unique": true,
+              "required": true,
+              "required_on_authentication": true
+            }
+        ], 
+        "public_name": "Phone",
+        "public_name_i18n": {"es": "Teléfono"},
+        "icon": "fa fa-phone"
+    }
+]
+```
+
+Describes support for alternative authentication methods objects, but it's unset
+by default. Using this allows an election to let voters authenticate not only
+with the default election authentication method, but with a list of different
+auth methods configured as described below.
+
+Each alternative authentication method should be an object with the
+following configuration keys:
+
+- `id`: Unique string identifying this alternative auth method. It will be used
+in some authentication urls.
+- `auth_method_name`: Authentication method used in this alternative auth method
+  method. Same format as [`auth_method`](#census-auth_method).
+- `auth_method_config`: Object with the configuration of this alternative auth
+  method method. Same format as
+  [`auth_method_config`](#census-auth_method_config).
+- `extra_fields`: Extra fields configuration used in this alternative auth
+  method method. It **must** have the same number and names as the main
+  `extra_fields` of this election, but the rest of the configuration of each
+  field can vary. Same format as [`extra_fields`](#census-extra_fields). 
+- `public_name`: String containing the visible default name shown in the login
+  interface for this authentication method.
+- `public_name_i18n`: Object containing the translation strings for the
+  `public_name`. Same format as
+  [`i18n_override`](#election-presentation-i18n_override).
+
 ### Census: `admin_fields`
 
 - **Property name**: `admin_fields`
