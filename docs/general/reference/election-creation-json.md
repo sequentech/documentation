@@ -3176,4 +3176,81 @@ TODO
 
 ## Answer Object
 
-TODO 
+The JSON object type describes an answer in a question. It used inside the
+[Question: `answers`](#question-answers) s property and it can have the 
+following properties:
+
+### Answer: `id`
+
+- **Property name**: `id`
+- **Type:** `Positive Integer`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `0`
+
+Anwer's id, it should be unique within the question.
+
+### Answer: `sort_order`
+
+- **Property name**: `sort_order`
+- **Type:** `Positive Integer`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `0`
+
+This value will be used to sort the answers in the question.
+If belongs to a category, it will be ordered within the category.
+
+### Answer: `category`
+
+- **Property name**: `category`
+- **Type:** `Text`
+- **Required:** No
+- **Default:** -
+- **Example:** `"Independents"`
+
+Category the answer belongs to. If the question is not using categories
+or the answer doesn't belong to one, use the empty string  `""`.
+
+### Answer: `text`
+
+- **Property name**: `text`
+- **Type:** `Text`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"John Ramirez"`
+
+The main text that will be shown for this voting option, for example the
+candidate name.
+
+
+### Answer: `details`
+
+- **Property name**: `details`
+- **Type:** `Text`
+- **Required:** No
+- **Default:** -
+- **Example:** `"John Ramirez is an expert on the field with 20 years working for XYZ."`
+
+Some extra text describing the voting option, for example a description of the candidate.
+This option is not required, in which case you should use the empty string  `""`.
+
+### Answer: `urls`
+
+- **Property name**: `urls`
+- **Type:** List<[Url](#url-object)>
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+[
+  {
+    "title": "URL",
+    "url": ""
+  },
+  {
+    "title": "Image URL",
+    "url": ""
+  }
+]
+```
