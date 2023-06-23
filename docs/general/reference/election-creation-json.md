@@ -3329,7 +3329,7 @@ Example:
 
 ### Is Category List
 
-When the question uses [checkable lists](#question-extra-enable_checkable_lists), this option is used to mark an answer as a checkable category.
+When the question uses [category lists](#question-extra-enable_checkable_lists), this option is used to mark an answer as a category list.
 
 The `title` value should be `"isCategoryList"` and the `url` value should be `"true"`.
 
