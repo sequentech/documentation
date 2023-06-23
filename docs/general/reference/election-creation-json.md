@@ -3311,6 +3311,22 @@ Example:
   },
 ```
 
+### Position
+
+This flag can be used for [explicit invalid Answers](#invalid-vote-flag) to position the answer either at the top or the bottom of the answers.
+
+The `title` value should be `"positionFlag"` and the `url` value should be either `"top"` or `"bottom"`. If this tag is not included,
+the default position of the explicit invalid answer will be at the bottom of the answers in the ballot.
+
+Example:
+
+```json
+  {
+    "title": "positionFlag",
+    "url": "bottom"
+  },
+```
+
 ### Is Category List
 
 When the question uses [checkable lists](#question-extra-enable_checkable_lists), this option is used to mark an answer as a checkable category.
@@ -3340,6 +3356,3 @@ Example:
     "url": "true"
   },
 ```
-
-
-### Position
