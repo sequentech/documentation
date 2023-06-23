@@ -3311,7 +3311,7 @@ Example:
   },
 ```
 
-### Position
+### Position Flag
 
 This flag can be used for [explicit invalid Answers](#invalid-vote-flag) to position the answer either at the top or the bottom of the answers.
 
