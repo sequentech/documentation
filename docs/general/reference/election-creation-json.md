@@ -3069,8 +3069,8 @@ selected by a voter in the voting booth:
   voter.
 
 An answer representing the checkable category can be added (a 
-`category answer`), and can be flagged as such by setting an url to the
-category answer with title `"isCategoryList"` and url set to `"true"` (string).
+`category answer`), and can be flagged as such by [setting an url to the
+category answer](#is-category-list) with title `"isCategoryList"` and url set to `"true"` (string).
 
 :::note 
 Currently it is required to include a category answer for each category of the
@@ -3254,3 +3254,92 @@ This option is not required, in which case you should use the empty string  `""`
   }
 ]
 ```
+
+A list of URL objects. This is used to add tags to the Answer.
+
+## Url Object
+
+The URL Json object is used to complement the Answer description with different tags.
+Each URL object has two keys: `title` and `url`. The `title` is the name of the tag
+and the `url` is the value of the tag.
+
+The possible url types are:
+
+### URL
+
+This is used when you want to include a webpage associated with the Answer. This URL
+will appear as part of the ballot in the voting booth. 
+
+The `title`value should be `"URL"` and the `url` value should be the link to the webpage.
+
+Example:
+
+```json
+  {
+    "title": "URL",
+    "url": "https://www.google.com"
+  },
+```
+
+### Image URL
+
+Use this if you want to display an image with this Answer in the voting booth. 
+
+The `title` value should be `"Image URL"` and the `url` value should be the link to the image.
+
+Example:
+
+```json
+  {
+    "title": "Image URL",
+    "url": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
+  },
+```
+
+### Invalid Vote Flag
+
+Use this if you want to add an explicit voting option for an invalid vote in the voting booth.
+
+The `title` value should be `"invalidVoteFlag"` and the `url` value should be `"true"`.
+
+Example:
+
+```json
+  {
+    "title": "invalidVoteFlag",
+    "url": "true"
+  },
+```
+
+### Is Category List
+
+When the question uses [checkable lists](#question-extra-enable_checkable_lists), this option is used to mark an answer as a checkable category.
+
+The `title` value should be `"isCategoryList"` and the `url` value should be `"true"`.
+
+Example:
+
+```json
+  {
+    "title": "isCategoryList",
+    "url": "true"
+  },
+```
+
+### Is Write In
+
+When the question uses [write-in candidates](../guides/write-ins/), this option is used to mark an answer as a write-in candidate.
+
+The `title` value should be `"isWriteIn"` and the `url` value should be `"true"`.
+
+Example:
+
+```json
+  {
+    "title": "isWriteIn",
+    "url": "true"
+  },
+```
+
+
+### Position
