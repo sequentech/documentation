@@ -320,7 +320,7 @@ scp config-base.yml prod-s1:/home/ubuntu/config.yml
 
 The previous step is not really required, but it is required for the following
 steps to have the `config.yml` inside the `/home/ubuntu`. You can for example 
-use the config file from [config.master.yml](./assets/config.master.yml) as a 
+use the config file from [config.master.yml](https://github.com/sequentech/deployment-tool/blob/master/doc/production/config.master.yml) as a 
 base, copying it instead.
 
 Then in the provisioned machine as root, we install dependencies and move the
