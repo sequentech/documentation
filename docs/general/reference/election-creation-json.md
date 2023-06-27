@@ -832,7 +832,7 @@ in the ballot box to always be fixed to the absolute bottom of the web brower wi
 - **Type:** `Integer`
 - **Required:** No
 - **Default:** -
-- **Example:** `true`
+- **Example:** `-1`
 
 If set, then a progress bar will be shown in the background of the Logout button.
 The progress bar is a countdown until the logout time, which happens when the
