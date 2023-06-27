@@ -133,11 +133,52 @@ No special cookies are used here.
 
 ### Configuration
 
-The login session cookies expiration time can be configured instead of having 
-no expiration time.
+The login session cookies expiration time can be configured using `config.yml`.
+The most important cookies are the ones that hold the authentication token. You
+can configure different expiration times for the `voting-booth` and the
+`admin-console`.
 
-To do that, just find the line with the `config.sequent_ui.cookies_expires` 
-configuration in the `config.yml` deployment configuration file and uncomment 
-it. The expiration time  will be set in minutes, but you can use a number 
-bigger than 60 to set hours. For example if you want to set one day you can 
-put `1440`.
+To configure the cookie expiration time for the voting booth, as well as the 
+authentication token expiration time, find the line with the 
+`config.iam.auth_token_expiration_seconds` configuration in the `config.yml` 
+deployment configuration file and change it. The expiration time will be set in
+seconds. For example an hour would be `3600` seconds. The default
+value is ten minutes or `600` seconds.
+
+To configure the cookie/auth token expiration time for the admin console, find
+the line with the `config.iam.admin_auth_token_expiration_seconds` configuration
+in the `config.yml`  deployment configuration file and change it. The default
+value is one hour or `3600` seconds.
+
+### Voting Booth Logout warning modal
+
+In the voting booth, a modal will pop up one minute before the authentication token
+expires. This modal warns the user that they only have one minute left before
+finishing to cast their ballot.
+
+### Voting Booth progress bar logout
+
+You can enable a feature to inform the user of exactly how much time they have left
+to vote before the cookies expire. If you configure the `booth_log_out__countdown_seconds`
+parameter in the election presentation as explained 
+[here](../../reference/election-creation-json#election-presentation-booth_log_out__countdown_seconds),
+a progress bar will show up in the background of the `Logout` button, to indicate
+how much time the user has left to cast their ballot. The progress bar goes from
+100% initially to 0% when the user runs out of time.  Also, if the user hovers the
+mouse over the button, a tooltip will further inform the user with the minutes/
+seconds they have left.
+
+A screenshot is included below:
+
+![Logout button progress bar](./assets/logout-progress.png "Logout button progress bar")
+
+And the tooltip:
+![Logout button tooltip](./assets/logout-tooltip.png "Logout button tooltip")
+
+
+
+### Admin console token renewal
+
+Although the cookies/auth token for the admin console have a limited lifetime, they
+are automatically renewed when they reach their half-life. For this renewal process
+to happen, the browser tab must be active.
