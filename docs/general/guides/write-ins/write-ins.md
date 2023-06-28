@@ -39,7 +39,7 @@ setting to `true`:
 You also need to add to the question at least one answer with an empty text 
 (as it will be provided by the voter, not you) that is marked to be a write-in 
 by ensuring the `answer.urls` list contains the element 
-`{"title": "isWriteIn", "url": "true"}`.
+`{"title": "isWriteIn", "url": "true"}` as [described here](../../reference/election-creation-json#is-write-in).
 
 For example, if you had 3 normal candidates `Candidate A`, `Candidate B` and
 `Candidate C` and allow voters to provide one write-in candidate, the election 
