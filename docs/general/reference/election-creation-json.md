@@ -826,6 +826,23 @@ be useful. See more
 When set to true, this forces the `Continue` button at the botting of the screens 
 in the ballot box to always be fixed to the absolute bottom of the web brower window.
 
+### Election Presentation: `booth_log_out__countdown_seconds`
+
+- **Property name**: `booth_log_out__countdown_seconds`
+- **Type:** `Integer`
+- **Required:** No
+- **Default:** -
+- **Example:** `-1`
+
+If set, then a progress bar will be shown in the background of the Logout button.
+The progress bar is a countdown until the logout time, which happens when the
+session expires. If the user hovers the mouse over the button, a tooltip will
+appear informing the user of the time they have left to cast their ballot.
+
+The value set here is the seconds of anticipation for the countdown before the
+session expires. If the value is negative, the countdown will start the moment
+the user logs in.
+
 ## Share Text Object
 
 Object describing a series of social network links or any other type of link
