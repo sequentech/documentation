@@ -65,6 +65,21 @@ not yet created ([details here](#modifying-elections)).
 Election's title. It will appear in the admin election list, and as the
 election title in the public election site and in the voting booth start screen.
 
+### Election: `title_i18n`
+
+- **Property name**: `title_i18n`
+- **Type:** `Map<String, String>`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "es": "Nueva elección"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the election `title` for that language in the `election-portal` and in the `voting-booth` for this specific election.
+
 ### Election: `description`
 
 - **Property name**: `description`
@@ -76,6 +91,21 @@ election title in the public election site and in the voting booth start screen.
 Election's description. It will appear below the title in the public election 
 site and in the voting booth start screen. As shown in the example it allows 
 for some basic HTML.
+
+### Election: `description_i18n`
+
+- **Property name**: `description_i18n`
+- **Type:** `Map<String, String>`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "es": "Esta es la descripción de la elección. Puede agregar html simple como <strong>negrita</strong> o <a href=\"https://sequentech.io\">enlaces a sitios web</a>.\n\n<br><br>Usted necesita usar dos elementos br para nuevos párrafos."
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the election `description` for that language in the `election-portal` and in the `voting-booth` for this specific election.
 
 ### Election: `virtual`
 
@@ -843,6 +873,33 @@ The value set here is the seconds of anticipation for the countdown before the
 session expires. If the value is negative, the countdown will start the moment
 the user logs in.
 
+### Election Presentation: `public_title`
+
+- **Property name**: `public_title`
+- **Type:** `String`
+- **Required:** No
+- **Default:** -
+- **Example:** `"Approval of the accounts 2022"`
+
+If set, this optional property will modify the voting booth behaviour so that
+instead of showing the title of election in the voting booth, it will show this
+other title instead.
+
+### Election Presentation: `public_title_i18n`
+
+- **Property name**: `public_title_i18n`
+- **Type:** `Map<String, String>`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "es": "Aprobación de las cuentas de 2022"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the Election Presentation `public_title_i18n` for that language in the `election-portal` and in the `voting-booth` for this specific election.
+
 ## Share Text Object
 
 Object describing a series of social network links or any other type of link
@@ -994,18 +1051,6 @@ disable publishing the candidates names, then you should use
 [publicCandidates: false](#election-publiccandidates) instead.
 :::
 
-
-### Election Presentation Options: `public_title`
-
-- **Property name**: `public_title`
-- **Type:** `String`
-- **Required:** No
-- **Default:** -
-- **Example:** `"Approval of the accounts 2022"`
-
-If set, this optional property will modify the voting booth behaviour so that
-instead of showing the title of election in the voting booth, it will show this
-other title instead.
 ### Election Presentation Options: `success_screen__hide_ballot_tracker`
 
 - **Property name**: `success_screen__hide_ballot_tracker`
@@ -2185,7 +2230,7 @@ in some authentication urls.
   interface for this authentication method.
 - `public_name_i18n`: Object containing the translation strings for the
   `public_name`. Same format as
-  [`i18n_override`](#election-presentation-i18n_override).
+  [`title_i18n`](#election-title_i18n).
 
 ### Census: `admin_fields`
 
@@ -2283,6 +2328,21 @@ The name property identifies the extra field. For most
 as the field name in the user interface during the authentication process. It's
 also used in API calls as the key to receive the authentication data or to store
 the census data of a specific user.
+
+### Extra Field: `name_i18n`
+
+- **Property name**: `name_i18n`
+- **Type:** `Map<String, String>`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "es": "Código"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the extra field `name` for that language in the `election-portal` and in the `voting-booth` for this specific election.
 
 ### Extra Field: `type`
 
@@ -2654,6 +2714,23 @@ in the `email` authentication method:
         ]
       },
 ```
+
+### Census Config: `msg_i18n`
+
+- **Property name**: `msg_i18n`
+- **Type:** `Map<String, String>`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "es": "Vota en __URL__ con código __CODE__"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the Census Config `msg` for that language in the `election-portal` and in the `voting-booth` for this specific election.
+
+
 ### Census Config: `html_message`
 
 - **Property name**: `html_message`
@@ -2761,6 +2838,21 @@ codes to voters such as `email` and `email-otp`.
 The template works in the same manner as the 
 [`msg` property](#census-config-subject), see that one for more details.
 
+### Census Config: `subject_i18n`
+
+- **Property name**: `subject_i18n`
+- **Type:** `Map<String, String>`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "es": "Vota en __URL__ con código __CODE__"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the Census Config `subject` for that language in the `election-portal` and in the `voting-booth` for this specific election.
+
 ### Census Config: `authentication-action`
 
 - **Property name**: `authentication-action`
@@ -2854,6 +2946,21 @@ the [Election object](#election-object) and can have the following properties:
 Title of the question. Will be shown in the voting booth and in the election 
 results.
 
+### Question: `title_i18n`
+
+- **Property name**: `title_i18n`
+- **Type:** `Map<String, String>`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "es": "Nueva elección"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the question `title` for that language in the `election-portal` and in the `voting-booth` for this specific election.
+
 ### Question: `description`
 
 - **Property name**: `description`
@@ -2868,6 +2975,21 @@ results.
 
 Question description. It will appear below the title in the voting booth. 
 As shown in the example it allows for some basic HTML.
+
+### Question: `description_i18n`
+
+- **Property name**: `description_i18n`
+- **Type:** `Map<String, String>`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "es": "Esta es la descripción de la elección. Puede agregar html simple como <strong>negrita</strong> o <a href=\"https://sequentech.io\">enlaces a sitios web</a>.\n\n<br><br>Usted necesita usar dos elementos br para nuevos párrafos."
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the election `description` for that language in the `election-portal` and in the `voting-booth` for this specific election.
 
 ### Question: `layout`
 
@@ -3240,6 +3362,20 @@ or the answer doesn't belong to one, use the empty string  `""`.
 The main text that will be shown for this voting option, for example the
 candidate name.
 
+### Answer: `text_i18n`
+
+- **Property name**: `text_i18n`
+- **Type:** `Map<String, String>`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "es": "Independientes"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the Answer `text_i18n` for that language in the `election-portal` and in the `voting-booth` for this specific election.
 
 ### Answer: `details`
 
@@ -3251,6 +3387,21 @@ candidate name.
 
 Some extra text describing the voting option, for example a description of the candidate.
 This option is not required, in which case you should use the empty string  `""`.
+
+### Answer: `details_i18n`
+
+- **Property name**: `details_i18n`
+- **Type:** `Map<String, String>`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "es": "Independientes"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the Answer `details_i18n` for that language in the `election-portal` and in the `voting-booth` for this specific election.
 
 ### Answer: `urls`
 
