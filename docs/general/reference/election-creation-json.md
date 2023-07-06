@@ -2525,6 +2525,21 @@ convertable-to-string value.
 Help text that will appear below the input in the voter authentication or 
 registration form.
 
+### Extra Field: `help_i18n`
+
+- **Property name**: `help_i18n`
+- **Type:** `Map<String, String>`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+  "es": "Ejemplo: Juan García"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the extra field `help` for that language in the `election-portal` and in the `voting-booth` for this specific election.
+
 ### Extra Field: `regex`
 
 - **Property name**: `regex`
