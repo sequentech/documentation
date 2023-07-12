@@ -3368,7 +3368,7 @@ following properties:
 ### WriteInConfig: `fields`
 
 - **Property name**: `fields`
-- **Type:** List<[WriteInField](#writeinfields-object)>
+- **Type:** List<[WriteInField](#writeinfield-object)>
 - **Required:** Yes
 - **Default:** -
 - **Example:**
@@ -3413,7 +3413,7 @@ values will be interpolated.
 ## WriteInField Object
 
 The JSON object type describes an extra field for the Write-Ins in a question. It used inside the
-[WriteInConfig: `fields`](#question-extra-object) s property and it can have the 
+[WriteInConfig: `fields`](#writeinconfig-object) s property and it can have the 
 following properties:
 
 ### WriteInField: `id`
