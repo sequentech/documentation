@@ -3432,7 +3432,7 @@ Defines the id of a WriteInField.
 - **Required:** Yes
 - **Example:** `"First Name"`
   
-Defines the placeholder text to be shown for Write In extra field, in the input element.
+Defines the placeholder text to be shown for the Write In extra field, in the input element.
 
 ### WriteInField: `placeholder_i18n`
 
@@ -3448,6 +3448,54 @@ Defines the placeholder text to be shown for Write In extra field, in the input 
 ```
 
 If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the WriteInField `placeholder` for that language for this specific question.
+
+### WriteInField: `label`
+
+- **Property:** label
+- **Type:** String
+- **Required:** Yes
+- **Example:** `"First Name"`
+  
+Defines the label text to be shown for the Write In extra field, at the top left of the input element.
+
+### WriteInField: `label_i18n`
+
+- **Property:** label_i18n
+- **Type:** Map<String, String>
+- **Required:** No
+- **Default:** -
+- **Example:**
+```json
+{
+  "es": "Apellidos"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the WriteInField `label` for that language for this specific question.
+
+### WriteInField: `help`
+
+- **Property:** help
+- **Type:** String
+- **Required:** Yes
+- **Example:** `"First Name"`
+  
+Defines the help text to be shown for the Write In extra field, after the input element.
+
+### WriteInField: `help_i18n`
+
+- **Property:** help_i18n
+- **Type:** Map<String, String>
+- **Required:** No
+- **Default:** -
+- **Example:**
+```json
+{
+  "es": "Apellidos"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the WriteInField `help` for that language for this specific question.
 
 ### WriteInField: `min`
 
