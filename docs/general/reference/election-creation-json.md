@@ -3273,6 +3273,41 @@ Indicate whether this question can include any write-ins. Needed to set to
 `true` if you are using [write-ins](../guides/write-ins/) in the 
 question. Defaults to `false`.
 
+### Question Extra: `write_in_config`
+
+- **Property name**: `write_in_config`
+- **Type:** [WriteInConfig](#writeinconfig-object)
+- **Required:** No
+- **Default:** `-`
+- **Example:** 
+```json
+{
+  "fields": [
+    {
+      "id": "first_name",
+      "placeholder": "First Name",
+      "placeholder_i18n": {
+        "es": "Nombre"
+      },
+      "min": 2,
+      "max": 10
+    },
+    {
+      "id": "last_name",
+      "placeholder": "Last surname",
+      "placeholder_i18n": {
+        "es": "Apellidos"
+      },
+      "max": 20,
+      "min": 2
+    }
+  ],
+  "template": "{first_name}; {last_name}"
+}
+```
+
+Defines extra fields for write-in answers.
+
 ### Question Extra: `answer_group_columns_size`
 
 - **Property name**: `answer_group_columns_size`
@@ -3323,6 +3358,164 @@ However if `answer_group_columns_size` is set to `6` and the
 `answer_columns_size` is set to `12`, then it would be answer categories using 
 half of the screen, appearing side by side in pairs. And within each category, 
 each answer will use the full width of the category.
+
+## WriteInConfig Object
+
+The JSON object type describes the Write-In configuration in a question. It used inside the
+[Question Extra: `extra_options`](#question-extra-object) s property and it can have the 
+following properties:
+
+### WriteInConfig: `fields`
+
+- **Property name**: `fields`
+- **Type:** List<[WriteInField](#writeinfield-object)>
+- **Required:** Yes
+- **Default:** -
+- **Example:**
+```json
+[
+  {
+    "id": "first_name",
+    "placeholder": "First Name",
+    "placeholder_i18n": {
+      "es": "Nombre"
+    },
+    "min": 2,
+    "max": 10
+  },
+  {
+    "id": "last_name",
+    "placeholder": "Last surname",
+    "placeholder_i18n": {
+      "es": "Apellidos"
+    },
+    "max": 20,
+    "min": 2
+  }
+]
+```
+
+The fields parameter is an array of objects defining each extra write-in field.
+
+### WriteInConfig: `template`
+
+- **Property name**: `template`
+- **Type:** String
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"{first_name}; {last_name}"`
+
+Template that defines how the Write-In fields will be encoded into a string.
+Each field value will be interpolated according to this template. Use `{`
+and `}` between the id of the field to specify the position(s) where the field
+values will be interpolated.
+
+## WriteInField Object
+
+The JSON object type describes an extra field for the Write-Ins in a question. It used inside the
+[WriteInConfig: `fields`](#writeinconfig-object) s property and it can have the 
+following properties:
+
+### WriteInField: `id`
+
+- **Property:** id
+- **Type:** String
+- **Required:** Yes
+- **Example:** `"first_name"`
+
+Defines the id of a WriteInField.
+
+### WriteInField: `placeholder`
+
+- **Property:** placeholder
+- **Type:** String
+- **Required:** Yes
+- **Example:** `"First Name"`
+  
+Defines the placeholder text to be shown for the Write In extra field, in the input element.
+
+### WriteInField: `placeholder_i18n`
+
+- **Property:** placeholder_i18n
+- **Type:** Map<String, String>
+- **Required:** No
+- **Default:** -
+- **Example:**
+```json
+{
+  "es": "Apellidos"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the WriteInField `placeholder` for that language for this specific question.
+
+### WriteInField: `label`
+
+- **Property:** label
+- **Type:** String
+- **Required:** Yes
+- **Example:** `"First Name"`
+  
+Defines the label text to be shown for the Write In extra field, at the top left of the input element.
+
+### WriteInField: `label_i18n`
+
+- **Property:** label_i18n
+- **Type:** Map<String, String>
+- **Required:** No
+- **Default:** -
+- **Example:**
+```json
+{
+  "es": "Apellidos"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the WriteInField `label` for that language for this specific question.
+
+### WriteInField: `help`
+
+- **Property:** help
+- **Type:** String
+- **Required:** Yes
+- **Example:** `"First Name"`
+  
+Defines the help text to be shown for the Write In extra field, after the input element.
+
+### WriteInField: `help_i18n`
+
+- **Property:** help_i18n
+- **Type:** Map<String, String>
+- **Required:** No
+- **Default:** -
+- **Example:**
+```json
+{
+  "es": "Apellidos"
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the WriteInField `help` for that language for this specific question.
+
+### WriteInField: `min`
+
+- **Property:** min
+- **Type:** Positive Number
+- **Required:** No
+- **Default:** None
+- **Example:** `2`
+  
+Defines the minimum number of characters for this field. 
+
+### WriteInField: `max`
+
+- **Property:** max
+- **Type:** Number
+- **Required:** No
+- **Default:** None
+- **Example:** 50
+
+Defines the maximum number of characters for this field. If negative, this check will not be active.
 
 ## Children Election Info Object
 

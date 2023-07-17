@@ -78,6 +78,78 @@ Currently the only
 [question layout](../../reference/election-creation-json#question-layout) 
 in the voting booth that supports write-ins is `simultaneous-questions`.
 
+### Write-In Extra Fields
+
+By default write-in answers are configured as a single text input field.
+You can separate them into multiple fields, for example Name and Surname.
+The resulting write-in will still be a single string, using a template
+to join the fields.
+
+This can be achieved by configuring the [`write_in_config`](../../reference/election-creation-json#question-extra-write_in_config) field in the [Question `extra_options`](../../reference/election-creation-json#question-extra_options).
+
+The `write_in_config` consists of an object with the list of fields
+and the template to be used. Each field has an `id` which acts as its
+name and then it can be reference in the template. For example if the
+question has two fields with ids `name` and `surname` then you can
+create a template with a string `"{name} - {surname}"` and the final
+string for the write-in will be the interpolation of the values of those
+fields. If the values are `John` and `Doe`, the final write-in field
+will be `John - Doe`.
+
+Furthermore, for each field you can specify the placeholder text for the
+input element, as a `label` and a `help` text,  as well as their translations.
+The `min` and `max` settings will specify the minimum and maximum number
+of characters for the write-in field
+
+This is an example configuration:
+
+```json
+
+  "write_in_config": {
+    "fields": [
+      {
+        "id": "name",
+        "placeholder": "Your name",
+        "placeholder_i18n": {
+          "es": "Tu nombre"
+        },
+        "label": "Name",
+        "label_i18n": {
+          "es": "Nombre"
+        },
+        "help": "(Mandatory) Type your name here",
+        "help_i18n": {
+          "es": "(Obligatorio) Escribe tu nombre aquí"
+        },
+        "max": 20,
+        "min": 1
+      },
+      {
+        "id": "surname",
+        "placeholder": "Your surname",
+        "placeholder_i18n": {
+          "es": "Tus apellidos"
+        },
+        "label": "Surname",
+        "label_i18n": {
+          "es": "Apellidos"
+        },
+        "help": "Type your surname here",
+        "help_i18n": {
+          "es": "Escribe tus apellidos aquí"
+        },
+        "max": 20,
+        "min": -1
+      }
+    ],
+    "template": "{name} - {surname}"
+  }
+```
+
+And this is how it looks:
+
+![Write-ins example extra field](./assets/writeins-extra-fields.png)
+
 ### Voting booth: behaviour and considerations
 
 Continuing with our example, our
