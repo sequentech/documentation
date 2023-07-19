@@ -1278,3 +1278,30 @@ configuration (by setting the `config.yml` variable `load_balancing.enabled` to
 `true`) if you're not using a load balancer. In that case, set the variable
 `load_balancing.use_https` to `true` and redeploy the server with at least the `oneserver` 
 playbook.
+
+### Timeout issues uploading CSV to census
+
+Once the election has been created, you can add voters to the census from the
+admin console: go to the `Census Data` tab of the election and click on the
+`Actions` dropdown button, then `Add CSV to census...`. A modal will appear and
+you can paste the CSV in the textbox, then click on `Confim and ADD CSV to census`
+and `Start upload NOW` on the next modal.
+
+If the upload fails, it may be because a request to upload the census timed out.
+The system uploads the census in batches of a certain size (200 voters by default).
+An http request is made for each batch. This http request may timeout in multiple
+places: the javascript call, the nginx server, and anywhere in the middle. If
+you're using a CDN like Cloudflare you might have to configure it to avoid the
+timeout.
+
+ Most likely the issue is in javascript/nginx and you can increase the
+timeout by changing the parameter `config.http.nginx_timeout_secs` in the
+`deployment-tool`'s `config.yml` file. Note that changing this parameter might
+increase the likelihood of a DDOS attack, so you might go another route to solve
+the issue, or you might revert the configuration after uploading the census.
+
+Another way to solve the issue is to reduce the batch size, thus reducing the
+processing time of each http call to upload the batch. You can do that by
+reducing the parameter `config.sequent_ui.census_import_batch`. Note that this
+will increase the number of requests to upload the census and it might slow
+the process of uploading the whole census.
