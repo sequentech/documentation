@@ -3403,12 +3403,25 @@ The fields parameter is an array of objects defining each extra write-in field.
 - **Type:** String
 - **Required:** Yes
 - **Default:** -
-- **Example:** `"{first_name}; {last_name}"`
+- **Example:** `"{first_name} - {last_name}"`
 
 Template that defines how the Write-In fields will be encoded into a string.
 Each field value will be interpolated according to this template. Use `{`
 and `}` between the id of the field to specify the position(s) where the field
 values will be interpolated.
+
+### WriteInConfig: `review_screen_presentation`
+
+- **Property name**: `review_screen_presentation`
+- **Type:** String
+- **Required:** No
+- **Default:** -
+- **Example:** `"string"`
+
+If this value is set to `"string"`, write-ins in the review screen
+will be shown as the final string after encoding the write-in extra fields. Otherwise
+the selected write-ins in the review screen will be shown just as in the voting step,
+except that they won't be editable.
 
 ## WriteInField Object
 
@@ -3456,7 +3469,7 @@ If defined, it's a map of internationalization strings, grouped by language code
 - **Required:** Yes
 - **Example:** `"First Name"`
   
-Defines the label text to be shown for the Write In extra field, at the top left of the input element.
+Defines the label text to be shown for the Write In extra field, at the top left of the input element. This field accepts html input.
 
 ### WriteInField: `label_i18n`
 
@@ -3480,7 +3493,7 @@ If defined, it's a map of internationalization strings, grouped by language code
 - **Required:** Yes
 - **Example:** `"First Name"`
   
-Defines the help text to be shown for the Write In extra field, after the input element.
+Defines the help text to be shown for the Write In extra field, after the input element. This field accepts html input.
 
 ### WriteInField: `help_i18n`
 
