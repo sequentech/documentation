@@ -12,3 +12,4 @@ The following guides are available:
 - [Messaging Voters Guide](./messaging-voters/)
 - [Electoral Board Ceremonies](./electoral-board-ceremonies/)
 - [Segmented Mixing Guide](./segmented-mixing/)
+- [Cron Tasks Guide](./cron-tasks/)
