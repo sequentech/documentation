@@ -2231,6 +2231,8 @@ in some authentication urls.
 - `public_name_i18n`: Object containing the translation strings for the
   `public_name`. Same format as
   [`title_i18n`](#election-title_i18n).
+- `icon`: [Font Awesome icon](https://fontawesome.com/v4/icons/) classname to be shown on the tab to choose the 
+  alternative auth method. Example: `fa fa-phone`.
 
 ### Census: `admin_fields`
 
