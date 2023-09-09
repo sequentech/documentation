@@ -5,7 +5,54 @@ title: User Permissions
 
 Users of the admin portal can have fine grained-permissions. Different actions and
 admin sections require certain permissions. A user can have any aggregate of the
-following permissions:
+described permissions.
+
+# Setting users permissions
+
+In the `deployment-tool`'s `config.yml` file, you can configure the 
+`config.iam.upsert_file` parameter with the path to a json file that contains a
+list of users and permissions. This an example of such file:
+
+```json
+[
+  {
+    "username": "john",
+    "email": "john@sequentech.io",
+    "password": "password",
+    "is_active": true,
+    "is_admin": false,
+    "election_permissions": [
+      {
+        "election_id": 1,
+        "permissions": [
+          "view"
+        ]
+      },
+      {
+        "election_id": 34570026,
+        "permissions": [
+          "view",
+          "allow-tally"
+        ]
+      }
+    ]
+   }
+ ]
+```
+
+For a given user, you must configure the `username`, `email`, `password`, and
+whether it's active or not with `is_active` among other parameters. If
+`is_admin` is `true`, the user becomes a superuser that can access all 
+elections.
+
+The `election_permissions` key is used to configure the permissions for
+all the elections the user has access to, which is required for non-superusers.
+
+The election id `1` is a special case. If the user has at least `view` access
+to that election id, they will be able to login into the admin console. And 
+when they log in they'll find the list of elections where they at least have 
+`view` access to.
+
 
 # Permissions list
 
