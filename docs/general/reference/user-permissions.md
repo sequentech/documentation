@@ -195,15 +195,31 @@ This permission allows the user to generate authentication codes for users from 
 Not required if the user already has the `edit` permission.
 
 ## Permission: `reset-voter`
-`
-## Permission: `suspend`
-`
-## Permission: `resume`
-`
-## Permission: `set-public-candidates`
-`
-## Permission: `set-authenticate-otl-period`
-`
-## Permission: `update-ballot-boxes-results-config`
-`
 
+This permission allows the user to reset a voter's registration fields to a pre-registration state.
+Not required if the user already has the `edit` permission.
+
+## Permission: `suspend`
+
+This permission allows the user to set the election status to `suspended`. Not required if the user
+already has the `edit` permission.
+
+## Permission: `resume`
+
+This permission allows the user to resume the voting period in an stopped election. Not required if
+the user already has the `edit` permission.
+
+## Permission: `set-public-candidates`
+
+This permission allows the user to configure whether the candidates in an election are public or not.
+Not required if the user already has the `edit` permission.
+
+## Permission: `set-authenticate-otl-period`
+
+This permission allows the user to configure the authentication OTL period for users in an election.
+Not required if the user already has the `edit` permission.
+
+## Permission: `update-ballot-boxes-results-config`
+
+This permission allows the user toupdate the ballot box results configuration and update the results
+in an election. Not required if the user already has the `edit` permission.
