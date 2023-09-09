@@ -37,81 +37,163 @@ already has the `edit` permission.
 
 This permission allows the user to update the election configuration. Not required
 if the user already has the `edit` permission.
-`
+
 ## Permission: `update-share`
 
 This permission allows the user to update the election social links configuration.
 Not required if the user already has the `edit` permission.
-`
+
 ## Permission: `delete`
 
 This permission allows the user to delete an election. Not required if the user
 already has the `edit` permission.
-`
+
 ## Permission: `send-auth`
 
 This permission allows the user to send authentication messages to selected voters
 from the election census. Not required if the user already has the `edit` permission.
-`
+
 ## Permission: `send-auth-all`
 
 This permission allows the user to send authentication messages to all voters
 from the election census. Not required if the user already has the `edit` permission.
-`
+
 ## Permission: `view-archived`
-`
+
+This permission allows the user to view archived elections. Not required if the user
+already has the `edit` permission.
+
 ## Permission: `view-results`
-`
+
+This permission allows the user to view the unpublished election results. Not required
+if the user already has the `edit` permission.
+
 ## Permission: `view-stats`
-`
+
+This permission allows the user to view the tally status of an election. Not required
+if the user already has the `edit` permission.
+
 ## Permission: `view-voters`
-`
+
+This permission allows the user to view the part of the census that have already cast their
+ballot in an election. Not required if the user already has the `edit` permission.
+
 ## Permission: `view-census`
-`
+
+This permission allows the user to view the part of the census of an election. Not required
+if the user already has the `edit` permission.
+
 ## Permission: `start`
-`
+
+This permission allows the user to set the election status as started, and to set the start
+date for an election. Not required if the user already has the `edit` permission.
+
 ## Permission: `stop`
-`
+
+This permission allows the user to set the election status as stopped, to set the stop
+date for an election, as well as its tally date. Not required if the user already has 
+the `edit` permission.
+
 ## Permission: `allow-tally`
-`
+
+This permission allows the user to allow the election to be tallied. Not required if the
+user already has the `edit` permission.
+
 ## Permission: `tally`
-`
+
+This permission allows the user to start the tally process for an election. Not required
+if the user already has the `edit` permission.
+
 ## Permission: `calculate-results`
-`
+
+This permission allows the user to start the results calculation for an election. Not required
+if the user already has the `edit` permission.
+
 ## Permission: `publish-results`
-`
+
+This permission allows the user to publish/unpublish the results of an election. Not required
+if the user already has the `edit` permission.
+
 ## Permission: `census-add`
-`
+
+This permission allows the user to add users to the census of an election. Not required
+if the user already has the `edit` permission.
+
 ## Permission: `census-delete`
-`
+
+This permission allows the user to remove users from the census of an election, but only if those
+users haven't voted yet. Not required if the user already has the `edit` permission.
+
 ## Permission: `census-delete-voted`
-`
+
+This permission allows the user to remove users from the census of an election, even if those
+users have voted already. Not required if the user already has the `edit` permission.
+
 ## Permission: `census-activation`
-`
+
+This permission allows the user to activate/deactive users from the census of an election. Not
+required if the user already has the `edit` permission.
+
 ## Permission: `add-ballot-boxes`
-`
+
+This permission allows the user to add ballot boxes to an election. Not required if the user
+already has the `edit` permission.
+
 ## Permission: `list-ballot-boxes`
-`
+
+This permission allows the user to list the ballot boxes from an election. Not required if the user
+already has the `edit` permission.
+
 ## Permission: `delete-ballot-boxes`
-`
+
+This permission allows the user to delete ballot boxes from an election. Not required if the user
+already has the `edit` permission.
+
 ## Permission: `add-tally-sheets`
-`
+
+This permission allows the user to add tally sheets to an election. Not required if the user
+already has the `edit` permission.
+
 ## Permission: `override-tally-sheets`
-`
+
+This permission allows the user to override existing tally sheets in an election. Not required
+if the user already has the `edit` permission.
+
 ## Permission: `list-tally-sheets`
-`
+
+This permission allows the user to list the tally sheets of an election. Not required if the user
+already has the `edit` permission.
+
 ## Permission: `delete-tally-sheets`
-`
+
+This permission allows the user to delete tally sheets from an election. Not required if the user
+already has the `edit` permission.
+
 ## Permission: `archive`
-`
+
+This permission allows the user to archive an election. Not required if the user already has 
+the `edit` permission.
+
 ## Permission: `unarchive`
-`
+
+This permission allows the user to unarchive an election. The `edit` permission is NOT sufficient
+for this action.
+
 ## Permission: `event-view-activity`
-`
+
+This permission allows the user to see the list of actions in an election. Not required if the user
+already has the `edit` permission.
+
 ## Permission: `event-receiver-view-activity`
-`
+
+This permission allows the user to see the list of actions in an election, filtered by the receiver id.
+Not required if the user already has the `edit` or `event-view-activity` permission.
+
 ## Permission: `generate-auth-code`
-`
+
+This permission allows the user to generate authentication codes for users from the census of an election.
+Not required if the user already has the `edit` permission.
+
 ## Permission: `reset-voter`
 `
 ## Permission: `suspend`
