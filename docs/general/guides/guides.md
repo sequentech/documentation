@@ -13,3 +13,4 @@ The following guides are available:
 - [Electoral Board Ceremonies](./electoral-board-ceremonies/)
 - [Segmented Mixing Guide](./segmented-mixing/)
 - [Cron Tasks Guide](./cron-tasks/)
+- [Scheduled Events Guide](./scheduled-events/)

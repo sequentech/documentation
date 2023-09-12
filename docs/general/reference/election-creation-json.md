@@ -406,6 +406,36 @@ details.
 Describes presentation options related to the whole election. See 
 [Election Presentation](#election-presentation-object) for more details.
 
+### Election: `scheduled_events`
+
+- **Property name**: `scheduled_events`
+- **Type:** Object
+- **Required:** No
+- **Default:** `null`
+- **Example:** 
+```json
+{
+    "start_voting": {
+        "event_at": "2023-09-12T09:26:00+00:00"
+    },
+    "end_voting": null
+}
+```
+
+Describes the configuration for automatic scheduled events of an election. It
+can be null, or it can be a dictionary that follows the example shown above.
+
+The only currently configurable schedulable events are the election voting
+period begining and end, configurable by the keys `start_voting` and 
+`end_voting`.
+
+You can configure any of those two to be either `null` or to be a dictionary 
+with the key `event_at` containing the date and time of the scheduled event. The
+given datetime should follow the string format shown in the example. 
+
+You must use non-naive datetime when providing the event date time, specifying
+the timezone (the `+00:00` means UTC).
+
 ### Election: `layout`
 
 - **Property name**: `layout`
