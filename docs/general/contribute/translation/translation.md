@@ -90,7 +90,7 @@ the translations:
 export LANG=it
 export BASE_LANG=en
 export I18N_FILE=~/Downloads/sequent_it.json
-export REPOS=(common-ui admin-portal election-portal voting-booth)
+export REPOS=(common-ui admin-console election-portal voting-booth)
 
 for REPO in $REPOS
 do
