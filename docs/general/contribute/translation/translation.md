@@ -32,7 +32,7 @@ This guide is grouped in two sections:
 
 ## How to translate `sequent-ui`
 
-### Step 1. Writing the translations
+### Step 1. Writing or exporting the translations
 
 The English version of the translation JSON files is usually the most up to 
 date, and it is the most international language. For these reasons, to create
@@ -53,12 +53,56 @@ and for German is `de`.
 
 Currently the Sequent Tech Project contains translations for the following 
 languages:
-- Catalan (ca)
+
 - English (en)
+- Spanish (es)
+- French (fr)
+- Italian (it)
+- Catalan (ca)
 - Finnish (fi)
 - Galician (gl)
-- Spanish (es)
 - Swedish (sv)
+
+We internally use [POEditor](https://poeditor.com/) for managing and updating
+some of these translations. To upload the translations from POEditor follow
+these instructions:
+1. Log in to [POEditor](https://poeditor.com/). Please request to the project
+managers to be added as a POEditor collaborator if you are not yet added there.
+2. Enter into the `Sequent Voting Platform` project
+3. Choose the language to export (for example `Italian`)
+4. Click in the `Export` tab.
+5. Chose the `Key-Value Export Format (.json)`
+6. Click to enable the `Advanced export options` and in the `Advanced Options`
+sidebar choose `Order` to be `Terms A-Z`, so that it's always sorted in the same
+manner.
+
+This will download a file with a name such as `sequent_it.json`. However, this
+file contains all the translated strings for that language, and now we need to
+export the appropriate strings to a file for each of the repositories
+(`common-ui`, `voting-booth`, etc).
+
+We have a handy python tool in the `misc-tools` repository. Please do a 
+`git clone https://github.com/sequentech/misc-tools.git` of the misc-tools 
+repository and then execute a series of command such as featured below to update
+the translations:
+
+```bash
+export LANG=it
+export BASE_LANG=en
+export I18N_FILE=~/Downloads/sequent_it.json
+export REPOS=(common-ui admin-console election-portal voting-booth)
+
+for REPO in $REPOS
+do
+  python misc-tools/utils/i18n.py \
+    --base "${REPO}/locales/${BASE_LANG}.json" \
+    --i18n "${I18N_FILE}" \
+    --out "${REPO}/locales/${LANG}.json"
+done
+```
+
+This command will filter the strings in the exported i18n file using the base
+language file for each repository.
 
 ### Step 2. Building the translations
 
