@@ -1087,6 +1087,7 @@ to download the ballot ticket PDF.
   - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
   - [`success_screen__ballot_ticket__h3`](#election-presentation-options-success_screen__ballot_ticket__h3)
   - [`success_screen__ballot_ticket__h4`](#election-presentation-options-success_screen__ballot_ticket__h4)
+  - [`success_screen__ballot_ticket__show_election_id`](#election-presentation-options-success_screen__ballot_ticket__show_election_id)
 
 If set, this optional property will modify the voting booth behaviour and the
 success screen will not show the link to download the ballot ticket PDF. This 
@@ -1105,6 +1106,7 @@ option does not hide the ballot tracker hash nor the QR code to the ballot
   - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
   - [`success_screen__ballot_ticket__h3`](#election-presentation-options-success_screen__ballot_ticket__h3)
   - [`success_screen__ballot_ticket__h4`](#election-presentation-options-success_screen__ballot_ticket__h4)
+  - [`success_screen__ballot_ticket__show_election_id`](#election-presentation-options-success_screen__ballot_ticket__show_election_id)
 
 If set, this optional property will modify the heading logo that appears next 
 in the PDF ballot ticket that the voter can download from  the voting booth 
@@ -1129,6 +1131,7 @@ PDF.
   - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
   - [`success_screen__ballot_ticket__h3`](#election-presentation-options-success_screen__ballot_ticket__h3)
   - [`success_screen__ballot_ticket__h4`](#election-presentation-options-success_screen__ballot_ticket__h4)
+  - [`success_screen__ballot_ticket__show_election_id`](#election-presentation-options-success_screen__ballot_ticket__show_election_id)
 
 If set, this optional property will modify the heading text that appears next 
 to the header logo in the PDF ballot ticket that the voter can download from 
@@ -1151,6 +1154,7 @@ in the same position in the ballot ticket PDF.
   - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
   - [`success_screen__ballot_ticket__h3`](#election-presentation-options-success_screen__ballot_ticket__h3)
   - [`success_screen__ballot_ticket__h4`](#election-presentation-options-success_screen__ballot_ticket__h4)
+  - [`success_screen__ballot_ticket__show_election_id`](#election-presentation-options-success_screen__ballot_ticket__show_election_id)
 
 If set, this optional property will modify the subheading text that appears next 
 to the header logo in the PDF ballot ticket that the voter can download from the 
@@ -1173,6 +1177,7 @@ in the same position in the ballot ticket PDF.
   - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
   - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
   - [`success_screen__ballot_ticket__h4`](#election-presentation-options-success_screen__ballot_ticket__h4)
+  - [`success_screen__ballot_ticket__show_election_id`](#election-presentation-options-success_screen__ballot_ticket__show_election_id)
 
 If set, this optional property will modify the title of the ballot ticket 
 that appears below the header logo in the PDF ballot ticket that the voter can 
@@ -1194,6 +1199,7 @@ By default, if this optional property is not set, then an i18n string saying
   - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
   - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
   - [`success_screen__ballot_ticket__h3`](#election-presentation-options-success_screen__ballot_ticket__h3)
+  - [`success_screen__ballot_ticket__show_election_id`](#election-presentation-options-success_screen__ballot_ticket__show_election_id)
 
 If set, this optional property will modify the text of the ballot ticket 
 that appears below the title of the PDF ballot ticket that the voter can 
@@ -1202,6 +1208,27 @@ download from the voting booth success screen.
 By default, if this optional property is not set, then an i18n string saying
 `Your vote has been cast correctly. This document justifies its issuance.` 
 will appear in the same position in the ballot ticket PDF.
+
+### Election Presentation Options: `success_screen__ballot_ticket__show_election_id`
+
+- **Property name**: `success_screen__ballot_ticket__show_election_id`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** -
+- **Example:** `true`
+- **Related:**
+  - [`success_screen__hide_download_ballot_ticket`](#election-presentation-options-success_screen__hide_download_ballot_ticket)
+  - [`success_screen__ballot_ticket__logo_url`](#election-presentation-options-success_screen__ballot_ticket__logo_url)
+  - [`success_screen__ballot_ticket__logo_header`](#election-presentation-options-success_screen__ballot_ticket__logo_header)
+  - [`success_screen__ballot_ticket__logo_subheader`](#election-presentation-options-success_screen__ballot_ticket__logo_subheader)
+  - [`success_screen__ballot_ticket__h3`](#election-presentation-options-success_screen__ballot_ticket__h3)
+  - [`success_screen__ballot_ticket__h4`](#election-presentation-options-success_screen__ballot_ticket__h4)
+
+If set, this optional property will include the election id in the PDF ballot
+ticket that the voter can download from the voting booth success screen.
+
+By default, if this optional property is not set, thus the election id doesn't
+appear in the PDF ballot ticket.
 
 ### Election Presentation Options: `success_screen__redirect__url`
 
