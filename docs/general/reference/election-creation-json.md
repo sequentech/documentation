@@ -3367,6 +3367,31 @@ However if `answer_group_columns_size` is set to `6` and the
 half of the screen, appearing side by side in pairs. And within each category, 
 each answer will use the full width of the category.
 
+### Question Extra: `show_filter_field`
+
+- **Property name**: `show_filter_field`
+- **Type:** `Boolean`
+- **Required:** No
+- **Default:** `false`
+- **Example:** `true`
+
+If set to `true`, it adds a search/filter field to the left of the question title 
+in the voting booth's candidates selection screen. By default, if unset, its
+value is `false`.
+
+Voters will be able to filter candidates using the search field. The search string
+can contain asterisks `*`. An asterisk will match zero or more characters. The search
+will only show options that partially match with the search string, either on the 
+category, text or details of the option. The search ignores casing and tildes.
+
+For example searching with the string `john*kennedy` on the text 
+`Sir John F. Kennedy Jr` will be a partial match, whereas if the search string
+was `John Kennedy` the search wouldn't match at all.
+
+If there's a partial match with the category, all options within the category will
+be shown. The results of the search will always be shown in one column, regardless of
+the column configuration for the question.
+
 ## WriteInConfig Object
 
 The JSON object type describes the Write-In configuration in a question. It used inside the
