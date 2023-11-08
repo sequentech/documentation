@@ -11,7 +11,7 @@ to use it.
 
 ## What it is
 
-SmartLink is a Single sign-on (SSO) authentication mechanism provided by the 
+SmartLink is a Single Sign-On (SSO) authentication mechanism provided by the 
 Sequent platform that uses a Keyed [HMAC](https://en.wikipedia.org/wiki/HMAC) 
 authentication token. It allows you to send voters that 
 are already authenticated  in your own platform or website to a voting link 
@@ -19,9 +19,9 @@ for a specific election without forcing them to authenticate again in Sequent
 Platform. It is a secure and simple way to implement Single sign-on.
 
 :::note Other Single sign-one methods
+
 Sequent Platform also supports the 
-[OpenID Connect authentication method](../../reference/election-creation-json#census-auth_method) 
-to implement Single sign-on.
+[OpenID Connect authentication method](../openid-auth/)  to implement Single Sign-On.
 :::
 
 ## How it works
