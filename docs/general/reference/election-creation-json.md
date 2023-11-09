@@ -2136,7 +2136,7 @@ If used, an [extra_field](#census-extra_fields) of type `tlf` and named
 - **openid-connect**: The authentication will happen through a third-party 
 openid provider. This provider shall be configured in the `config.yml` 
 [ansible deployment configuration](../guides/deployment/). If used, an 
-[extra_field](#census-extra_fields) of type `sub` and named `text` is 
+[extra_field](#census-extra_fields) of type `text` and named `sub` is 
 required.
 
 - **user-and-password**: The voters will authenticate simply by the username 
