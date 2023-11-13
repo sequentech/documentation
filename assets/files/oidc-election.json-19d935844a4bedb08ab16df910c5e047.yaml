@@ -1,0 +1,140 @@
+[
+  {
+    "title": "OIDC Test Election",
+    "description": ".",
+    "authorities": [
+      "demo-a2"
+    ],
+    "director": "demo-a1",
+    "presentation": {
+      "theme": "default",
+      "urls": [],
+      "allow_tally": true,
+      "theme_css": ""
+    },
+    "layout": "simple",
+    "num_successful_logins_allowed": 0,
+    "tallyPipesConfig": {
+      "version": "10.0.2",
+      "pipes": [
+        {
+          "type": "tally_pipes.pipes.results.do_tallies",
+          "params": {}
+        },
+        {
+          "type": "tally_pipes.pipes.sort.sort_non_iterative",
+          "params": {}
+        }
+      ]
+    },
+    "census": {
+      "has_ballot_boxes": false,
+      "oidc_providers": [
+        {
+          "public_info": {
+            "id": "google",
+            "title": "Authenticate with Google",
+            "description": "Authenticate with Google",
+            "icon": "https://www.google.com/favicon.ico",
+            "authorization_endpoint": "https://accounts.google.com/o/oauth2/v2/auth",
+            "client_id": "<CLIENT_ID>.apps.googleusercontent.com",
+            "issuer": "https://accounts.google.com",
+            "scope": "openid email",
+            "token_endpoint": "https://oauth2.googleapis.com/token",
+            "jwks_uri": "https://www.googleapis.com/oauth2/v3/certs",
+            "logout_uri": "https://accounts.google.com/o/oauth2/v2/auth_logout"
+          },
+          "private_config": {
+            "client_secret": "<CLIENT_SECRET>"
+          }
+        }
+      ],
+      "voters": [
+      ],
+      "auth_method": "openid-connect",
+      "census": "close",
+      "extra_fields": [
+        {
+          "name": "sub",
+          "type": "text",
+          "source_claim": "email",
+          "required": true,
+          "unique": true,
+          "min": 4,
+          "max": 255,
+          "required_on_authentication": true
+        }
+      ],
+      "admin_fields": [],
+      "config": {
+        "provider_ids": ["google"],
+        "authentication-action": {
+          "mode": "vote",
+          "mode-config": {
+            "url": ""
+          }
+        },
+        "registration-action": {
+          "mode": "vote",
+          "mode-config": null
+        }
+      }
+    },
+    "questions": [
+      {
+        "answer_total_votes_percentage": "over-total-valid-votes",
+        "answers": [
+          {
+            "category": "",
+            "details": "",
+            "id": 0,
+            "sort_order": 0,
+            "text": "Yes",
+            "urls": [
+              {
+                "title": "URL",
+                "url": ""
+              },
+              {
+                "title": "Image URL",
+                "url": ""
+              }
+            ]
+          },
+          {
+            "category": "",
+            "details": "",
+            "id": 1,
+            "sort_order": 1,
+            "text": "No",
+            "urls": [
+              {
+                "title": "URL",
+                "url": ""
+              },
+              {
+                "title": "Image URL",
+                "url": ""
+              }
+            ]
+          }
+        ],
+        "description": "",
+        "layout": "accordion",
+        "max": 1,
+        "min": 1,
+        "num_winners": 1,
+        "tally_type": "plurality-at-large",
+        "title": "Do you approve the usage of OpenID Connect?",
+        "extra_options": {
+          "shuffle_categories": true,
+          "shuffle_all_options": true,
+          "shuffle_category_list": [],
+          "show_points": false
+        },
+        "active": true
+      }
+    ],
+    "extra_data": {}
+  }
+]
