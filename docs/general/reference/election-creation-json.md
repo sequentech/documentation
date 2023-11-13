@@ -2136,7 +2136,7 @@ If used, an [extra_field](#census-extra_fields) of type `tlf` and named
 - **openid-connect**: The authentication will happen through a third-party 
 openid provider. This provider shall be configured in the `config.yml` 
 [ansible deployment configuration](../guides/deployment/). If used, an 
-[extra_field](#census-extra_fields) of type `sub` and named `text` is 
+[extra_field](#census-extra_fields) of type `text` and named `sub` is 
 required.
 
 - **user-and-password**: The voters will authenticate simply by the username 
@@ -2158,12 +2158,10 @@ implement Single sign-on (SSO) and integrate with a third-party site or
 plataform. Read about how to use it in the
 [SmartLink Auth Guide](../guides/smart-link-auth).
 
-- **dnie**: The voters will authenticate using a TLS client authentication
-certificate. This authentication method requires some updates to be usable in 
-the current version of the software and thus is currently not usable, but it 
-does not require much development work to make it work.
-
-<!-- TODO: Write a guide explaining how to add a new authentication method. -->
+- **openid-connect**: The voters will authenticate using a 3rd-party OpenID
+Connect (OIDC) provider. It's a straightforward way to implement Single
+sign-on (SSO) and integrate with a third-party site or plataform. Read about how
+to use it in the [OIDC Auth Guide](../guides/openid-auth/).
 
 :::note Alternative authentication methods
 If the authentication method is `email` but there's defined also an `tlf` 
@@ -2212,6 +2210,39 @@ is `sms-otp`, the extra field named `tlf` and of type `tlf` is required.
 
 See [Extra Field](#extra-field-object) for more details about extra fields. 
 
+### Census: `oidc_providers`
+
+- **Property name**: `oidc_providers`
+- **Type:** List of objects
+- **Required:** No
+- **Default:** `undefined`
+- **Example:** 
+```json
+[
+    {
+      "public_info": {
+          "id": "google",
+          "title": "Authenticate with Google",
+          "description": "Authenticate with Google",
+          "icon": "https://www.google.com/favicon.ico",
+          "authorization_endpoint": "https://accounts.google.com/o/oauth2/v2/auth",
+          "client_id": "<CLIENT_ID>.apps.googleusercontent.com",
+          "issuer": "https://accounts.google.com",
+          "scope": "openid email",
+          "token_endpoint": "https://oauth2.googleapis.com/token",
+          "jwks_uri": "https://www.googleapis.com/oauth2/v3/certs",
+          "logout_uri": "https://accounts.google.com/o/oauth2/v2/auth_logout"
+      },
+      "private_info": {
+          "client_secret": "<CLIENT_SECRET>"
+      }
+    }
+]
+```
+
+List of OpenID Connect (OIDC) providers available for OIDC authentication.
+
+More information in the [OIDC authentication guide](../guides/openid-auth/).
 
 ### Census: `alternative_auth_methods`
 
@@ -2436,6 +2467,19 @@ are the following available extra field types that you can use:
 Defines if this field is required during authentication. If `true` it means 
 that during the authentication process this field needs to be provided by the 
 voter.
+
+### Extra Field: `source_claim`
+
+- **Property name**: `source_claim`
+- **Type:** `String`
+- **Required:** No
+- **Default:** `null`
+- **Example:** `"email"`
+
+OIDC claim name to compare with the extra field's data during authentication.
+Used only in OpenID Connect authentication for the `"sub"` named extra field.
+
+More information in the [OIDC authentication guide](../guides/openid-auth/).
 
 ### Extra Field: `match_against_census_on_otl_authentication`
 
@@ -2932,6 +2976,22 @@ The template works in the same manner as the
 ```
 
 If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the Census Config `subject` for that language in the `election-portal` and in the `voting-booth` for this specific election.
+
+
+### Census Config: `provider_ids`
+
+- **Property name**: `provider_ids`
+- **Type:** `List[String]`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+["google"]
+```
+
+If defined, it's a list of strings corresponding to the list of provider ids to make available for the user to authenticate, in order.
+
+More information in the [OIDC authentication guide](../guides/openid-auth/).
 
 ### Census Config: `authentication-action`
 
