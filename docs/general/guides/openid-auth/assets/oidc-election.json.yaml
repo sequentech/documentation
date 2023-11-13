@@ -29,6 +29,26 @@
     },
     "census": {
       "has_ballot_boxes": false,
+      "oidc_providers": [
+        {
+          "public_info": {
+            "id": "google",
+            "title": "Authenticate with Google",
+            "description": "Authenticate with Google",
+            "icon": "https://www.google.com/favicon.ico",
+            "authorization_endpoint": "https://accounts.google.com/o/oauth2/v2/auth",
+            "client_id": "<CLIENT_ID>.apps.googleusercontent.com",
+            "issuer": "https://accounts.google.com",
+            "scope": "openid email",
+            "token_endpoint": "https://oauth2.googleapis.com/token",
+            "jwks_uri": "https://www.googleapis.com/oauth2/v3/certs",
+            "logout_uri": "https://accounts.google.com/o/oauth2/v2/auth_logout"
+          },
+          "private_config": {
+            "client_secret": "<CLIENT_SECRET>"
+          }
+        }
+      ],
       "voters": [
       ],
       "auth_method": "openid-connect",
@@ -37,6 +57,7 @@
         {
           "name": "sub",
           "type": "text",
+          "source_claim": "email",
           "required": true,
           "unique": true,
           "min": 4,
@@ -46,6 +67,7 @@
       ],
       "admin_fields": [],
       "config": {
+        "provider_ids": ["google"],
         "authentication-action": {
           "mode": "vote",
           "mode-config": {
