@@ -930,6 +930,37 @@ other title instead.
 
 If defined, it's a map of internationalization strings, grouped by language code. The provided translation will override the Election Presentation `public_title_i18n` for that language in the `election-portal` and in the `voting-booth` for this specific election.
 
+
+### Election Presentation: `i18n_languages_conf`
+
+- **Property name**: `i18n_languages_conf`
+- **Type:** `Option[Object]`
+- **Required:** No
+- **Default:** -
+- **Example:** 
+```json
+{
+    // default language if anything else is equal
+    "default_language": "en",
+    // if set to `false`, we'll match browser settings with available 
+    // languages to decide which language to load by default. If set 
+    // to `true`, then we won't detect any browser language preferences
+    // and we'll always load the previously defined `default_language`
+    // by default.
+    "force_default_language": false,
+    // available languages for this election
+    "available_languages": [
+        "en",
+        "es"
+    ]
+}
+```
+
+Allows the modification of the language behavior for any election. You can
+change the default language, override if the default language should be 
+automatically loaded, and also change the list of available languages for this
+specific election. Applies on the Voting Booth and also on the Election Portal.
+
 ## Share Text Object
 
 Object describing a series of social network links or any other type of link
