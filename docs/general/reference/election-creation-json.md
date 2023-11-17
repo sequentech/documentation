@@ -886,6 +886,36 @@ be useful. See more
 When set to true, this forces the `Continue` button at the botting of the screens 
 in the ballot box to always be fixed to the absolute bottom of the web brower window.
 
+
+### Election Presentation: `mandatory_acceptance_tos_html`
+
+- **Property name**: `mandatory_acceptance_tos_html`
+- **Type:** `Option<String>`
+- **Required:** No
+- **Default:** -
+- **Example:** `"I accept the <strong>Terms and conditions</strong>"`
+
+If set to some string, then the voting booth will show the given Basic HTML text
+with a checkbox in that Start Screen of the Voting Booth, and the Start Voting
+action button below will be disabled until the voter clicks and marks the 
+checkbox for accepting these terms.   
+
+
+### Election Presentation: `mandatory_acceptance_tos_html_i18n`
+
+- **Property name**: `mandatory_acceptance_tos_html`
+- **Type:** `Option<Map<String, String>>`
+- **Required:** No
+- **Default:** -
+```json
+{
+  "es": "Acepto las <strong>Condiciones de Servicio</strong>""
+}
+```
+
+If defined, it's a map of internationalization strings, grouped by language, for
+the `mandatory_acceptance_tos_html` field.
+
 ### Election Presentation: `booth_log_out__countdown_seconds`
 
 - **Property name**: `booth_log_out__countdown_seconds`
