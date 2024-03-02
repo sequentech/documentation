@@ -11,6 +11,5 @@ The following guides are available:
 - [SmartLink Auth Guide](./smart-link-auth/)
 - [Messaging Voters Guide](./messaging-voters/)
 - [Electoral Board Ceremonies](./electoral-board-ceremonies/)
-- [Segmented Mixing Guide](./segmented-mixing/)
 - [Cron Tasks Guide](./cron-tasks/)
 - [Scheduled Events Guide](./scheduled-events/)
