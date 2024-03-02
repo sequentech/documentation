@@ -65,6 +65,17 @@ not yet created ([details here](#modifying-elections)).
 Election's title. It will appear in the admin election list, and as the
 election title in the public election site and in the voting booth start screen.
 
+### Election: `weightedVotingField`
+
+- **Property name**: `weightedVotingField`
+- **Type:** `Short String` || `null`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"vote_weight"`
+
+Indicates the Election's vote-weight extra field name if set. This field needs
+to be of type `int` to work. 
+
 ### Election: `title_i18n`
 
 - **Property name**: `title_i18n`
