@@ -44,7 +44,7 @@
             "jwks_uri": "https://www.googleapis.com/oauth2/v3/certs",
             "logout_uri": "https://accounts.google.com/o/oauth2/v2/auth_logout"
           },
-          "private_config": {
+          "private_info": {
             "client_secret": "<CLIENT_SECRET>"
           }
         }
