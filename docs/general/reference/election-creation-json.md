@@ -3526,7 +3526,8 @@ following properties:
 - **Required:** Yes
 - **Example:** `"first_name"`
 
-Defines the id of a WriteInField.
+Defines the id of a WriteInField. This id has the same limitations of a javascript variable, for 
+example it can't start with numbers.
 
 ### WriteInField: `placeholder`
 
