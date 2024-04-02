@@ -65,6 +65,17 @@ not yet created ([details here](#modifying-elections)).
 Election's title. It will appear in the admin election list, and as the
 election title in the public election site and in the voting booth start screen.
 
+### Election: `weightedVotingField`
+
+- **Property name**: `weightedVotingField`
+- **Type:** `Short String` || `null`
+- **Required:** Yes
+- **Default:** -
+- **Example:** `"vote_weight"`
+
+Indicates the Election's vote-weight extra field name if set. This field needs
+to be of type `int` to work. 
+
 ### Election: `title_i18n`
 
 - **Property name**: `title_i18n`
@@ -627,47 +638,6 @@ Specifies if the census main lookup field is hidden. Only use this option if
 you have setup some other(s) [census extra_field](#census-extra_fields) with the
 [required_on_authentication attribute](#extra-field-required_on_authentication) 
 set to `true`, as it would be used to look up the voter in the database.
-
-### Election: `segmentedMixing`
-
-- **Property name**: `segmentedMixing`
-- **Type:** `Boolean`
-- **Required:** No
-- **Default:** `false`
-- **Example:** `true`
-- **Related:**
-  - [`mixingCategorySegmentation`](#election-mixingCategorySegmentation)
-
-When set to `true`, enables segmented mixing in the election. In that case, it
-also requires that [`mixingCategorySegmentation`](#election-mixingCategorySegmentation) is configured properly. See the [Segmented Mixing Guide](../guides/segmented-mixing/) for more
-information.
-
-### Election: `mixingCategorySegmentation`
-
-- **Property name**: `mixingCategorySegmentation`
-- **Type:** Object
-- **Required:** No
-- **Default:** `null`
-- **Example:** 
-```json
-{
-  "categoryName": "province",
-  "categories": [
-    "Sevilla",
-    "Madrid"
-  ]
-}
-```
-- **Related:**
-  - [`segmentedMixing`](#election-segmentedMixing)
-
-When [`segmentedMixing`](#election-segmentedMixing) is set to `true`, this
-property is used to specify the name of the [extra field](#census-extra_fields)
-used for segmentation, along with the possible values, in order, that this
-segment can have. Note that this list of possible values is used for encoding.
-
-See the [Segmented Mixing Guide](../guides/segmented-mixing/) for more
-information.
 
 ### Election: `publicCandidates`
 
