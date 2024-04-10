@@ -569,7 +569,7 @@ authorities. Then install them:
 
 ```bash
 root@prod-s1:/root/prod-s1/ $ eopeers --install prod-a1.pkg --keystore /home/ballotbox/keystore.jks
-root@prod-s1:/root/prod-s1/ $ eopeers --install prod-a2.pkg
+root@prod-s1:/root/prod-s1/ $ eopeers --install prod-a2.pkg --keystore /home/ballotbox/keystore.jks
 root@prod-s1:/root/prod-s1/ $ service nginx restart
 root@prod-s1:/root/prod-s1/ $ supervisorctl restart ballot-box
 ```
