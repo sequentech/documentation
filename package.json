@@ -1,6 +1,6 @@
 {
   "name": "documentation",
-  "version": "master",
+  "version" : "10.3.0",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
