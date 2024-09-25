@@ -3540,6 +3540,16 @@ If there's a partial match with the category, all options within the category wi
 be shown. The results of the search will always be shown in one column, regardless of
 the column configuration for the question.
 
+### Question Extra: `footer_html`
+
+- **Property name**: `footer_html`
+- **Type:** `String`
+- **Required:** No
+- **Default:** ``
+- **Example:** `<b>My html</b>`
+
+This html will be included at the end of the question in the voting and review screens.
+
 ## WriteInConfig Object
 
 The JSON object type describes the Write-In configuration in a question. It used inside the
